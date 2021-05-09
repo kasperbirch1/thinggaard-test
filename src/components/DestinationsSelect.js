@@ -20,7 +20,11 @@ const DestinationsSelect = ({ list, onChange, value }) => {
           -- select an option --
         </MenuItem>
         {list.map((item) => {
-          return <MenuItem value={item.code}>{item.name}</MenuItem>;
+          return (
+            <MenuItem key={item.id} value={item.code}>
+              {item.name}
+            </MenuItem>
+          );
         })}
       </Select>
     </FormControl>

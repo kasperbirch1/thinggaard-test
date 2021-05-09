@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { useStyles } from "../styles";
 
-const DurationsSelect = ({ destinationId, onChange, value }) => {
+const DurationsSelect = ({
+  destinationId,
+  onChange,
+  value,
+  apiAuthentication,
+}) => {
   const classes = useStyles();
 
   const [durations, setDurations] = useState(null);
@@ -12,22 +17,26 @@ const DurationsSelect = ({ destinationId, onChange, value }) => {
     if (!destinationId) {
       return;
     }
+    let source = axios.CancelToken.source();
     const fetch = async () => {
-      try {
-        const token = await axios.get(
-          "https://thinggaard.dk/wp-json/thinggaard/v1/authentication"
-        );
-
-        if (token?.data?.result?.auth_token) {
+      if (apiAuthentication) {
+        try {
           const { data } = await axios.get(
-            `https://thinggaard.dk/wp-json/thinggaard/v1/durations?destination_id=${destinationId}&token=${token?.data?.result?.auth_token}`
+            `https://thinggaard.dk/wp-json/thinggaard/v1/durations?destination_id=${destinationId}&token=${apiAuthentication}`,
+            {
+              cancelToken: source.token,
+            }
           );
           setDurations(data.result);
-        }
-      } catch (error) {}
+        } catch (error) {}
+      }
     };
     fetch();
-  }, [destinationId]);
+
+    return () => {
+      source.cancel();
+    };
+  }, [destinationId, apiAuthentication]);
   return (
     <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel id="DurationsSelect">DurationsSelect</InputLabel>
@@ -42,8 +51,10 @@ const DurationsSelect = ({ destinationId, onChange, value }) => {
         <MenuItem disabled selected value>
           -- select an option --
         </MenuItem>
-        {durations?.map((duration) => (
-          <MenuItem value={duration.days}>{duration.days}</MenuItem>
+        {durations?.map((duration, index) => (
+          <MenuItem key={index} value={duration.days}>
+            {duration.days}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>
