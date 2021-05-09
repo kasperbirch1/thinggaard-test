@@ -56,11 +56,12 @@ const DatesSelect = ({ destinationId, onChange, value, apiAuthentication }) => {
     return () => {
       source.cancel();
     };
-  }, [destinationId, apiAuthentication]);
+  }, [destinationId, apiAuthentication, onChange]);
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
+        disableToolbar
         shouldDisableDate={disableDays}
         className={classes.formControl}
         clearable
