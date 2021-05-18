@@ -6,7 +6,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import format from "date-fns/format";
-import { useStyles } from "../styles";
+import { useStyles } from "../../styles";
 
 const DatesSelect = ({ destinationId, onChange, value, apiAuthentication }) => {
   const classes = useStyles();

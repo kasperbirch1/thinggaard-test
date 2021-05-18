@@ -41,6 +41,15 @@ const Trip = ({ trip }) => {
           ></div>
         )}
 
+        {/* {post?.meta?.hotel_beliggenhed && (
+          <div
+            className="hotel_beliggenhed"
+            dangerouslySetInnerHTML={{
+              __html: post?.meta?.hotel_beliggenhed,
+            }}
+          ></div>
+        )} */}
+
         {/* {post?.meta?.hotel_fakta && (
           <div
             className="hotel_fakta"
@@ -50,9 +59,13 @@ const Trip = ({ trip }) => {
           ></div>
         )} */}
 
-        <p>Rejselængde: {travel_length}</p>
-        <p>Hjemrejse: {return_date}</p>
-        <p className="text-red-500 font-black text-right">{`Pris: ${minimum_price} kr.`}</p>
+        <div className="flex justify-between">
+          <div>
+            <p>Rejselængde: {travel_length}</p>
+            <p className="m-0">Hjemrejse: {return_date}</p>
+          </div>
+          <p className="m-0 self-end text-red-500 font-black text-right">{`Pris: ${minimum_price} kr.`}</p>
+        </div>
         {/* <pre>{JSON.stringify(trip, null, 2)}</pre> */}
       </div>
     </div>

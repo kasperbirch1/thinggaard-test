@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useStyles } from "../styles";
+import { useStyles } from "../../styles";
 
 const TransportsSelect = ({
   destinationId,

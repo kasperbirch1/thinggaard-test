@@ -2,10 +2,10 @@ import { Button, Grid, TextField, useMediaQuery } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DatesSelect from "../components/DatesSelect";
-import DestinationsSelect from "../components/DestinationsSelect";
-import DurationsSelect from "../components/DurationsSelect";
-import TransportsSelect from "../components/TransportsSelect";
+import DatesSelect from "../components/form-inputs/DatesSelect";
+import DestinationsSelect from "../components/form-inputs/DestinationsSelect";
+import DurationsSelect from "../components/form-inputs/DurationsSelect";
+import TransportsSelect from "../components/form-inputs/TransportsSelect";
 import Trip from "../components/Trip";
 import { useStyles } from "../styles";
 
@@ -16,10 +16,18 @@ const Home = () => {
   const [destinations, setDestinations] = useState(null);
   const [destinationId, setdestinationId] = useState(null);
   const [duration, setDuration] = useState("");
-  const [ages, setAges] = useState("");
+  const [adults, setAdults] = useState("");
   const [transport, setTransport] = useState("");
   const [date, setDate] = useState(null);
   const [trips, setTrips] = useState(null);
+
+  const countAdults = (number) => {
+    let countAdults = [];
+    for (let i = 0; i < adults; i++) {
+      countAdults.push("30");
+    }
+    return countAdults;
+  };
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -69,15 +77,15 @@ const Home = () => {
   }, [apiAuthentication]);
 
   const handleSubmit = async (event) => {
-    const countPersons = new Array(45);
-    console.log(
-      "🚀 ~ file: Home.js ~ line 72 ~ handleSubmit ~ countPersons",
-      countPersons
-    );
     event.preventDefault();
+
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${destinationId.code}&ages=${ages}&duration=${duration}&date=${date}&transport=${transport}&token=${apiAuthentication}`
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${
+          destinationId.code
+        }&ages=${countAdults(
+          adults
+        )}&duration=${duration}&date=${date}&transport=${transport}&token=${apiAuthentication}`
       );
       setTrips(data.result);
     } catch (error) {}
@@ -131,10 +139,9 @@ const Home = () => {
               type="number"
               variant="outlined"
               className={classes.formControl}
-              value={ages}
+              value={adults}
               onChange={(e) => {
-                setAges(e.target.value);
-                // setAges(new Array(e.target.value));
+                setAdults(e.target.value);
               }}
             />
           </Grid>

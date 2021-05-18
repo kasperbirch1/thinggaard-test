@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import React from "react";
-import { useStyles } from "../styles";
+import { useStyles } from "../../styles";
 
 const DestinationsSelect = ({ list, onChange, value }) => {
   const classes = useStyles();

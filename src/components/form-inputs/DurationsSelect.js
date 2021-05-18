@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import { useStyles } from "../styles";
+import { useStyles } from "../../styles";
 
 const DurationsSelect = ({
   destinationId,
