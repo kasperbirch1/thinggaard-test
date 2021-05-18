@@ -87,6 +87,10 @@ const Home = () => {
           adults
         )}&duration=${duration}&date=${date}&transport=${transport}&token=${apiAuthentication}`
       );
+      console.log(
+        "🚀 ~ file: Home.js ~ line 90 ~ handleSubmit ~ data",
+        data.result
+      );
       setTrips(data.result);
     } catch (error) {}
   };
@@ -94,78 +98,73 @@ const Home = () => {
   return (
     <>
       {destinations && (
-        <Grid
-          component="form"
-          container
-          spacing={MinWidth600 ? 0 : 1}
-          style={{ paddingRight: "15px" }}
-        >
-          <Grid item xs={12} md={2}>
-            <DestinationsSelect
-              list={destinations.destinations}
-              value={destinationId}
-              onChange={setdestinationId}
-            />
-          </Grid>
-          <Grid item xs={12} md={2}>
-            <DurationsSelect
-              apiAuthentication={apiAuthentication}
-              destinationId={destinationId}
-              value={duration}
-              onChange={setDuration}
-            />
-          </Grid>
+        <form className="p-2 grid md:grid-cols-3 gap-3">
+          <DestinationsSelect
+            list={destinations.destinations}
+            value={destinationId}
+            onChange={setdestinationId}
+          />
 
-          <Grid item xs={12} md={2}>
-            <DatesSelect
-              apiAuthentication={apiAuthentication}
-              destinationId={destinationId}
-              value={date}
-              onChange={setDate}
-            />
-          </Grid>
-          <Grid item xs={12} md={2}>
-            <TransportsSelect
-              destinationId={destinationId}
-              duration={duration}
-              apiAuthentication={apiAuthentication}
-              value={transport}
-              onChange={setTransport}
-            />
-          </Grid>
-          <Grid item xs={12} md={2}>
-            <TextField
-              label="antal voksne"
-              type="number"
-              variant="outlined"
-              className={classes.formControl}
-              value={adults}
-              onChange={(e) => {
-                setAdults(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={2}>
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              onClick={handleSubmit}
-            >
-              fetchTrips
-            </Button>
-          </Grid>
-        </Grid>
+          <DurationsSelect
+            apiAuthentication={apiAuthentication}
+            destinationId={destinationId}
+            value={duration}
+            onChange={setDuration}
+          />
+
+          <TransportsSelect
+            destinationId={destinationId}
+            duration={duration}
+            apiAuthentication={apiAuthentication}
+            value={transport}
+            onChange={setTransport}
+          />
+
+          <TextField
+            label="antal voksne"
+            type="number"
+            variant="outlined"
+            className={classes.formControl}
+            value={adults}
+            onChange={(e) => {
+              setAdults(e.target.value);
+            }}
+          />
+
+          <DatesSelect
+            apiAuthentication={apiAuthentication}
+            destinationId={destinationId}
+            value={date}
+            onChange={setDate}
+          />
+
+          <Button
+            fullWidth
+            type="submit"
+            variant="outlined"
+            onClick={handleSubmit}
+          >
+            Find Rejse
+          </Button>
+        </form>
       )}
 
-      {trips ? (
+      {trips && (
         <Link to="/hotel/details" className="p-4 flex flex-col space-y-6 ">
           {trips.map((trip) => (
             <Trip key={trip.accomodation_code} trip={trip} />
           ))}
         </Link>
-      ) : (
-        <>Ingen hotel fundet</>
+      )}
+
+      {trips === undefined && (
+        <div className="m-4 p-3 text-center shadow">
+          <p className="font-bold">Vi kunne desværre ikke finde din rejse</p>
+          <p className="italic">Tjek om din søgning er korrekt</p>
+          <p className="">
+            Eller kontakt os på <a href="tel:70100010">70 10 00 10</a>
+          </p>
+        </div>
       )}
     </>
   );
