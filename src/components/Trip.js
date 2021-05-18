@@ -10,35 +10,52 @@ const Trip = ({ trip }) => {
     post,
   } = trip;
 
+  if (!post) {
+    return null;
+  }
+
   return (
-    <>
+    <div className="shadow md:flex">
       <div
+        className="w-full md:w-5/12 h-52 min-h-full bg-cover bg-center md:h-auto"
         style={{
-          display: "grid",
-          gridTemplateColumns: " 1fr 2fr",
-          margin: "1.5rem 1rem",
+          backgroundImage: `url(${post.images?.full[0]})`,
         }}
-      >
-        <div>
-          <h2>{destination_name}</h2>
-          <p>{room_description}</p>
-          <span>{`Pris: ${minimum_price} kr.`}</span>
-          <p>Rejselængde: {travel_length}</p>
-          <p>Hjemrejse: {return_date}</p>
-        </div>
-        {post?.images && (
+      />
+      <div className="p-3 md:w-7/12">
+        <h2 className="mb-2 text-themeColor font-semibold text-xl">
+          {post?.post_title},
+          <span className="ml-2 text-gray-500 font-normal text-sm">
+            {destination_name}
+          </span>
+        </h2>
+
+        <p>{room_description}</p>
+
+        {post?.meta?.hotel_beskrivelse && (
           <div
-            style={{
-              height: "auto",
-              width: "100%",
-              backgroundImage: `url(${post.images.full[0]})`,
-              backgroundPosition: "center",
+            className="hotel_beskrivelse"
+            dangerouslySetInnerHTML={{
+              __html: post?.meta?.hotel_beskrivelse,
             }}
-          />
+          ></div>
         )}
+
+        {/* {post?.meta?.hotel_fakta && (
+          <div
+            className="hotel_fakta"
+            dangerouslySetInnerHTML={{
+              __html: post?.meta?.hotel_fakta,
+            }}
+          ></div>
+        )} */}
+
+        <p>Rejselængde: {travel_length}</p>
+        <p>Hjemrejse: {return_date}</p>
+        <p className="text-red-500 font-black text-right">{`Pris: ${minimum_price} kr.`}</p>
+        {/* <pre>{JSON.stringify(trip, null, 2)}</pre> */}
       </div>
-      <pre>{JSON.stringify(trip, null, 2)}</pre>
-    </>
+    </div>
   );
 };
 

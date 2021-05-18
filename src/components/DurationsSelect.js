@@ -22,7 +22,7 @@ const DurationsSelect = ({
       if (apiAuthentication) {
         try {
           const { data } = await axios.get(
-            `https://thinggaard.dk/wp-json/thinggaard/v1/durations?destination_id=${destinationId}&token=${apiAuthentication}`,
+            `https://thinggaard.dk/wp-json/thinggaard/v1/durations?destination_id=${destinationId.code}&token=${apiAuthentication}`,
             {
               cancelToken: source.token,
             }

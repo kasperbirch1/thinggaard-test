@@ -21,7 +21,7 @@ const DestinationsSelect = ({ list, onChange, value }) => {
         </MenuItem>
         {list.map((item) => {
           return (
-            <MenuItem key={item.id} value={item.code}>
+            <MenuItem key={item.id} value={item}>
               {item.name}
             </MenuItem>
           );

@@ -5,6 +5,7 @@ import { useStyles } from "../styles";
 
 const TransportsSelect = ({
   destinationId,
+  duration,
   apiAuthentication,
   onChange,
   value,
@@ -21,7 +22,7 @@ const TransportsSelect = ({
       if (apiAuthentication) {
         try {
           const { data } = await axios.get(
-            `https://thinggaard.dk/wp-json/thinggaard/v1/transports?destination_id=${destinationId}&transport=${"0"}&token=${apiAuthentication}`,
+            `https://thinggaard.dk/wp-json/thinggaard/v1/transports?destination_id=${destinationId.id}&token=${apiAuthentication}&duration_from=${duration}&duration_to=${duration}`,
             {
               cancelToken: source.token,
             }
