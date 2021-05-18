@@ -98,7 +98,7 @@ const Home = () => {
   return (
     <>
       {destinations && (
-        <form className="p-2 grid md:grid-cols-3 gap-3">
+        <form onSubmit={handleSubmit} className="p-2 grid md:grid-cols-3 gap-3">
           <DestinationsSelect
             list={destinations.destinations}
             value={destinationId}
@@ -138,12 +138,7 @@ const Home = () => {
             onChange={setDate}
           />
 
-          <Button
-            fullWidth
-            type="submit"
-            variant="outlined"
-            onClick={handleSubmit}
-          >
+          <Button fullWidth type="submit" variant="outlined">
             Find Rejse
           </Button>
         </form>
