@@ -116,7 +116,7 @@ const GlobalState = (props) => {
   const fetchDates = async (source) => {
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/dates?destination_id=${state.currentDestination.code}&token=${state.token}`,
+        `https://thinggaard.dk/wp-json/thinggaard/v1/dates?destination_id=${state.currentDestination?.code}&token=${state.token}`,
         {
           cancelToken: source.token,
         }
@@ -144,12 +144,16 @@ const GlobalState = (props) => {
     try {
       const { data } = await axios.get(
         `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${
-          state.currentDestinatio.code
+          state.currentDestination.code
         }&ages=${countAdults(state.adults)}&duration=${
           state.currentDuration
         }&date=${state.currentDate}&transport=${state.currentTransport}&token=${
           state.token
         }}`
+      );
+      console.log(
+        "🚀 ~ file: GlobalState.js ~ line 155 ~ handleSubmit ~ data",
+        data
       );
       dispatch({
         type: SET_TRIPS,
@@ -184,7 +188,10 @@ const GlobalState = (props) => {
   useEffect(() => {
     let source = axios.CancelToken.source();
     fetchDurations(source);
-    fetchDates(source);
+
+    if (state.token) {
+      fetchDates(source);
+    }
 
     if (state.currentDuration) {
       fetchTransports(source);

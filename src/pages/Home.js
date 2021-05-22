@@ -11,7 +11,6 @@ import { SET_ADULTS } from "../context/types";
 
 const Home = () => {
   const classes = useStyles();
-
   const { destinations, handleSubmit, adults, dispatch, trips } =
     useContext(globalContext);
 
@@ -35,7 +34,6 @@ const Home = () => {
               });
             }}
           />
-
           <DatesSelect />
           <Button fullWidth type="submit" variant="outlined">
             Find Rejse
