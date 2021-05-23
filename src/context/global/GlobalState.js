@@ -32,8 +32,8 @@ const GlobalState = (props) => {
     dates: [new Date()],
     currentDate: null,
     trips: null,
-    currentTrip: null,
-    currentCombinations: null,
+    currentTrip: {},
+    currentCombinations: [],
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);
@@ -157,10 +157,6 @@ const GlobalState = (props) => {
         type: SET_CURRENT_COMBINATIONS,
         payload: data.result,
       });
-      console.log(
-        "🚀 ~ file: GlobalState.js ~ line 148 ~ fetchCombinations ~ data",
-        data
-      );
     } catch (error) {
       console.log(error);
     }

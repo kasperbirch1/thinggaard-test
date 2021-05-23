@@ -5,8 +5,10 @@ import CarouselComponent from "../components/CarouselComponent";
 import HotelRating from "../components/HotelRating";
 import HotelReviews from "../components/HotelReviews";
 import globalContext from "../context/global/globalContext";
+import { useHistory } from "react-router-dom";
 
 const Details = () => {
+  const history = useHistory();
   let { currentAccomodationCode, currentPeriodId } = useParams();
   const { currentTrip, fetchCombinations, currentCombinations } =
     useContext(globalContext);
@@ -19,25 +21,19 @@ const Details = () => {
     accommodation_checkin,
     accommodation_checkout,
   } = currentTrip;
-  console.log(
-    "🚀 ~ file: Details.js ~ line 24 ~ Details ~ currentTrip",
-    currentTrip
-  );
 
   useEffect(() => {
-    if (currentAccomodationCode && currentPeriodId) {
-      let source = axios.CancelToken.source();
-      fetchCombinations(source, currentAccomodationCode, currentPeriodId);
-      return () => {
-        source.cancel();
-      };
-    }
+    let source = axios.CancelToken.source();
+    fetchCombinations(source, currentAccomodationCode, currentPeriodId);
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   return (
     <>
       <div className="relative">
-        <CarouselComponent images={post.meta.gallery_settings} DetailsPage />
+        <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
         <div className="absolute top-4 right-10 h-32 w-32 rounded-full bg-themeColor grid place-content-center text-center text-sm">
           BOOK TIDLIG 2.000,
         </div>
@@ -62,6 +58,7 @@ const Details = () => {
         </h2>
 
         <HotelReviews />
+        <HotelRating />
 
         <div className="my-4 md:flex">
           {post?.meta?.hotel_beskrivelse && (
@@ -74,9 +71,8 @@ const Details = () => {
           )}
           {post?.meta?.hotel_fakta && (
             <div className="mt-4 md:my-0 hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow">
-              <HotelRating />
               <div
-                className="border-t border-black pt-2"
+                className="pt-2"
                 dangerouslySetInnerHTML={{
                   __html: post?.meta?.hotel_fakta,
                 }}
@@ -98,7 +94,7 @@ const Details = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentCombinations.map((combination, index) => (
+                {currentCombinations?.map((combination, index) => (
                   <tr
                     key={index}
                     onClick={() => alert(combination.rooms.rooms_description)}
