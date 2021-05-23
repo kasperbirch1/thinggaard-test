@@ -40,7 +40,7 @@ const Details = () => {
           BOOK TIDLIG 2.000,
         </div>
 
-        <div className="p-4 bg-gray-200 md:absolute md:right-10 md:bottom-24 md:rounded text-center md:text-left">
+        <div className="p-4 bg-gray-100 md:absolute md:right-10 md:bottom-24 md:rounded text-center md:text-left">
           <div className="font-black line-through	">
             DKK <span className="">{minimum_price}-</span>
           </div>
@@ -50,38 +50,7 @@ const Details = () => {
           <div className="">Vælg værelser og bestil</div>
         </div>
       </div>
-      {currentCombinations && (
-        <div className="m-2 bg-gray-200 p-4">
-          <table class="table-fixed">
-            <thead>
-              <tr className="text-left text-sm md:text-base">
-                <th class="p-1 w-6/12 md:w-8/12">Værelser</th>
-                <th class="p-1 w-4/12 md:w-2/12">Rejseinfo</th>
-                <th class="p-1 w-2/12 md:w-2/12 text-center">pris</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentCombinations.map((combination) => (
-                <tr
-                  onClick={() => alert(combination.rooms.rooms_description)}
-                  className="text-sm cursor-pointer"
-                >
-                  <td className="p-1">{combination.rooms.rooms_description}</td>
-                  <td className="p-1 ">
-                    {combination.transport_code_name} <br />
-                    {combination.current_week.departure_date}
-                    <br />
-                    {combination.current_week.display_days} dage
-                  </td>
-                  <td className="p-1 text-center font-semibold">
-                    {combination.current_week.price}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+
       <div className="p-3">
         <h2 className="mb-2 text-themeColor font-semibold text-xl">
           {post?.post_title},
@@ -92,6 +61,41 @@ const Details = () => {
         <p>{room_description}</p>
         <HotelRating />
         <HotelReviews />
+
+        {currentCombinations && (
+          <div className=" bg-gray-100 p-2 shadow">
+            <table class="table-fixed">
+              <thead>
+                <tr className="text-left text-sm md:text-base">
+                  <th class="py-1 pr-1 w-6/12 md:w-8/12">Værelser</th>
+                  <th class="py-1 pr-1 w-4/12 md:w-2/12">Rejseinfo</th>
+                  <th class="py-1 pr-1 w-2/12 md:w-2/12 text-center">pris</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentCombinations.map((combination) => (
+                  <tr
+                    onClick={() => alert(combination.rooms.rooms_description)}
+                    className="text-sm cursor-pointer"
+                  >
+                    <td className="py-1 pr-1">
+                      {combination.rooms.rooms_description}
+                    </td>
+                    <td className="py-1 pr-1 ">
+                      {combination.transport_code_name} <br />
+                      {combination.current_week.departure_date}
+                      <br />
+                      {combination.current_week.display_days} dage
+                    </td>
+                    <td className="py-1 pr-1 text-center font-semibold">
+                      {combination.current_week.price}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="my-4 pb-4 border-b  border-black md:flex">
           {post?.meta?.hotel_beskrivelse && (
@@ -104,7 +108,7 @@ const Details = () => {
           )}
           {post?.meta?.hotel_fakta && (
             <div
-              className="hotel_fakta md:w-4/12 bg-gray-200 p-4"
+              className="hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow"
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_fakta,
               }}
