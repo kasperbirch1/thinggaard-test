@@ -62,7 +62,7 @@ const Details = () => {
         <HotelRating />
         <HotelReviews />
 
-        <div className="my-4 pb-4 md:flex">
+        <div className="my-4 md:flex">
           {post?.meta?.hotel_beskrivelse && (
             <div
               className="hotel_beskrivelse md:w-8/12 md:pr-3"
@@ -73,7 +73,7 @@ const Details = () => {
           )}
           {post?.meta?.hotel_fakta && (
             <div
-              className="hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow"
+              className="mt-4 md:my-0 hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow"
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_fakta,
               }}
@@ -82,7 +82,7 @@ const Details = () => {
         </div>
 
         {currentCombinations && (
-          <div className=" bg-gray-100 p-2 shadow">
+          <div className="mb-4 md:my-0 bg-gray-100 p-2 shadow">
             <table class="table-fixed w-full">
               <thead>
                 <tr className="text-left text-sm md:text-base">
