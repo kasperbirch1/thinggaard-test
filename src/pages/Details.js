@@ -82,7 +82,7 @@ const Details = () => {
         </div>
 
         {currentCombinations && (
-          <div className="mb-4 md:my-0 bg-gray-100 p-2 shadow">
+          <div className="mb-4 bg-gray-100 p-2 shadow">
             <table class="table-fixed w-full">
               <thead>
                 <tr className="text-left text-sm md:text-base">
