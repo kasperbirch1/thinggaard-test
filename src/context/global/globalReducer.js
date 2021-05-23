@@ -14,6 +14,7 @@ import {
   SET_CURRENT_DATE,
   SET_TRIPS,
   SET_CURRENT_TRIP,
+  SET_CURRENT_COMBINATIONS,
 } from "../types";
 
 const globalReducer = (state, action) => {
@@ -96,6 +97,11 @@ const globalReducer = (state, action) => {
       return {
         ...state,
         currentTrip: action.payload,
+      };
+    case SET_CURRENT_COMBINATIONS:
+      return {
+        ...state,
+        currentCombinations: action.payload,
       };
     default:
       return state;

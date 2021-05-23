@@ -8,7 +8,8 @@ import globalContext from "../context/global/globalContext";
 
 const Details = () => {
   let { currentAccomodationCode, currentPeriodId } = useParams();
-  const { currentTrip, fetchCombinations } = useContext(globalContext);
+  const { currentTrip, fetchCombinations, currentCombinations } =
+    useContext(globalContext);
 
   const {
     destination_name,
@@ -35,20 +36,58 @@ const Details = () => {
     <>
       <div className="relative">
         <CarouselComponent images={post.meta.gallery_settings} DetailsPage />
-        <div className="absolute top-4 right-4 h-32 w-32 rounded-full bg-themeColor grid place-content-center text-center text-sm">
-          BOOK TIDLIG2.000,
+        <div className="absolute top-4 right-10 h-32 w-32 rounded-full bg-themeColor grid place-content-center text-center text-sm">
+          BOOK TIDLIG 2.000,
         </div>
 
-        <div className="p-4 bg-gray-200 md:absolute md:right-4 md:bottom-24 md:rounded text-center md:text-left">
+        <div className="p-4 bg-gray-200 md:absolute md:right-10 md:bottom-24 md:rounded text-center md:text-left">
           <div className="font-black line-through	">
-            DKK <span className="">23.792,-</span>
+            DKK <span className="">{minimum_price}-</span>
           </div>
           <div className="font-black">
-            DKK <span className="">21.792,-</span>
+            DKK <span className="">{minimum_price}-</span>
           </div>
           <div className="">Vælg værelser og bestil</div>
         </div>
       </div>
+      {currentCombinations && (
+        <>
+          <h2>Combinations:</h2>
+
+          <table class="mx-2 table-fixed">
+            <thead>
+              <tr>
+                <th class="w-1/4 ...">Værelser</th>
+                <th class="w-1/4 ...">Varighed</th>
+                <th class="w-1/4 ...">Dato</th>
+                <th class="w-1/4 ...">transport</th>
+                <th class="w-1/4 ...">pris</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentCombinations.map((combination) => (
+                <tr className="">
+                  <td className="py-2 text-center">
+                    {combination.rooms.rooms_description}
+                  </td>
+                  <td className="py-2 text-center">
+                    {combination.current_week.display_days}
+                  </td>
+                  <td className="py-2 text-center">
+                    {combination.current_week.departure_date}
+                  </td>
+                  <td className="py-2 text-center">
+                    {combination.transport_code_name}
+                  </td>
+                  <td className="py-2 text-center">
+                    {combination.current_week.price}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
       <div className="p-3">
         <h2 className="mb-2 text-themeColor font-semibold text-xl">
           {post?.post_title},

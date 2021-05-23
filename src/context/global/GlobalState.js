@@ -12,6 +12,7 @@ import {
   SET_DATES,
   SET_TRIPS,
   SET_CURRENT_DATE,
+  SET_CURRENT_COMBINATIONS,
 } from "../types";
 import axios from "axios";
 
@@ -32,6 +33,7 @@ const GlobalState = (props) => {
     currentDate: null,
     trips: null,
     currentTrip: null,
+    currentCombinations: null,
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);
@@ -150,6 +152,11 @@ const GlobalState = (props) => {
           cancelToken: source.token,
         }
       );
+
+      dispatch({
+        type: SET_CURRENT_COMBINATIONS,
+        payload: data.result,
+      });
       console.log(
         "🚀 ~ file: GlobalState.js ~ line 148 ~ fetchCombinations ~ data",
         data
@@ -251,6 +258,7 @@ const GlobalState = (props) => {
         currentDate: state.currentDate,
         trips: state.trips,
         currentTrip: state.currentTrip,
+        currentCombinations: state.currentCombinations,
         dispatch,
         handleSubmit,
         fetchCombinations,
