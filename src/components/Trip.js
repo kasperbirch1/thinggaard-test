@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 import CarouselComponent from "./CarouselComponent";
+import { SET_CURRENT_TRIP } from "../context/types";
+import globalContext from "../context/global/globalContext";
 
 const Trip = ({ trip }) => {
+  const { dispatch } = useContext(globalContext);
   const {
     destination_name,
     return_date,
@@ -10,6 +13,8 @@ const Trip = ({ trip }) => {
     room_description,
     minimum_price,
     post,
+    accomodation_code,
+    period_id,
   } = trip;
 
   if (!post) {
@@ -19,7 +24,16 @@ const Trip = ({ trip }) => {
   return (
     <div className="m-4 shadow  md:flex">
       <CarouselComponent images={post.meta.gallery_settings} />
-      <Link to="/hotel/details" className="block md:w-7/12">
+      <Link
+        onClick={() =>
+          dispatch({
+            type: SET_CURRENT_TRIP,
+            payload: trip,
+          })
+        }
+        to={`hotel/${accomodation_code}/${period_id}`}
+        className="block md:w-7/12"
+      >
         <div div className="p-3 ">
           <h2 className="mb-2 text-themeColor font-semibold text-xl">
             {post?.post_title},
@@ -32,30 +46,12 @@ const Trip = ({ trip }) => {
 
           {post?.meta?.hotel_beskrivelse && (
             <div
-              className="hotel_beskrivelse"
+              className="hotel_beskrivelse--reduceret"
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_beskrivelse,
               }}
             ></div>
           )}
-
-          {/* {post?.meta?.hotel_beliggenhed && (
-          <div
-            className="hotel_beliggenhed"
-            dangerouslySetInnerHTML={{
-              __html: post?.meta?.hotel_beliggenhed,
-            }}
-          ></div>
-        )} */}
-
-          {/* {post?.meta?.hotel_fakta && (
-          <div
-            className="hotel_fakta"
-            dangerouslySetInnerHTML={{
-              __html: post?.meta?.hotel_fakta,
-            }}
-          ></div>
-        )} */}
 
           <div className="flex justify-between">
             <div>

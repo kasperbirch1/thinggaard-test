@@ -7,13 +7,19 @@
     @apply leading-tight;
     @apply mb-4;
   }
-  .hotel_beskrivelse > * {
+  .hotel_beskrivelse--reduceret > * {
     @apply hidden;
   }
 
-  .hotel_beskrivelse p:first-of-type {
+  .hotel_beskrivelse--reduceret p:first-of-type {
     @apply block;
     @apply line-clamp-5;
+  }
+
+  .hotel_beskrivelse,
+  .hotel_beliggenhed,
+  .hotel_fakta {
+    @apply space-y-4;
   }
 
   iframe {

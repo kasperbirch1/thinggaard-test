@@ -12,3 +12,4 @@ export const SET_ADULTS = "SET_ADULTS";
 export const SET_DATES = "SET_DATES";
 export const SET_CURRENT_DATE = "SET_CURRENT_DATE";
 export const SET_TRIPS = "SET_TRIPS";
+export const SET_CURRENT_TRIP = "SET_CURRENT_TRIP";

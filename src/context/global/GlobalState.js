@@ -11,6 +11,7 @@ import {
   SET_TRANSPORTS,
   SET_DATES,
   SET_TRIPS,
+  SET_CURRENT_DATE,
 } from "../types";
 import axios from "axios";
 
@@ -30,6 +31,7 @@ const GlobalState = (props) => {
     dates: [new Date()],
     currentDate: null,
     trips: null,
+    currentTrip: null,
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);
@@ -130,6 +132,33 @@ const GlobalState = (props) => {
     }
   };
 
+  const fetchCombinations = async (
+    source,
+    currentAccomodationCode,
+    currentPeriodId
+  ) => {
+    try {
+      const { data } = await axios.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips/combinations?&ages=${countAdults(
+          state.adults
+        )}&duration=${state.currentDuration}&date=${
+          state.currentDate
+        }&transport=${state.currentTransport}&token=${
+          state.token
+        }&accomodation_code=${currentAccomodationCode}&period_id=${currentPeriodId}`,
+        {
+          cancelToken: source.token,
+        }
+      );
+      console.log(
+        "🚀 ~ file: GlobalState.js ~ line 148 ~ fetchCombinations ~ data",
+        data
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const countAdults = (number) => {
     let countAdults = [];
     for (let i = 0; i < state.adults; i++) {
@@ -149,12 +178,9 @@ const GlobalState = (props) => {
           state.currentDuration
         }&date=${state.currentDate}&transport=${state.currentTransport}&token=${
           state.token
-        }}`
+        }`
       );
-      console.log(
-        "🚀 ~ file: GlobalState.js ~ line 155 ~ handleSubmit ~ data",
-        data
-      );
+
       dispatch({
         type: SET_TRIPS,
         payload: data.result,
@@ -187,6 +213,11 @@ const GlobalState = (props) => {
 
   useEffect(() => {
     let source = axios.CancelToken.source();
+
+    dispatch({
+      type: SET_CURRENT_DATE,
+      payload: null,
+    });
     fetchDurations(source);
 
     if (state.token) {
@@ -219,8 +250,10 @@ const GlobalState = (props) => {
         dates: state.dates,
         currentDate: state.currentDate,
         trips: state.trips,
+        currentTrip: state.currentTrip,
         dispatch,
         handleSubmit,
+        fetchCombinations,
       }}
     >
       {props.children}
