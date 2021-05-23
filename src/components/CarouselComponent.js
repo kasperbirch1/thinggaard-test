@@ -20,9 +20,7 @@ const CarouselComponent = ({ images, DetailsPage }) => {
         >
           {images?.map((img) => (
             <div
-              className={`w-full bg-cover bg-center ${
-                DetailsPage ? "h-64 md:h-80" : "h-52 md:h-64"
-              }`}
+              className={`bg-cover bg-center h-52 md:h-64`}
               style={{
                 backgroundImage: `url(${img.url})`,
               }}
