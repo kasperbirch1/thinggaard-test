@@ -62,9 +62,28 @@ const Details = () => {
         <HotelRating />
         <HotelReviews />
 
+        <div className="my-4 pb-4 md:flex">
+          {post?.meta?.hotel_beskrivelse && (
+            <div
+              className="hotel_beskrivelse md:w-8/12 md:pr-3"
+              dangerouslySetInnerHTML={{
+                __html: post?.meta?.hotel_beskrivelse,
+              }}
+            />
+          )}
+          {post?.meta?.hotel_fakta && (
+            <div
+              className="hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow"
+              dangerouslySetInnerHTML={{
+                __html: post?.meta?.hotel_fakta,
+              }}
+            />
+          )}
+        </div>
+
         {currentCombinations && (
           <div className=" bg-gray-100 p-2 shadow">
-            <table class="table-fixed">
+            <table class="table-fixed w-full">
               <thead>
                 <tr className="text-left text-sm md:text-base">
                   <th class="py-1 pr-1 w-6/12 md:w-8/12">Værelser</th>
@@ -96,25 +115,6 @@ const Details = () => {
             </table>
           </div>
         )}
-
-        <div className="my-4 pb-4 border-b  border-black md:flex">
-          {post?.meta?.hotel_beskrivelse && (
-            <div
-              className="hotel_beskrivelse md:w-8/12 md:pr-3"
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_beskrivelse,
-              }}
-            />
-          )}
-          {post?.meta?.hotel_fakta && (
-            <div
-              className="hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow"
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_fakta,
-              }}
-            />
-          )}
-        </div>
 
         {post?.meta?.hotel_beliggenhed && (
           <div

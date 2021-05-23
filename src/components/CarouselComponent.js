@@ -6,23 +6,16 @@ const CarouselComponent = ({ images, DetailsPage }) => {
   return (
     <>
       {DetailsPage ? (
-        <Carousel
-          className={` md:min-h-full w-full}`}
-          showIndicators={DetailsPage ? true : false}
-          showThumbs={DetailsPage ? true : false}
-          autoPlay={false}
-        >
+        <Carousel autoPlay={false}>
           {images?.map((img) => (
-            <div className={`w-full bg-cover bg-center max-h-96`}>
-              <img src={img.url} loading="lazy" />
-            </div>
+            <img src={img.url} loading="lazy" />
           ))}
         </Carousel>
       ) : (
         <Carousel
           className={`md:min-h-full md:w-5/12`}
-          showIndicators={DetailsPage ? true : false}
-          showThumbs={DetailsPage ? true : false}
+          showIndicators={false}
+          showThumbs={false}
           autoPlay={false}
         >
           {images?.map((img) => (
@@ -33,7 +26,7 @@ const CarouselComponent = ({ images, DetailsPage }) => {
               style={{
                 backgroundImage: `url(${img.url})`,
               }}
-            ></div>
+            />
           ))}
         </Carousel>
       )}
