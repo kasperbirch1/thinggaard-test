@@ -6,9 +6,14 @@ const CarouselComponent = ({ images, DetailsPage }) => {
   return (
     <>
       {DetailsPage ? (
-        <Carousel autoPlay={false}>
-          {images?.map((img) => (
-            <img src={img.url} loading="lazy" />
+        <Carousel autoPlay={false} dynamicHeight={true}>
+          {images?.map((img, index) => (
+            <img
+              key={index}
+              src={img.url}
+              loading="lazy"
+              alt="CarouselComponent"
+            />
           ))}
         </Carousel>
       ) : (
@@ -18,8 +23,9 @@ const CarouselComponent = ({ images, DetailsPage }) => {
           showThumbs={false}
           autoPlay={false}
         >
-          {images?.map((img) => (
+          {images?.map((img, index) => (
             <div
+              key={index}
               className={`bg-cover bg-center h-52 md:h-64`}
               style={{
                 backgroundImage: `url(${img.url})`,

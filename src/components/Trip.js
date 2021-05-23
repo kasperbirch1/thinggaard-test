@@ -22,7 +22,7 @@ const Trip = ({ trip }) => {
   }
 
   return (
-    <div className="m-4 shadow  md:flex">
+    <div className="m-4 shadow md:flex">
       <CarouselComponent images={post.meta.gallery_settings} />
       <Link
         onClick={() =>
@@ -34,7 +34,7 @@ const Trip = ({ trip }) => {
         to={`hotel/${accomodation_code}/${period_id}`}
         className="block md:w-7/12"
       >
-        <div div className="p-3 ">
+        <div className="p-3 ">
           <h2 className="mb-2 text-themeColor font-semibold text-xl">
             {post?.post_title},
             <span className="ml-2 text-gray-500 font-normal text-sm">

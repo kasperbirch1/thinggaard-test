@@ -13,14 +13,16 @@ const Details = () => {
 
   const {
     destination_name,
-    return_date,
     travel_length,
-    room_description,
     minimum_price,
     post,
-    accomodation_code,
-    period_id,
+    accommodation_checkin,
+    accommodation_checkout,
   } = currentTrip;
+  console.log(
+    "🚀 ~ file: Details.js ~ line 24 ~ Details ~ currentTrip",
+    currentTrip
+  );
 
   useEffect(() => {
     if (currentAccomodationCode && currentPeriodId) {
@@ -40,7 +42,7 @@ const Details = () => {
           BOOK TIDLIG 2.000,
         </div>
 
-        <div className="p-4 bg-gray-100 md:absolute md:right-10 md:bottom-24 md:rounded text-center md:text-left">
+        <div className="p-4 bg-gray-100 md:absolute md:right-10 md:bottom-20 md: md:rounded text-center md:text-left">
           <div className="font-black line-through	">
             DKK <span className="">{minimum_price}-</span>
           </div>
@@ -58,8 +60,7 @@ const Details = () => {
             {destination_name}
           </span>
         </h2>
-        <p>{room_description}</p>
-        <HotelRating />
+
         <HotelReviews />
 
         <div className="my-4 md:flex">
@@ -72,28 +73,34 @@ const Details = () => {
             />
           )}
           {post?.meta?.hotel_fakta && (
-            <div
-              className="mt-4 md:my-0 hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow"
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_fakta,
-              }}
-            />
+            <div className="mt-4 md:my-0 hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow">
+              <HotelRating />
+              <div
+                className="border-t border-black pt-2"
+                dangerouslySetInnerHTML={{
+                  __html: post?.meta?.hotel_fakta,
+                }}
+              />
+            </div>
           )}
         </div>
 
         {currentCombinations && (
           <div className="mb-4 bg-gray-100 p-2 shadow">
-            <table class="table-fixed w-full">
+            <table className="table-fixed w-full">
               <thead>
                 <tr className="text-left text-sm md:text-base">
-                  <th class="py-1 pr-1 w-6/12 md:w-8/12">Værelser</th>
-                  <th class="py-1 pr-1 w-4/12 md:w-2/12">Rejseinfo</th>
-                  <th class="py-1 pr-1 w-2/12 md:w-2/12 text-center">pris</th>
+                  <th className="py-1 pr-1 w-6/12 md:w-8/12">Værelser</th>
+                  <th className="py-1 pr-1 w-4/12 md:w-2/12">Rejseinfo</th>
+                  <th className="py-1 pr-1 w-2/12 md:w-2/12 text-center">
+                    pris
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {currentCombinations.map((combination) => (
+                {currentCombinations.map((combination, index) => (
                   <tr
+                    key={index}
                     onClick={() => alert(combination.rooms.rooms_description)}
                     className="text-sm cursor-pointer"
                   >

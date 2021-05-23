@@ -18,12 +18,12 @@ import axios from "axios";
 
 const GlobalState = (props) => {
   const initialState = {
-    token: null,
+    token: "",
     loading: false,
     destinations: [],
-    allDurations: null,
+    allDurations: [],
     countries: null,
-    currentDestination: null,
+    currentDestination: "",
     durations: null,
     currentDuration: "",
     transports: null,
