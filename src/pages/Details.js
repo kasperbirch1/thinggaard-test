@@ -51,42 +51,36 @@ const Details = () => {
         </div>
       </div>
       {currentCombinations && (
-        <>
-          <h2>Combinations:</h2>
-
-          <table class="mx-2 table-fixed">
+        <div className="m-2 bg-gray-200 p-4">
+          <table class="table-fixed">
             <thead>
-              <tr>
-                <th class="w-1/4 ...">Værelser</th>
-                <th class="w-1/4 ...">Varighed</th>
-                <th class="w-1/4 ...">Dato</th>
-                <th class="w-1/4 ...">transport</th>
-                <th class="w-1/4 ...">pris</th>
+              <tr className="text-left text-sm md:text-base">
+                <th class="p-1 w-6/12 md:w-8/12">Værelser</th>
+                <th class="p-1 w-4/12 md:w-2/12">Rejseinfo</th>
+                <th class="p-1 w-2/12 md:w-2/12 text-center">pris</th>
               </tr>
             </thead>
             <tbody>
               {currentCombinations.map((combination) => (
-                <tr className="">
-                  <td className="py-2 text-center">
-                    {combination.rooms.rooms_description}
-                  </td>
-                  <td className="py-2 text-center">
-                    {combination.current_week.display_days}
-                  </td>
-                  <td className="py-2 text-center">
+                <tr
+                  onClick={() => alert(combination.rooms.rooms_description)}
+                  className="text-sm cursor-pointer"
+                >
+                  <td className="p-1">{combination.rooms.rooms_description}</td>
+                  <td className="p-1 ">
+                    {combination.transport_code_name} <br />
                     {combination.current_week.departure_date}
+                    <br />
+                    {combination.current_week.display_days} dage
                   </td>
-                  <td className="py-2 text-center">
-                    {combination.transport_code_name}
-                  </td>
-                  <td className="py-2 text-center">
+                  <td className="p-1 text-center font-semibold">
                     {combination.current_week.price}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       )}
       <div className="p-3">
         <h2 className="mb-2 text-themeColor font-semibold text-xl">
