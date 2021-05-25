@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <>
+    <main className="max-w-screen-lg mx-auto">
       <Router>
         <Switch>
           <Route exact path="/">
@@ -15,7 +15,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </>
+    </main>
   );
 };
 

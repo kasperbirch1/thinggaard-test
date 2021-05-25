@@ -1,22 +1,14 @@
 import React from "react";
+import { StarIcon } from "@heroicons/react/solid";
 
-const HotelRating = () => {
-  const startCount = 3;
-  var stars = [];
-  for (var i = 0; i < startCount; i++) {
-    stars.push("");
-  }
-
+const HotelRating = ({ rating }) => {
   return (
-    <div className="hotel-rating">
-      Halvpension
-      {stars.map((element, index) => {
-        return (
-          <span key={index} className="">
-            *
-          </span>
-        );
-      })}
+    <div className="flex items-end">
+      {Array(rating)
+        .fill()
+        .map((_, i) => (
+          <StarIcon key={i} className="h-5 text-yellow-500" />
+        ))}
     </div>
   );
 };

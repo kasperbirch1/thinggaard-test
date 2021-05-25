@@ -3,6 +3,9 @@ import React, { useContext } from "react";
 import CarouselComponent from "./CarouselComponent";
 import { SET_CURRENT_TRIP } from "../context/types";
 import globalContext from "../context/global/globalContext";
+import HotelRating from "./HotelRating";
+import HotelReviews from "./HotelReviews";
+import format from "date-fns/format";
 
 const Trip = ({ trip }) => {
   const { dispatch } = useContext(globalContext);
@@ -22,7 +25,7 @@ const Trip = ({ trip }) => {
   }
 
   return (
-    <div className="m-4 shadow md:flex">
+    <div className="relative m-4 shadow md:flex">
       <CarouselComponent images={post.meta.gallery_settings} />
       <Link
         onClick={() =>
@@ -35,6 +38,7 @@ const Trip = ({ trip }) => {
         className="block md:w-7/12"
       >
         <div className="p-3 ">
+          <HotelRating rating={4} />
           <h2 className="mb-2 text-themeColor font-semibold text-xl">
             {post?.post_title},
             <span className="ml-2 text-gray-500 font-normal text-sm">
@@ -53,9 +57,13 @@ const Trip = ({ trip }) => {
             ></div>
           )}
 
+          <div className="m-3 md:absolute md:top-0 md:right-0">
+            <HotelReviews rating={3} />
+          </div>
+
           <div className="flex justify-between">
             <div>
-              <p>Rejselængde: {travel_length}</p>
+              <p className="m-0">Rejselængde: {travel_length}</p>
               <p className="m-0">Hjemrejse: {return_date}</p>
             </div>
             <p className="m-0 self-end text-red-500 font-black text-right">{`Pris: ${minimum_price} kr.`}</p>

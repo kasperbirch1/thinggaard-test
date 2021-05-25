@@ -1,14 +1,26 @@
 import React from "react";
+import { HeartIcon } from "@heroicons/react/solid";
 
-const HotelReviews = () => {
+const HotelReviews = ({ rating }) => {
   return (
-    <div className="">
-      <a href="/">Læs gæstevurderinger</a>
-      <span className="score">3,5 / 5,0</span>
-      <span className="">*</span>
-      <span className="">*</span>
-      <span className="">*</span>
-    </div>
+    <>
+      <div className="flex justify-center">
+        <div className="flex">
+          {Array(rating)
+            .fill()
+            .map((_, i) => (
+              <HeartIcon key={i} className="h-5 text-red-500" />
+            ))}
+
+          <span className="block ml-2" href="/">
+            3,5 / 5,0
+          </span>
+        </div>
+      </div>
+      <a className="block text-center" href="/">
+        Læs gæstevurderinger
+      </a>
+    </>
   );
 };
 

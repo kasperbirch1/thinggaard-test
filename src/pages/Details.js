@@ -50,15 +50,15 @@ const Details = () => {
       </div>
 
       <div className="p-3">
-        <h2 className="mb-2 text-themeColor font-semibold text-xl">
-          {post?.post_title},
-          <span className="ml-2 text-gray-500 font-normal text-sm">
-            {destination_name}
-          </span>
-        </h2>
-
-        <HotelReviews />
-        <HotelRating />
+        <HotelRating rating={4} />
+        <div className="flex">
+          <h2 className="mb-2 text-themeColor font-semibold text-xl">
+            {post?.post_title},
+            <span className="ml-2 text-gray-500 font-normal text-sm">
+              {destination_name}
+            </span>
+          </h2>
+        </div>
 
         <div className="my-4 md:flex">
           {post?.meta?.hotel_beskrivelse && (
@@ -71,6 +71,9 @@ const Details = () => {
           )}
           {post?.meta?.hotel_fakta && (
             <div className="mt-4 md:my-0 hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow">
+              <div className="my-4">
+                <HotelReviews rating={3} />
+              </div>
               <div
                 className="pt-2"
                 dangerouslySetInnerHTML={{
