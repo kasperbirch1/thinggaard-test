@@ -12,21 +12,11 @@ import Details from "./Details";
 
 const Home = () => {
   const classes = useStyles();
-  const {
-    destinations,
-    handleSubmit,
-    adults,
-    dispatch,
-    trips,
-    currentTrip,
-    fetchCombinations,
-    currentCombinations,
-  } = useContext(globalContext);
+  const { destinations, handleSubmit, adults, dispatch, trips, currentTrip } =
+    useContext(globalContext);
 
   return (
     <>
-      {currentTrip && <Details />}
-
       {destinations && (
         <>
           <form
@@ -54,6 +44,8 @@ const Home = () => {
               Find Rejse
             </Button>
           </form>
+
+          {currentTrip && <Details />}
 
           {trips?.map((trip) => (
             <Trip key={trip.accomodation_code} trip={trip} />

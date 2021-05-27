@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import CarouselComponent from "./CarouselComponent";
 import { SET_CURRENT_TRIP } from "../context/types";
 import globalContext from "../context/global/globalContext";
 import HotelRating from "./HotelRating";
 import HotelReviews from "./HotelReviews";
-import format from "date-fns/format";
+// import format from "date-fns/format";
 
 const Trip = ({ trip }) => {
   const { dispatch } = useContext(globalContext);
@@ -16,8 +16,8 @@ const Trip = ({ trip }) => {
     room_description,
     minimum_price,
     post,
-    accomodation_code,
-    period_id,
+    // accomodation_code,
+    // period_id,
   } = trip;
 
   if (!post) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 import CarouselComponent from "../components/CarouselComponent";
 import HotelRating from "../components/HotelRating";
 import HotelReviews from "../components/HotelReviews";
@@ -15,11 +15,11 @@ const Details = () => {
 
   const {
     destination_name,
-    travel_length,
+    // travel_length,
     minimum_price,
     post,
-    accommodation_checkin,
-    accommodation_checkout,
+    // accommodation_checkin,
+    // accommodation_checkout,
     accomodation_code,
     period_id,
   } = currentTrip;
