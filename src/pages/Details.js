@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 
 const Details = () => {
   const history = useHistory();
-  let { currentAccomodationCode, currentPeriodId } = useParams();
+  // let { currentAccomodationCode, currentPeriodId } = useParams();
   const { currentTrip, fetchCombinations, currentCombinations } =
     useContext(globalContext);
 
@@ -20,11 +20,14 @@ const Details = () => {
     post,
     accommodation_checkin,
     accommodation_checkout,
+    accomodation_code,
+    period_id,
   } = currentTrip;
 
   useEffect(() => {
     let source = axios.CancelToken.source();
-    fetchCombinations(source, currentAccomodationCode, currentPeriodId);
+    // fetchCombinations(source, currentAccomodationCode, currentPeriodId);
+    fetchCombinations(source, accomodation_code, period_id);
     return () => {
       source.cancel();
     };

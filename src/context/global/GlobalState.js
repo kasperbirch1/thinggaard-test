@@ -13,6 +13,7 @@ import {
   SET_TRIPS,
   SET_CURRENT_DATE,
   SET_CURRENT_COMBINATIONS,
+  SET_CURRENT_TRIP,
 } from "../types";
 import axios from "axios";
 
@@ -32,7 +33,7 @@ const GlobalState = (props) => {
     dates: [new Date()],
     currentDate: null,
     trips: null,
-    currentTrip: {},
+    currentTrip: null,
     currentCombinations: [],
   };
 
@@ -183,6 +184,11 @@ const GlobalState = (props) => {
           state.token
         }`
       );
+
+      dispatch({
+        type: SET_CURRENT_TRIP,
+        payload: null,
+      });
 
       dispatch({
         type: SET_TRIPS,
