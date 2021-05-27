@@ -16,12 +16,6 @@
     @apply line-clamp-5;
   }
 
-  .hotel_beskrivelse,
-  .hotel_beliggenhed,
-  .hotel_fakta {
-    @apply space-y-4;
-  }
-
   iframe {
     @apply w-full;
   }

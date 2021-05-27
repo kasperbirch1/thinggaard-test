@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { useParams } from "react-router";
 import CarouselComponent from "../components/CarouselComponent";
 import HotelRating from "../components/HotelRating";
@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 
 const Details = () => {
   const history = useHistory();
+  const [tabIndex, setTabIndex] = useState(1);
   // let { currentAccomodationCode, currentPeriodId } = useParams();
   const { currentTrip, fetchCombinations, currentCombinations } =
     useContext(globalContext);
@@ -51,6 +52,7 @@ const Details = () => {
           <div className="">Vælg værelser og bestil</div>
         </div>
       </div>
+      <HotelReviews rating={3} />
 
       <div className="p-3">
         <HotelRating rating={4} />
@@ -61,30 +63,6 @@ const Details = () => {
               {destination_name}
             </span>
           </h2>
-        </div>
-
-        <div className="my-4 md:flex">
-          {post?.meta?.hotel_beskrivelse && (
-            <div
-              className="hotel_beskrivelse md:w-8/12 md:pr-3"
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_beskrivelse,
-              }}
-            />
-          )}
-          {post?.meta?.hotel_fakta && (
-            <div className="mt-4 md:my-0 hotel_fakta md:w-4/12 bg-gray-100 p-2 shadow">
-              <div className="my-4">
-                <HotelReviews rating={3} />
-              </div>
-              <div
-                className="pt-2"
-                dangerouslySetInnerHTML={{
-                  __html: post?.meta?.hotel_fakta,
-                }}
-              />
-            </div>
-          )}
         </div>
 
         {currentCombinations && (
@@ -125,14 +103,67 @@ const Details = () => {
           </div>
         )}
 
-        {post?.meta?.hotel_beliggenhed && (
+        <div className="flex justify-around bg-gray-100 p-4">
           <div
-            className="hotel_beliggenhed"
-            dangerouslySetInnerHTML={{
-              __html: post?.meta?.hotel_beliggenhed,
-            }}
-          ></div>
-        )}
+            className={`cursor-pointer ${
+              tabIndex === 1 && "text-lg	font-bold	border-b-2 border-black"
+            }`}
+            onClick={() => setTabIndex(1)}
+          >
+            Hotellet
+          </div>
+          <div
+            className={`cursor-pointer ${
+              tabIndex === 2 && "text-lg	font-bold	border-b-2 border-black"
+            }`}
+            onClick={() => setTabIndex(2)}
+          >
+            Fakta
+          </div>
+          <div
+            className={`cursor-pointer ${
+              tabIndex === 3 && "text-lg	font-bold	border-b-2 border-black"
+            }`}
+            onClick={() => setTabIndex(3)}
+          >
+            Kort
+          </div>
+        </div>
+
+        <div>
+          {post?.meta?.hotel_beskrivelse && (
+            <div
+              className={`${
+                tabIndex === 1 ? "block" : "hidden"
+              } hotel_beskrivelse`}
+              dangerouslySetInnerHTML={{
+                __html: post?.meta?.hotel_beskrivelse,
+              }}
+            />
+          )}
+
+          {post?.meta?.hotel_fakta && (
+            <div
+              className={`${
+                tabIndex === 2 ? "block" : "hidden"
+              } hotel_beliggenhed`}
+              dangerouslySetInnerHTML={{
+                __html: post?.meta?.hotel_fakta,
+              }}
+            />
+          )}
+
+          {post?.meta?.hotel_beliggenhed && (
+            <div
+              className={`${
+                tabIndex === 3 ? "block" : "hidden"
+              } hotel_beliggenhed`}
+              dangerouslySetInnerHTML={{
+                __html: post?.meta?.hotel_beliggenhed,
+              }}
+            />
+          )}
+        </div>
       </div>
     </>
   );
