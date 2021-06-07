@@ -10,7 +10,7 @@ const DurationsSelect = () => {
 
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel id="DurationsSelect">DurationsSelect</InputLabel>
+      <InputLabel id="DurationsSelect">Rejselængde</InputLabel>
       <Select
         id="DurationsSelect"
         value={currentDuration}
@@ -23,11 +23,11 @@ const DurationsSelect = () => {
         }}
       >
         <MenuItem disabled selected value>
-          -- select an option --
+          -- Vælg rejselængde --
         </MenuItem>
         {durations?.map((duration, index) => (
           <MenuItem key={index} value={duration.days}>
-            {duration.days}
+            {duration.days} dage
           </MenuItem>
         ))}
       </Select>

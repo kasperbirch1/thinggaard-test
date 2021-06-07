@@ -30,6 +30,8 @@ const GlobalState = (props) => {
     transports: null,
     currentTransport: "",
     adults: 2,
+    children: 0,
+    childrenAges: [],
     dates: [new Date()],
     currentDate: null,
     trips: null,
@@ -174,31 +176,29 @@ const GlobalState = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const childrenFiltered = state.children
+      ? state.childrenAges.filter(function (el) {
+          return el != null;
+        })
+      : [];
+
+    const adultsFiltered = countAdults(state.adults);
+
+    const allAges =
+      childrenFiltered && childrenFiltered.length
+        ? adultsFiltered + "," + childrenFiltered.slice(0, state.children)
+        : adultsFiltered;
+
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${
-          state.currentDestination.code
-        }&ages=${countAdults(state.adults)}&duration=${
-          state.currentDuration
-        }&date=${state.currentDate}&transport=${state.currentTransport}&token=${
-          state.token
-        }`
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${state.currentDestination.code}&ages=${allAges}&duration=${state.currentDuration}&date=${state.currentDate}&transport=${state.currentTransport}&token=${state.token}}`
       );
-
-      dispatch({
-        type: SET_CURRENT_TRIP,
-        payload: null,
-      });
-
       dispatch({
         type: SET_TRIPS,
         payload: data.result,
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
-
   // useEffects
 
   useEffect(() => {
@@ -261,6 +261,8 @@ const GlobalState = (props) => {
         trips: state.trips,
         currentTrip: state.currentTrip,
         currentCombinations: state.currentCombinations,
+        children: state.children,
+        childrenAges: state.childrenAges,
         dispatch,
         handleSubmit,
         fetchCombinations,

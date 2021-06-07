@@ -11,7 +11,7 @@ const DestinationsSelect = () => {
 
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel id="destinations">destinations</InputLabel>
+      <InputLabel id="destinations">Rejsemål</InputLabel>
       <Select
         id="destinations"
         value={currentDestination}
@@ -24,7 +24,7 @@ const DestinationsSelect = () => {
         }}
       >
         <MenuItem disabled selected value>
-          -- select an option --
+          -- Vælg et rejsemål --
         </MenuItem>
         {destinations?.map((item) => {
           return (

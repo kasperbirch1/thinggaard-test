@@ -1,4 +1,4 @@
-import { Button, TextField } from "@material-ui/core";
+import { Button, FormControl, TextField } from "@material-ui/core";
 import { useContext } from "react";
 import DatesSelect from "../components/form-inputs/DatesSelect";
 import DestinationsSelect from "../components/form-inputs/DestinationsSelect";
@@ -9,6 +9,8 @@ import { useStyles } from "../styles";
 import globalContext from "../context/global/globalContext";
 import { SET_ADULTS } from "../context/types";
 import Details from "./Details";
+import AdultsSelect from "../components/form-inputs/AdultsSelect";
+import ChildrenSelect from "../components/form-inputs/ChildrenSelect";
 
 const Home = () => {
   const classes = useStyles();
@@ -21,28 +23,25 @@ const Home = () => {
         <>
           <form
             onSubmit={handleSubmit}
-            className="p-2 grid md:grid-cols-3 gap-3"
+            className="flex flex-col md:flex-row md:flex-wrap mx-auto justify-center"
           >
             <DestinationsSelect />
             <DurationsSelect />
             <TransportsSelect />
-            <TextField
-              label="antal voksne"
-              type="number"
-              variant="outlined"
-              className={classes.formControl}
-              value={adults}
-              onChange={(e) => {
-                dispatch({
-                  type: SET_ADULTS,
-                  payload: e.target.value,
-                });
-              }}
-            />
+            <AdultsSelect />
+            <ChildrenSelect />
             <DatesSelect />
-            <Button fullWidth type="submit" variant="outlined">
-              Find Rejse
-            </Button>
+            <FormControl className={classes.formControl}>
+              <Button
+                size="large"
+                color="primary"
+                type="submit"
+                variant="contained"
+                style={{ minHeight: "56px" }}
+              >
+                Find Rejse
+              </Button>
+            </FormControl>
           </form>
 
           {currentTrip && <Details />}

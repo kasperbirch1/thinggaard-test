@@ -26,7 +26,7 @@ const TransportsSelect = () => {
           }}
         >
           <MenuItem value={false} disabled>
-            -- select an option --
+            -- Vælg transportform --
           </MenuItem>
 
           {transports?.map((item) => (

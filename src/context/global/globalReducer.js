@@ -15,6 +15,8 @@ import {
   SET_TRIPS,
   SET_CURRENT_TRIP,
   SET_CURRENT_COMBINATIONS,
+  SET_CHILDREN,
+  SET_CHILDREN_AGES,
 } from "../types";
 
 const globalReducer = (state, action) => {
@@ -102,6 +104,16 @@ const globalReducer = (state, action) => {
       return {
         ...state,
         currentCombinations: action.payload,
+      };
+    case SET_CHILDREN:
+      return {
+        ...state,
+        children: action.payload,
+      };
+    case SET_CHILDREN_AGES:
+      return {
+        ...state,
+        childrenAges: action.payload,
       };
     default:
       return state;
