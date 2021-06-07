@@ -176,6 +176,11 @@ const GlobalState = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    dispatch({
+      type: SET_CURRENT_TRIP,
+      payload: null,
+    });
+
     const childrenFiltered = state.children
       ? state.childrenAges.filter(function (el) {
           return el != null;
