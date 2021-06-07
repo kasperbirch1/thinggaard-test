@@ -6,10 +6,11 @@ import HotelRating from "../components/HotelRating";
 import HotelReviews from "../components/HotelReviews";
 import globalContext from "../context/global/globalContext";
 import { useHistory } from "react-router-dom";
+import { Tab, Tabs } from "@material-ui/core";
 
 const Details = () => {
   const history = useHistory();
-  const [tabIndex, setTabIndex] = useState(1);
+  const [tabIndex, setTabIndex] = useState(0);
   // let { currentAccomodationCode, currentPeriodId } = useParams();
   const { currentTrip, fetchCombinations, currentCombinations } =
     useContext(globalContext);
@@ -33,6 +34,16 @@ const Details = () => {
       source.cancel();
     };
   }, []);
+
+  const handleTabIndex = (event, newValue) => {
+    setTabIndex(newValue);
+  };
+  const a11yProps = (index) => {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  };
 
   return (
     <>
@@ -103,14 +114,33 @@ const Details = () => {
           </div>
         )}
 
-        <div className="flex justify-around bg-gray-100 p-4">
+        <Tabs
+          fullWidth
+          value={tabIndex}
+          onChange={handleTabIndex}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Hotellet" {...a11yProps(0)} />
+          <Tab label="Fakta" {...a11yProps(1)} />
+          <Tab label="Kort" {...a11yProps(2)} />
+        </Tabs>
+
+        {/* <div className="flex justify-around bg-gray-100 p-4">
+          <div
+            className={`cursor-pointer ${
+              tabIndex === 0 && "text-lg	font-bold	border-b-2 border-black"
+            }`}
+            onClick={() => setTabIndex(0)}
+          >
+            Hotellet
+          </div>
           <div
             className={`cursor-pointer ${
               tabIndex === 1 && "text-lg	font-bold	border-b-2 border-black"
             }`}
             onClick={() => setTabIndex(1)}
           >
-            Hotellet
+            Fakta
           </div>
           <div
             className={`cursor-pointer ${
@@ -118,23 +148,15 @@ const Details = () => {
             }`}
             onClick={() => setTabIndex(2)}
           >
-            Fakta
-          </div>
-          <div
-            className={`cursor-pointer ${
-              tabIndex === 3 && "text-lg	font-bold	border-b-2 border-black"
-            }`}
-            onClick={() => setTabIndex(3)}
-          >
             Kort
           </div>
-        </div>
+        </div> */}
 
         <div>
           {post?.meta?.hotel_beskrivelse && (
             <div
               className={`${
-                tabIndex === 1 ? "block" : "hidden"
+                tabIndex === 0 ? "block" : "hidden"
               } hotel_beskrivelse`}
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_beskrivelse,
@@ -145,7 +167,7 @@ const Details = () => {
           {post?.meta?.hotel_fakta && (
             <div
               className={`${
-                tabIndex === 2 ? "block" : "hidden"
+                tabIndex === 1 ? "block" : "hidden"
               } hotel_beliggenhed`}
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_fakta,
@@ -156,7 +178,7 @@ const Details = () => {
           {post?.meta?.hotel_beliggenhed && (
             <div
               className={`${
-                tabIndex === 3 ? "block" : "hidden"
+                tabIndex === 2 ? "block" : "hidden"
               } hotel_beliggenhed`}
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_beliggenhed,
