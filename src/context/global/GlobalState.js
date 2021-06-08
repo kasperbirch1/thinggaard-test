@@ -14,6 +14,7 @@ import {
   SET_CURRENT_DATE,
   SET_CURRENT_COMBINATIONS,
   SET_CURRENT_TRIP,
+  SET_ORDER,
 } from "../types";
 import axios from "axios";
 
@@ -37,6 +38,7 @@ const GlobalState = (props) => {
     trips: null,
     currentTrip: null,
     currentCombinations: [],
+    order: null,
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);
@@ -174,6 +176,10 @@ const GlobalState = (props) => {
       const { data } = await axios.get(
         `https://thinggaard.dk/wp-json/thinggaard/v1/orders/create?transport=${state.currentTrip.transport_id}&token=${state.token}&period_id=${state.currentTrip.period_id}&ages=${state.currentTrip.age_string}&origin_url=thinggaard.dk&ip_address=35.198.722.00&room_string=${roomString}`
       );
+      dispatch({
+        type: SET_ORDER,
+        payload: data.result,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -282,6 +288,7 @@ const GlobalState = (props) => {
         currentCombinations: state.currentCombinations,
         children: state.children,
         childrenAges: state.childrenAges,
+        order: state.order,
         dispatch,
         handleSubmit,
         fetchCombinations,

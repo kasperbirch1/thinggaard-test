@@ -8,7 +8,7 @@ import Trip from "../components/Trip";
 import { useStyles } from "../styles";
 import globalContext from "../context/global/globalContext";
 import { SET_ADULTS } from "../context/types";
-import Details from "./Details";
+import Details from "../components/Details";
 import AdultsSelect from "../components/form-inputs/AdultsSelect";
 import ChildrenSelect from "../components/form-inputs/ChildrenSelect";
 
@@ -23,7 +23,7 @@ const Home = () => {
         <>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col md:flex-row md:flex-wrap mx-auto justify-center"
+            className="mt-6 flex flex-col md:flex-row md:flex-wrap mx-auto justify-center md:space-x-2"
           >
             <DestinationsSelect />
             <DurationsSelect />

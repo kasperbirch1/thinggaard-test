@@ -17,6 +17,7 @@ import {
   SET_CURRENT_COMBINATIONS,
   SET_CHILDREN,
   SET_CHILDREN_AGES,
+  SET_ORDER,
 } from "../types";
 
 const globalReducer = (state, action) => {
@@ -115,6 +116,12 @@ const globalReducer = (state, action) => {
         ...state,
         childrenAges: action.payload,
       };
+    case SET_ORDER: {
+      return {
+        ...state,
+        order: action.payload,
+      };
+    }
     default:
       return state;
   }

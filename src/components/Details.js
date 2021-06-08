@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 // import { useParams } from "react-router";
-import CarouselComponent from "../components/CarouselComponent";
-import HotelRating from "../components/HotelRating";
-import HotelReviews from "../components/HotelReviews";
+import CarouselComponent from "./CarouselComponent";
+import HotelRating from "./HotelRating";
+import HotelReviews from "./HotelReviews";
 import globalContext from "../context/global/globalContext";
 import { useHistory } from "react-router-dom";
 import { Button, Tab, Tabs } from "@material-ui/core";
@@ -112,6 +112,7 @@ const Details = () => {
                       <Button
                         onClick={() => {
                           fetchOrderCreate(combination.rooms.room_string);
+                          history.push("order");
                         }}
                       >
                         Bestil
