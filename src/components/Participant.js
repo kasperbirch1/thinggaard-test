@@ -10,8 +10,6 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import ToggleButton from "@material-ui/lab/ToggleButton";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
 
 const Participant = ({ participant }) => {
