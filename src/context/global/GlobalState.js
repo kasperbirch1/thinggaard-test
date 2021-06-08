@@ -165,6 +165,20 @@ const GlobalState = (props) => {
     }
   };
 
+  const fetchOrderCreate = async (roomString) => {
+    console.log(
+      "🚀 ~ file: GlobalState.js ~ line 169 ~ fetchOrderCreate ~ roomString",
+      roomString
+    );
+    try {
+      const { data } = await axios.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/orders/create?transport=${state.currentTrip.transport_id}&token=${state.token}&period_id=${state.currentTrip.period_id}&ages=${state.currentTrip.age_string}&origin_url=thinggaard.dk&ip_address=35.198.722.00&room_string=${roomString}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const countAdults = (number) => {
     let countAdults = [];
     for (let i = 0; i < state.adults; i++) {
@@ -271,6 +285,7 @@ const GlobalState = (props) => {
         dispatch,
         handleSubmit,
         fetchCombinations,
+        fetchOrderCreate,
       }}
     >
       {props.children}

@@ -6,14 +6,18 @@ import HotelRating from "../components/HotelRating";
 import HotelReviews from "../components/HotelReviews";
 import globalContext from "../context/global/globalContext";
 import { useHistory } from "react-router-dom";
-import { Tab, Tabs } from "@material-ui/core";
+import { Button, Tab, Tabs } from "@material-ui/core";
 
 const Details = () => {
   const history = useHistory();
   const [tabIndex, setTabIndex] = useState(0);
   // let { currentAccomodationCode, currentPeriodId } = useParams();
-  const { currentTrip, fetchCombinations, currentCombinations } =
-    useContext(globalContext);
+  const {
+    currentTrip,
+    fetchCombinations,
+    currentCombinations,
+    fetchOrderCreate,
+  } = useContext(globalContext);
 
   const {
     destination_name,
@@ -82,19 +86,16 @@ const Details = () => {
               <thead>
                 <tr className="text-left text-sm md:text-base">
                   <th className="py-1 pr-1 w-6/12 md:w-8/12">Værelser</th>
-                  <th className="py-1 pr-1 w-4/12 md:w-2/12">Rejseinfo</th>
+                  <th className="py-1 pr-1 w-2/12 md:w-2/12">Rejseinfo</th>
                   <th className="py-1 pr-1 w-2/12 md:w-2/12 text-center">
                     pris
                   </th>
+                  <th className="w-2/12">test</th>
                 </tr>
               </thead>
               <tbody>
                 {currentCombinations?.map((combination, index) => (
-                  <tr
-                    key={index}
-                    onClick={() => alert(combination.rooms.rooms_description)}
-                    className="text-sm cursor-pointer"
-                  >
+                  <tr key={index} className="text-sm">
                     <td className="py-1 pr-1">
                       {combination.rooms.rooms_description}
                     </td>
@@ -106,6 +107,15 @@ const Details = () => {
                     </td>
                     <td className="py-1 pr-1 text-center font-semibold">
                       {combination.current_week.price}
+                    </td>
+                    <td className="">
+                      <Button
+                        onClick={() => {
+                          fetchOrderCreate(combination.rooms.room_string);
+                        }}
+                      >
+                        Bestil
+                      </Button>
                     </td>
                   </tr>
                 ))}
