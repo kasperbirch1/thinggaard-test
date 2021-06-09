@@ -7,7 +7,6 @@ import TransportsSelect from "../components/form-inputs/TransportsSelect";
 import Trip from "../components/Trip";
 import { useStyles } from "../styles";
 import globalContext from "../context/global/globalContext";
-import { SET_ADULTS } from "../context/types";
 import Details from "../components/Details";
 import AdultsSelect from "../components/form-inputs/AdultsSelect";
 import ChildrenSelect from "../components/form-inputs/ChildrenSelect";

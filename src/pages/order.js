@@ -16,9 +16,9 @@ const Order = () => {
 
   return (
     <>
-      <div className="flex">
-        <OrderForm tailwindCSS="w-10/12 p-2" />
-        <OrderTotal tailwindCSS="w-2/12 p-2" />
+      <div className="md:flex">
+        <OrderForm tailwindCSS="md:w-8/12 md:p-2" />
+        <OrderTotal tailwindCSS="md:w-4/12 md:m-2" />
       </div>
       <pre>{JSON.stringify(order, null, 2)}</pre>
     </>
