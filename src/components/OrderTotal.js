@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import globalContext from "../context/global/globalContext";
 
 const OrderTotal = ({ tailwindCSS }) => {
-  const { currentTrip } = useContext(globalContext);
+  const { currentTrip, order } = useContext(globalContext);
   console.log(
     "🚀 ~ file: OrderTotal.js ~ line 6 ~ OrderTotal ~ currentTrip",
     currentTrip
   );
+  console.log("🚀 ~ file: OrderTotal.js ~ line 6 ~ OrderTotal ~ order", order);
 
   return (
     <div className={`rounded bg-gray-200 shadow ${tailwindCSS}`}>
@@ -20,43 +21,35 @@ const OrderTotal = ({ tailwindCSS }) => {
         style={{
           backgroundImage: `url(${currentTrip?.post?.images?.full[0]})`,
         }}
-      ></div>
+      />
       <div className={`p-4`}>
         <div className="border-b border-black pb-4">
-          <h2 className="text-3xl">Garni Peter</h2>
-          <h3 className="">Canazei, Italien</h3>
-        </div>
-        <div className="flex justify-between">
-          <p className="m-0">Indkvartering</p>
-          <p className="m-0">test</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="m-0">Personer</p>
-          <p className="m-0">test</p>
+          <h2 className="text-3xl">{currentTrip?.post.post_title}</h2>
+          <h3 className="">{currentTrip?.destination_name}</h3>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Uge</p>
-          <p className="m-0">test</p>
+          <p className="m-0">{currentTrip?.weekno}</p>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Tjek ind</p>
-          <p className="m-0">test</p>
+          <p className="m-0">{order?.departure_date}</p>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Tjek ud</p>
-          <p className="m-0">test</p>
+          <p className="m-0">{order?.return_date}</p>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Rejselængde</p>
-          <p className="m-0">test</p>
+          <p className="m-0">{currentTrip?.travel_length}</p>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Transport</p>
-          <p className="m-0">test</p>
+          <p className="m-0">{currentTrip?.transport_name}</p>
         </div>
         <div className="md:flex md:justify-between md:items-center border-black border-t pt-4">
           <h2 className="font-bold text-2xl">Totalpris</h2>
-          <h3 className="font-semibold">DKK 12.296,-</h3>
+          <h3 className="font-semibold">{`DKK ${order?.booking_amount}`}-</h3>
         </div>
       </div>
     </div>

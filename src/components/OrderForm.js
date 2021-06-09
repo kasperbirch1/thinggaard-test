@@ -5,9 +5,11 @@ import Participant from "./Participant";
 
 const OrderForm = ({ tailwindCSS }) => {
   const { order } = useContext(globalContext);
+  console.log("🚀 ~ file: OrderForm.js ~ line 8 ~ OrderForm ~ order", order);
 
   return (
     <form className={` ${tailwindCSS}`}>
+      <h3 className="text-themeColor text-3xl font-bold">Email:</h3>
       <TextField
         id="email"
         label="Email"
@@ -15,15 +17,12 @@ const OrderForm = ({ tailwindCSS }) => {
         type="email"
         name="email"
       />
-      <h3> Personer:</h3>
-      <p>
-        Dobbeltværelse med bad/toilet og balkon (2 pers.) - mulighed for 1
-        ekstra opredning
-      </p>
+      <h3 className="text-themeColor text-3xl font-bold">Deltagere:</h3>
+      <p>{order?.participants[0]?.room_description}</p>
 
-      <ul className="mt-4 flex flex-col space-y-3">
+      <ul className="mt-4 p-2 space-y-3 ">
         {order?.participants.map((item, index) => (
-          <Participant key={index} participant={item} />
+          <Participant key={index} participant={item} personCount={index} />
         ))}
       </ul>
     </form>
