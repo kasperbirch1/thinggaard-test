@@ -27,7 +27,7 @@ const Participant = ({ participant, personCount }) => {
 
   return (
     <li className="p-2 shadow">
-      <h2 className="">{`Person ${personCount + 1}`}</h2>
+      <h2 className="font-semibold text-sm">{`Person ${personCount + 1}`}</h2>
       <div className="w-full md:flex md:flex-row md:flex-wrap">
         <TextField
           className={classes.formControl}
