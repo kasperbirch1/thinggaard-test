@@ -78,7 +78,7 @@ const Participant = ({ participant, personCount }) => {
             <MenuItem disabled value="0">
               -- Vælg --
             </MenuItem>
-            {participant?.services.map((item) => {
+            {participant?.services.map((item, index) => {
               if (item.service_group_id == 1) {
                 return (
                   <MenuItem
@@ -104,10 +104,13 @@ const Participant = ({ participant, personCount }) => {
             <MenuItem disabled value="0">
               -- Vælg --
             </MenuItem>
-            {participant?.services.map((item) => {
+            {participant?.services.map((item, index) => {
               if (item.service_group_id == 66) {
                 return (
-                  <MenuItem value={item.service_price_id}>
+                  <MenuItem
+                    key={item.service_price_id}
+                    value={item.service_price_id}
+                  >
                     {item.description}
                   </MenuItem>
                 );
