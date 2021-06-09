@@ -24,8 +24,13 @@ const OrderTotal = ({ tailwindCSS }) => {
       />
       <div className={`p-4`}>
         <div className="border-b border-black pb-4">
-          <h2 className="text-3xl">{currentTrip?.post.post_title}</h2>
-          <h3 className="">{currentTrip?.destination_name}</h3>
+          <h2 className="text-3xl">
+            {currentTrip?.post.post_title}
+            {", "}
+            <span className="text-base">{currentTrip?.destination_name}</span>
+          </h2>
+
+          <p>{order?.participants[0]?.room_description}</p>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Uge</p>
