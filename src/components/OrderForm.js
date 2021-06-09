@@ -11,7 +11,7 @@ const OrderForm = ({ tailwindCSS }) => {
 
   return (
     <div className={` ${tailwindCSS}`}>
-      <h2 className="bg-gray-200 p-4 text-4xl text text-center font-bold text-themeColor mb-4 rounded shadow">
+      <h2 className="bg-gray-100 p-4 text-4xl text text-center font-bold text-themeColor mb-4 rounded shadow">
         Deltagere
       </h2>
       <form className="">

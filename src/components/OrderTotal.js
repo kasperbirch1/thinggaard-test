@@ -10,7 +10,7 @@ const OrderTotal = ({ tailwindCSS }) => {
   console.log("🚀 ~ file: OrderTotal.js ~ line 6 ~ OrderTotal ~ order", order);
 
   return (
-    <div className={`rounded bg-gray-200 shadow ${tailwindCSS}`}>
+    <div className={`rounded bg-gray-100 shadow ${tailwindCSS}`}>
       <div className="bg-themeColor rounded-t px-4 py-6">
         <h2 className="font-bold text-white text-center tracking-widest">
           DIN REJSE
@@ -30,7 +30,7 @@ const OrderTotal = ({ tailwindCSS }) => {
             <span className="text-base">{currentTrip?.destination_name}</span>
           </h2>
 
-          <p>{order?.participants[0]?.room_description}</p>
+          <p className="text-sm">{order?.participants[0]?.room_description}</p>
         </div>
         <div className="flex justify-between">
           <p className="m-0">Uge</p>
