@@ -15,6 +15,7 @@ import {
   SET_CURRENT_COMBINATIONS,
   SET_CURRENT_TRIP,
   SET_ORDER,
+  SET_PARTICIPANTS_DATA,
 } from "../types";
 import axios from "axios";
 
@@ -38,6 +39,7 @@ const GlobalState = (props) => {
     trips: null,
     currentTrip: null,
     currentCombinations: [],
+    participantsData: [],
     order: null,
   };
 
@@ -283,6 +285,7 @@ const GlobalState = (props) => {
         children: state.children,
         childrenAges: state.childrenAges,
         order: state.order,
+        participantsData: state.participantsData,
         dispatch,
         handleSubmit,
         fetchCombinations,
