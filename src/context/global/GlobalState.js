@@ -146,13 +146,7 @@ const GlobalState = (props) => {
   ) => {
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/trips/combinations?&ages=${countAdults(
-          state.adults
-        )}&duration=${state.currentDuration}&date=${
-          state.currentDate
-        }&transport=${state.currentTransport}&token=${
-          state.token
-        }&accomodation_code=${currentAccomodationCode}&period_id=${currentPeriodId}`,
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips/combinations?&ages=${state.currentTrip.age_string}&duration=${state.currentDuration}&date=${state.currentDate}&transport=${state.currentTransport}&token=${state.token}&accomodation_code=${currentAccomodationCode}&period_id=${currentPeriodId}`,
         {
           cancelToken: source.token,
         }
