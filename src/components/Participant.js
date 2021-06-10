@@ -15,18 +15,24 @@ import { useStyles } from "../styles";
 
 const Participant = ({ participant, personCount }) => {
   const classes = useStyles();
-  const [selected, setSelected] = useState(false);
   const [select, setSelect] = useState(0);
-  const [select1, setSelect1] = useState(0);
-  const [select2, setSelect2] = useState(0);
+  const [state, setState] = useState({});
 
   console.log(
     "🚀 ~ file: Participant.js ~ line 4 ~ Participant ~ participant",
     participant
   );
 
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <li className="p-2 shadow">
+      <pre>{JSON.stringify(state, null, 2)}</pre>
       <h2 className="font-semibold text-sm">{`Person ${personCount + 1}`}</h2>
       <div className="w-full md:flex md:flex-row md:flex-wrap">
         <TextField
@@ -59,65 +65,27 @@ const Participant = ({ participant, personCount }) => {
               setSelect(e.target.value);
             }}
           >
-            <MenuItem disabled value="0">
-              -- Køn --
-            </MenuItem>
+            <MenuItem disabled>-- Køn --</MenuItem>
             <MenuItem value="1">Mand</MenuItem>
             <MenuItem value="2">Kvinde</MenuItem>
           </Select>
         </FormControl>
-        <FormControl className={classes.formControl} variant="outlined">
-          <InputLabel id="liftkort">Liftkort</InputLabel>
-          <Select
-            id="liftkort"
-            value={select1}
-            onChange={(e) => {
-              setSelect1(e.target.value);
-            }}
+
+        {participant?.services_ordered.map((item) => (
+          <FormControl
+            key={item.id}
+            className={classes.formControl}
+            variant="outlined"
           >
-            <MenuItem disabled value="0">
-              -- Vælg --
-            </MenuItem>
-            {participant?.services.map((item, index) => {
-              if (item.service_group_id == 1) {
-                return (
-                  <MenuItem
-                    key={item.service_price_id}
-                    value={item.service_price_id}
-                  >
-                    {item.description}
-                  </MenuItem>
-                );
-              }
-            })}
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl} variant="outlined">
-          <InputLabel id="Parking">Parking</InputLabel>
-          <Select
-            id="Parking"
-            value={select2}
-            onChange={(e) => {
-              setSelect2(e.target.value);
-            }}
-          >
-            <MenuItem disabled value="0">
-              -- Vælg --
-            </MenuItem>
-            {participant?.services.map((item, index) => {
-              if (item.service_group_id == 66) {
-                return (
-                  <MenuItem
-                    key={item.service_price_id}
-                    value={item.service_price_id}
-                  >
-                    {item.description}
-                  </MenuItem>
-                );
-              }
-            })}
-          </Select>
-        </FormControl>
+            <InputLabel id={item.title}>{item.title}</InputLabel>
+            <Select id={item.title} value={state} onChange={handleChange}>
+              <MenuItem disabled>-- Vælg --</MenuItem>
+              {item.results.map((subItem, index) => (
+                <MenuItem key={index}>{subItem.description}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ))}
       </div>
     </li>
   );

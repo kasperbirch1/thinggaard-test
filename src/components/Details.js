@@ -126,7 +126,6 @@ const Details = () => {
         )}
 
         <Tabs
-          fullWidth
           value={tabIndex}
           onChange={handleTabIndex}
           aria-label="simple tabs example"
