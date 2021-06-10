@@ -15,24 +15,14 @@ import { useStyles } from "../styles";
 
 const Participant = ({ participant, personCount }) => {
   const classes = useStyles();
-  const [select, setSelect] = useState(0);
-  const [state, setState] = useState({});
 
   console.log(
     "🚀 ~ file: Participant.js ~ line 4 ~ Participant ~ participant",
     participant
   );
 
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
     <li className="p-2 shadow">
-      <pre>{JSON.stringify(state, null, 2)}</pre>
       <h2 className="font-semibold text-sm">{`Person ${personCount + 1}`}</h2>
       <div className="w-full md:flex md:flex-row md:flex-wrap">
         <TextField
@@ -57,14 +47,7 @@ const Participant = ({ participant, personCount }) => {
           className={classes.formControl}
         >
           <InputLabel id="køn">Køn</InputLabel>
-          <Select
-            id="køn"
-            label="køn"
-            value={select}
-            onChange={(e) => {
-              setSelect(e.target.value);
-            }}
-          >
+          <Select id="køn" label="køn">
             <MenuItem disabled>-- Køn --</MenuItem>
             <MenuItem value="1">Mand</MenuItem>
             <MenuItem value="2">Kvinde</MenuItem>
@@ -78,7 +61,7 @@ const Participant = ({ participant, personCount }) => {
             variant="outlined"
           >
             <InputLabel id={item.title}>{item.title}</InputLabel>
-            <Select id={item.title} value={state} onChange={handleChange}>
+            <Select id={item.title}>
               <MenuItem disabled>-- Vælg --</MenuItem>
               {item.results.map((subItem, index) => (
                 <MenuItem key={index}>{subItem.description}</MenuItem>
