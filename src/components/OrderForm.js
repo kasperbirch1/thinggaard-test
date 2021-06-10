@@ -6,7 +6,7 @@ import Participant from "./Participant";
 
 const OrderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
-  const { order } = useContext(globalContext);
+  const { order, participantsdata } = useContext(globalContext);
 
   return (
     <div className={` ${tailwindCSS}`}>
