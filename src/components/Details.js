@@ -90,7 +90,7 @@ const Details = () => {
                   <th className="py-1 pr-1 w-2/12 md:w-2/12 text-center">
                     pris
                   </th>
-                  <th className="w-2/12">test</th>
+                  <th className="w-2/12"></th>
                 </tr>
               </thead>
               <tbody>
@@ -114,6 +114,8 @@ const Details = () => {
                           fetchOrderCreate(combination.rooms.room_string);
                           history.push("order");
                         }}
+                        color="primary"
+                        variant="contained"
                       >
                         Bestil
                       </Button>
