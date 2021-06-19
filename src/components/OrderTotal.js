@@ -3,11 +3,6 @@ import globalContext from "../context/global/globalContext";
 
 const OrderTotal = ({ tailwindCSS }) => {
   const { currentTrip, order } = useContext(globalContext);
-  console.log(
-    "🚀 ~ file: OrderTotal.js ~ line 6 ~ OrderTotal ~ currentTrip",
-    currentTrip
-  );
-  console.log("🚀 ~ file: OrderTotal.js ~ line 6 ~ OrderTotal ~ order", order);
 
   return (
     <div className={`rounded bg-gray-100 shadow ${tailwindCSS}`}>

@@ -18,7 +18,7 @@ const ChildrenSelect = (props) => {
 
   return (
     <>
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl variant="outlined" className={"grid-span-2",classes.formControl}>
         <div
           className="form-wrap"
           style={{
@@ -46,7 +46,8 @@ const ChildrenSelect = (props) => {
           />
           {children > 0 &&
             countChildren(children).map((item, count) => (
-              <div className="mb-2">
+              <div className="mb-2" key={count}
+              >
                 <TextField
                   fullWidth
                   size="small"

@@ -22,7 +22,7 @@ const Home = () => {
         <>
           <form
             onSubmit={handleSubmit}
-            className="mt-6 flex flex-col md:flex-row md:flex-wrap mx-auto justify-center md:space-x-2"
+            className="mt-6 flex mx-auto justify-center md:space-x-2"
           >
             <DestinationsSelect />
             <DurationsSelect />

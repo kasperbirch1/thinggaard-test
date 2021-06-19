@@ -22,10 +22,6 @@ import {
 } from "../types";
 
 const globalReducer = (state, action) => {
-  console.log(
-    "🚀 ~ file: globalReducer.js ~ line 2 ~ globalReducer ~ action",
-    action
-  );
   switch (action.type) {
     case SET_LOADING:
       return {

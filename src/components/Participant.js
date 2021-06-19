@@ -26,8 +26,6 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
-  console.log(participantsDataNew);
-
   return (
     <li className="p-2 shadow">
       <h2 className="font-semibold text-sm">
@@ -73,6 +71,7 @@ const Participant = ({ participant, personCount }) => {
           <div
             className="grid grid-cols-3 p-4 mb-4 gap-4 rounded"
             style={{ backgroundColor: "#f2f2f2" }}
+            key={servicekey}
           >
             <div className={"col-span-2"}>
               <h2>{serviceitem.title}</h2>
@@ -86,24 +85,13 @@ const Participant = ({ participant, personCount }) => {
                 {serviceitem.title}
               </InputLabel>
               <Select
-                value={
-                  Array.isArray(participantsDataNew) &&
-                  Array.isArray(participantsDataNew[personCount]) &&
-                  participantsDataNew[personCount][servicekey]
-                    ? participantsDataNew[personCount][servicekey]
-                    : serviceitem.results[0].description
-                }
                 id={serviceitem.title}
+                value={participantsDataNew[participant.participant_id] && participantsDataNew[participant.participant_id][serviceitem.id]  ? participantsDataNew[participant.participant_id][serviceitem.id] : false}
                 onChange={(e) => {
-                  var serviceArray =
-                    Array.isArray(participantsDataNew) &&
-                    Array.isArray(participantsDataNew[personCount])
-                      ? participantsDataNew[personCount]
-                      : [];
-                  console.log(serviceArray);
-                  console.log(servicekey);
-                  serviceArray[servicekey] = e.target.value;
-                  participantsDataNew[personCount] = serviceArray;
+                  var pushedValue=participantsDataNew[participant.participant_id];
+                  pushedValue=pushedValue ? pushedValue : {};
+                  pushedValue[serviceitem.id]=e.target.value;
+                  participantsDataNew[participant.participant_id]=pushedValue;
                   setParticipantsDataNew(participantsDataNew);
                   dispatch({
                     type: SET_PARTICIPANTS_DATA,
@@ -112,8 +100,9 @@ const Participant = ({ participant, personCount }) => {
                 }}
               >
                 <MenuItem disabled>-- Vælg --</MenuItem>
-                {serviceitem.results.map((subItem, subItemIndex) => (
-                  <MenuItem value={subItem.description} key={subItemIndex}>
+                <MenuItem value={false}>Fravalgt</MenuItem>
+            {serviceitem.results.map((subItem, subItemIndex) => (
+                  <MenuItem value={subItem.service_price_id} key={subItemIndex}>
                     {subItem.description}
                   </MenuItem>
                 ))}
