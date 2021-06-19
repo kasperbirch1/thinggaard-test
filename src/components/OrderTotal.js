@@ -2,8 +2,24 @@ import React, { useContext } from "react";
 import globalContext from "../context/global/globalContext";
 
 const OrderTotal = ({ tailwindCSS }) => {
-  const { currentTrip, order } = useContext(globalContext);
+  const { currentTrip, order, participantsData } = useContext(globalContext);
+  let extraPrice=0;
+  let totalPrice=order? order.booking_amount : 0;
 
+  participantsData.map((participant, participantKey) => {
+    order.participants.map((orderParticipant, orderParticipantKey) => {
+      if(participantKey===orderParticipant.participant_id)
+      {
+        orderParticipant.services.map((orderParticipantService, orderParticipantServiceKey) => {
+          if(orderParticipantService.service_price_id===participant[orderParticipantService.service_group_id])
+          {
+            extraPrice=extraPrice+parseFloat(orderParticipantService.service_price);
+            console.log(extraPrice);
+          }
+        })
+      }
+    });
+  });
   return (
     <div className={`rounded bg-gray-100 shadow ${tailwindCSS}`}>
       <div className="bg-themeColor rounded-t px-4 py-6">
@@ -49,7 +65,7 @@ const OrderTotal = ({ tailwindCSS }) => {
         </div>
         <div className="md:flex md:justify-between md:items-center border-black border-t pt-4">
           <h2 className="font-bold text-2xl">Totalpris</h2>
-          <h3 className="font-semibold">{`DKK ${order?.booking_amount}`}-</h3>
+          <h3 className="font-semibold">DKK {totalPrice+extraPrice}</h3>
         </div>
       </div>
     </div>
