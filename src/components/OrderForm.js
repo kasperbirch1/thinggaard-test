@@ -14,7 +14,7 @@ const OrderForm = ({ tailwindCSS }) => {
         Deltagere
       </h2>
       <form className="">
-        <div className="p-2 shadow">
+        <div className="p-4 border border-solid rounded border-gray-400">
           <TextField
             fullWidth
             id="email"
@@ -24,7 +24,7 @@ const OrderForm = ({ tailwindCSS }) => {
             name="email"
           />
         </div>
-        <ul className="mt-4 space-y-3 ">
+        <ul>
           {order?.participants.map((item, index) => (
             <Participant key={index} participant={item} personCount={index} />
           ))}

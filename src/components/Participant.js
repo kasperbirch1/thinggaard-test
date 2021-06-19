@@ -27,8 +27,8 @@ const Participant = ({ participant, personCount }) => {
   );
 
   return (
-    <li className="p-2 shadow">
-      <h2 className="font-semibold text-sm">
+    <div  className="mt-4 mb-4 p-4 rounded border border-solid border-1 border-gray-400">
+      <h2 className="font-semibold text-sm mb-4">
         {(participant.age > 17 ? "Voksen" : "Barn") +
           " (deltager " +
           (personCount + 1) +
@@ -36,8 +36,8 @@ const Participant = ({ participant, personCount }) => {
       </h2>
       <div className="grid grid-cols-3 gap-4">
         <TextField
-          className={classes.FormControl}
-          id="name"
+        className={classes.formControl}
+        id="name"
           label="Navn"
           variant="outlined"
           type="text"
@@ -45,7 +45,7 @@ const Participant = ({ participant, personCount }) => {
           defaultValue={participant.full_name}
         />
         <TextField
-        className={classes.FormControl}
+        className={classes.formControl}
         id="age"
           label="Alder"
           variant="outlined"
@@ -54,7 +54,7 @@ const Participant = ({ participant, personCount }) => {
           defaultValue={participant.age}
         />
         <FormControl
-        className={classes.FormControl}
+        className={classes.formControl}
         variant="outlined"
         >
           <InputLabel id="køn">Køn</InputLabel>
@@ -78,7 +78,8 @@ const Participant = ({ participant, personCount }) => {
             <FormControl
             key={serviceitem.id}
               variant="outlined"
-            >
+              className={classes.formControl}
+              >
               <InputLabel id={serviceitem.title}>
                 {serviceitem.title}
               </InputLabel>
@@ -100,7 +101,8 @@ const Participant = ({ participant, personCount }) => {
               <MenuItem disabled>-- Vælg --</MenuItem>
               {!serviceitem.standard && <MenuItem value={false}>Fravalgt</MenuItem>}
               {serviceitem.results.map((subItem, subItemIndex) => (
-                  <MenuItem value={subItem.service_price_id} key={subItemIndex}>
+                  <MenuItem           className={classes.formControl}
+value={subItem.service_price_id} key={subItemIndex}>
                     {subItem.description}
                   </MenuItem>
                 ))}
@@ -109,7 +111,7 @@ const Participant = ({ participant, personCount }) => {
           </div>
         ))}
       </div>
-    </li>
+    </div>
   );
 };
 
