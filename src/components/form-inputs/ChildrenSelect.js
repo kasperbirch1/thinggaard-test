@@ -59,7 +59,6 @@ const ChildrenSelect = (props) => {
                   value={childrenAges[count] ? childrenAges[count] : false}
                   onChange={(myEvent) => {
                     childrenAges[count] = myEvent.target.value;
-                    console.log(childrenAges);
                     dispatch({
                       type: SET_CHILDREN_AGES,
                       payload: childrenAges,

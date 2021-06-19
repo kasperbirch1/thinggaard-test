@@ -26,6 +26,7 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
+  console.log(participant);
   return (
     <li className="p-2 shadow">
       <h2 className="font-semibold text-sm">
@@ -86,7 +87,7 @@ const Participant = ({ participant, personCount }) => {
               </InputLabel>
               <Select
                 id={serviceitem.title}
-                value={participantsDataNew[participant.participant_id] && participantsDataNew[participant.participant_id][serviceitem.id]  ? participantsDataNew[participant.participant_id][serviceitem.id] : false}
+                value={participantsDataNew[participant.participant_id] && participantsDataNew[participant.participant_id][serviceitem.id]  ? participantsDataNew[participant.participant_id][serviceitem.id] : serviceitem.standard ? serviceitem.standard : false}
                 onChange={(e) => {
                   var pushedValue=participantsDataNew[participant.participant_id];
                   pushedValue=pushedValue ? pushedValue : {};
@@ -99,9 +100,9 @@ const Participant = ({ participant, personCount }) => {
                   });
                 }}
               >
-                <MenuItem disabled>-- Vælg --</MenuItem>
-                <MenuItem value={false}>Fravalgt</MenuItem>
-            {serviceitem.results.map((subItem, subItemIndex) => (
+              <MenuItem disabled>-- Vælg --</MenuItem>
+              {!serviceitem.standard && <MenuItem value={false}>Fravalgt</MenuItem>}
+              {serviceitem.results.map((subItem, subItemIndex) => (
                   <MenuItem value={subItem.service_price_id} key={subItemIndex}>
                     {subItem.description}
                   </MenuItem>
