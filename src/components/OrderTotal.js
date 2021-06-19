@@ -6,6 +6,15 @@ const OrderTotal = ({ tailwindCSS }) => {
   let extraPrice=0;
   let totalPrice=order? order.booking_amount : 0;
 
+  var formatter = new Intl.NumberFormat('da-DK', {
+    style: 'currency',
+    currency: 'DKK',
+  
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
+
   participantsData.map((participant, participantKey) => {
     order.participants.map((orderParticipant, orderParticipantKey) => {
       if(participantKey===orderParticipant.participant_id)
@@ -65,7 +74,7 @@ const OrderTotal = ({ tailwindCSS }) => {
         </div>
         <div className="md:flex md:justify-between md:items-center border-black border-t pt-4">
           <h2 className="font-bold text-2xl">Totalpris</h2>
-          <h3 className="font-semibold">DKK {totalPrice+extraPrice}</h3>
+          <h3 className="font-semibold">{formatter.format(totalPrice+extraPrice)}</h3>
         </div>
       </div>
     </div>
