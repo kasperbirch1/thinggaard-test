@@ -40,6 +40,8 @@ const GlobalState = (props) => {
     currentTrip: null,
     currentCombinations: [],
     participantsData: [],
+    participant_service_group_id: "",
+    participant_service_price_id: "",
     order: null,
   };
 
@@ -170,6 +172,20 @@ const GlobalState = (props) => {
       );
       dispatch({
         type: SET_ORDER,
+        payload: data.result,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setParticipantServices = async (roomString) => {
+    try {
+      const { data } = await axios.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/orders/participants/attach?token=${state.token}&order_id=${state.order_id}&parcipant_id=${state.participant_id}&service_group_id=${state.participant_service_group_id}&&service_price_id=${state.participant_serice_price_id}`
+      );
+      dispatch({
+        type: SET_PARTICIPANTS_DATA,
         payload: data.result,
       });
     } catch (error) {

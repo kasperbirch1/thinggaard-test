@@ -26,7 +26,6 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
-  console.log(participant);
   return (
     <li className="p-2 shadow">
       <h2 className="font-semibold text-sm">
@@ -37,7 +36,7 @@ const Participant = ({ participant, personCount }) => {
       </h2>
       <div className="grid grid-cols-3 gap-4">
         <TextField
-          className={classes.formControl}
+          className={classes.FormControl}
           id="name"
           label="Navn"
           variant="outlined"
@@ -46,8 +45,8 @@ const Participant = ({ participant, personCount }) => {
           defaultValue={participant.full_name}
         />
         <TextField
-          className={classes.formControl}
-          id="age"
+        className={classes.FormControl}
+        id="age"
           label="Alder"
           variant="outlined"
           type="number"
@@ -55,9 +54,8 @@ const Participant = ({ participant, personCount }) => {
           defaultValue={participant.age}
         />
         <FormControl
-          className={classes.formControl}
-          variant="outlined"
-          className={classes.formControl}
+        className={classes.FormControl}
+        variant="outlined"
         >
           <InputLabel id="køn">Køn</InputLabel>
           <Select id="køn" label="køn">
@@ -70,7 +68,7 @@ const Participant = ({ participant, personCount }) => {
       <div className={"py-4"}>
         {participant?.services_ordered.map((serviceitem, servicekey) => (
           <div
-            className="grid grid-cols-3 p-4 mb-4 gap-4 rounded"
+            className="grid grid-cols-3 p-4 mb-4 rounded"
             style={{ backgroundColor: "#f2f2f2" }}
             key={servicekey}
           >
@@ -78,8 +76,7 @@ const Participant = ({ participant, personCount }) => {
               <h2>{serviceitem.title}</h2>
             </div>
             <FormControl
-              key={serviceitem.id}
-              className={classes.formControl}
+            key={serviceitem.id}
               variant="outlined"
             >
               <InputLabel id={serviceitem.title}>
