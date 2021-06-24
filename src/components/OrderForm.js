@@ -1,11 +1,13 @@
-import { TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import globalContext from "../context/global/globalContext";
 import { useStyles } from "../styles";
 import Participant from "./Participant";
 
 const OrderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
+  const history = useHistory();
   const { order, participantsdata } = useContext(globalContext);
 
   return (
@@ -15,6 +17,7 @@ const OrderForm = ({ tailwindCSS }) => {
       </h2>
       <form className="">
         <div className="p-4 border border-solid rounded border-gray-400">
+          <h2 className="font-semibold text-sm mb-4">Email for bestiller</h2>
           <TextField
             fullWidth
             id="email"
@@ -30,6 +33,17 @@ const OrderForm = ({ tailwindCSS }) => {
           ))}
         </ul>
       </form>
+      <div className="text-center">
+        <Button
+          onClick={() => {
+            history.push("orderdetails");
+          }}
+          color="primary"
+          variant="contained"
+        >
+          Fortsæt
+        </Button>
+      </div>
     </div>
   );
 };
