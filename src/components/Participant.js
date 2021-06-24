@@ -38,8 +38,8 @@ const Participant = ({ participant, personCount }) => {
 
   return (
     <div className="my-6 p-4 rounded border border-solid border-1 border-gray-400">
-      <div className="grid grid-cols-12 mb-4">
-        <div className="col-span-12">
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 mb-4">
           <h2 className="font-semibold text-lg text-center">
             {(participant.age > 17 ? "Voksen" : "Barn") +
               " (deltager " +
@@ -130,76 +130,79 @@ const Participant = ({ participant, personCount }) => {
           </Select>
         </FormControl>
       </div>
-      <div className={"py-4"}>
+      <div className={"pt-4"}>
         {participant?.services_ordered.map((serviceitem, servicekey) => (
-          <div
-            className="grid grid-cols-3 p-4 mb-4 rounded"
-            style={{ backgroundColor: "#f2f2f2" }}
-            key={servicekey}
-          >
-            <div className={"col-span-2"}>
-              <h2>{serviceitem.title}</h2>
-            </div>
-            <FormControl
-              key={serviceitem.id}
-              variant="outlined"
-              className={classes.formControl}
-            >
-              <InputLabel id={serviceitem.title}>
-                {serviceitem.title}
-              </InputLabel>
-              <Select
-                id={serviceitem.title}
-                value={
-                  participantsDataNew[participant.participant_id] &&
-                  participantsDataNew[participant.participant_id]["services"] &&
-                  participantsDataNew[participant.participant_id]["services"][
-                    serviceitem.id
-                  ]
-                    ? participantsDataNew[participant.participant_id][
-                        "services"
-                      ][serviceitem.id]
-                    : serviceitem.standard
-                    ? serviceitem.standard
-                    : false
-                }
-                onChange={(e) => {
-                  var pushedValue =
-                    participantsDataNew[participant.participant_id]["services"];
-                  pushedValue = pushedValue ? pushedValue : {};
-                  pushedValue[serviceitem.id] = e.target.value;
-                  participantsDataNew[participant.participant_id]["services"] =
-                    pushedValue;
-                  setParticipantsDataNew(participantsDataNew);
-                  dispatch({
-                    type: SET_PARTICIPANTS_DATA,
-                    payload: participantsDataNew,
-                  });
-                }}
+          <div className="mb-4" key={servicekey}>
+            <div className="grid grid-cols-12">
+              <div className="col-span-5">
+                <h2>{serviceitem.title}</h2>
+              </div>
+              <FormControl
+                key={serviceitem.id}
+                variant="outlined"
+                className="col-span-7"
               >
-                <MenuItem disabled>-- Vælg --</MenuItem>
-                {!serviceitem.standard && (
-                  <MenuItem value={false}>Fravalgt</MenuItem>
-                )}
-                {serviceitem.results.map((subItem, subItemIndex) => (
-                  <MenuItem
-                    className={classes.formControl}
-                    value={subItem.service_price_id}
-                    key={subItemIndex}
-                  >
-                    {subItem.description} (
-                    {formatter.format(subItem.service_price)})
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                <InputLabel id={serviceitem.title}>
+                  {serviceitem.title}
+                </InputLabel>
+                <Select
+                  id={serviceitem.title}
+                  value={
+                    participantsDataNew[participant.participant_id] &&
+                    participantsDataNew[participant.participant_id][
+                      "services"
+                    ] &&
+                    participantsDataNew[participant.participant_id]["services"][
+                      serviceitem.id
+                    ]
+                      ? participantsDataNew[participant.participant_id][
+                          "services"
+                        ][serviceitem.id]
+                      : serviceitem.standard
+                      ? serviceitem.standard
+                      : false
+                  }
+                  onChange={(e) => {
+                    var pushedValue =
+                      participantsDataNew[participant.participant_id][
+                        "services"
+                      ];
+                    pushedValue = pushedValue ? pushedValue : {};
+                    pushedValue[serviceitem.id] = e.target.value;
+                    participantsDataNew[participant.participant_id][
+                      "services"
+                    ] = pushedValue;
+                    setParticipantsDataNew(participantsDataNew);
+                    dispatch({
+                      type: SET_PARTICIPANTS_DATA,
+                      payload: participantsDataNew,
+                    });
+                  }}
+                >
+                  <MenuItem disabled>-- Vælg --</MenuItem>
+                  {!serviceitem.standard && (
+                    <MenuItem value={false}>Fravalgt</MenuItem>
+                  )}
+                  {serviceitem.results.map((subItem, subItemIndex) => (
+                    <MenuItem
+                      className={classes.formControl}
+                      value={subItem.service_price_id}
+                      key={subItemIndex}
+                    >
+                      {subItem.description} (
+                      {formatter.format(subItem.service_price)})
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-12 mb-4">
-        <div className="col-span-12 text-center">
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 text-right">
           <Button
-            size="medium"
+            size="large"
             onClick={() => {
               handleParticipantSave(
                 participant.participant_id,
