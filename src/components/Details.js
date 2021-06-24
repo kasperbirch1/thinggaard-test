@@ -30,6 +30,11 @@ const Details = () => {
     period_id,
   } = currentTrip;
 
+  var formatter = new Intl.NumberFormat('da-DK', {
+    style: 'currency',
+    currency: 'DKK',
+  });
+
   useEffect(() => {
     let source = axios.CancelToken.source();
     // fetchCombinations(source, currentAccomodationCode, currentPeriodId);
@@ -49,137 +54,103 @@ const Details = () => {
     };
   };
 
+  const tempRating = ((Math.random() * 1.5) + 3.5).toFixed(1);
   return (
     <>
-      <div className="relative">
-        <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
-        <div className="absolute top-4 right-10 h-32 w-32 rounded-full bg-themeColor grid place-content-center text-center text-sm">
-          BOOK TIDLIG 2.000,
-        </div>
-
-        <div className="p-4 bg-gray-100 md:absolute md:right-10 md:bottom-20 md: md:rounded text-center md:text-left">
-          <div className="font-black line-through	">
-            DKK <span className="">{minimum_price}-</span>
-          </div>
-          <div className="font-black">
-            DKK <span className="">{minimum_price}-</span>
-          </div>
-          <div className="">Vælg værelser og bestil</div>
-        </div>
+    <h1 className="mb-2 mt-2 text-themeColor font-semibold text-xl text-center">
+      {post?.post_title},
+      <span className="ml-2 text-gray-500 font-normal text-sm">
+        {destination_name}
+      </span>
+    </h1>
+<div className="relative">
+      <div className={"p-4"} style={{maxWidth: "960px", margin: "0 auto"}}>
+      <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
       </div>
-      <HotelReviews rating={3} />
+      </div>
+      <HotelReviews rating={tempRating} />
 
       <div className="p-3">
-        <HotelRating rating={4} />
-        <div className="flex">
-          <h2 className="mb-2 text-themeColor font-semibold text-xl">
-            {post?.post_title},
-            <span className="ml-2 text-gray-500 font-normal text-sm">
-              {destination_name}
-            </span>
-          </h2>
-        </div>
-
-        {currentCombinations && (
-          <div className="mb-4 bg-gray-100 p-2 shadow">
-            <table className="table-fixed w-full">
-              <thead>
-                <tr className="text-left text-sm md:text-base">
-                  <th className="py-1 pr-1 w-6/12 md:w-8/12">Værelser</th>
-                  <th className="py-1 pr-1 w-2/12 md:w-2/12">Rejseinfo</th>
-                  <th className="py-1 pr-1 w-2/12 md:w-2/12 text-center">
-                    pris
-                  </th>
-                  <th className="w-2/12"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentCombinations?.map((combination, index) => (
-                  <tr key={index} className="text-sm">
-                    <td className="py-1 pr-1">
-                      {combination.rooms.rooms_description}
-                    </td>
-                    <td className="py-1 pr-1 ">
-                      {combination.transport_code_name} <br />
-                      {combination.current_week.departure_date}
-                      <br />
-                      {combination.current_week.display_days} dage
-                    </td>
-                    <td className="py-1 pr-1 text-center font-semibold">
-                      {combination.current_week.price}
-                    </td>
-                    <td className="">
-                      <Button
-                        onClick={() => {
-                          fetchOrderCreate(combination.rooms.room_string);
-                          history.push("order");
-                        }}
-                        color="primary"
-                        variant="contained"
-                      >
-                        Bestil
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
 
         <Tabs
           value={tabIndex}
           onChange={handleTabIndex}
-          aria-label="simple tabs example"
+          aria-label="Muligheder"
         >
-          <Tab label="Hotellet" {...a11yProps(0)} />
-          <Tab label="Fakta" {...a11yProps(1)} />
-          <Tab label="Kort" {...a11yProps(2)} />
+        <Tab label="Priser" {...a11yProps(0)} />
+        <Tab label="Hotellet" {...a11yProps(1)} />
+        <Tab label="Fakta" {...a11yProps(2)} />
+        <Tab label="Kort" {...a11yProps(3)} />
         </Tabs>
 
-        {/* <div className="flex justify-around bg-gray-100 p-4">
-          <div
-            className={`cursor-pointer ${
-              tabIndex === 0 && "text-lg	font-bold	border-b-2 border-black"
-            }`}
-            onClick={() => setTabIndex(0)}
-          >
-            Hotellet
-          </div>
-          <div
-            className={`cursor-pointer ${
-              tabIndex === 1 && "text-lg	font-bold	border-b-2 border-black"
-            }`}
-            onClick={() => setTabIndex(1)}
-          >
-            Fakta
-          </div>
-          <div
-            className={`cursor-pointer ${
-              tabIndex === 2 && "text-lg	font-bold	border-b-2 border-black"
-            }`}
-            onClick={() => setTabIndex(2)}
-          >
-            Kort
-          </div>
-        </div> */}
-
         <div>
-          {post?.meta?.hotel_beskrivelse && (
-            <div
-              className={`${
-                tabIndex === 0 ? "block" : "hidden"
-              } hotel_beskrivelse`}
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_beskrivelse,
-              }}
-            />
+          <div
+            className={`${
+              tabIndex === 0 ? "block" : "hidden"
+            } hotel_priser`}
+          >
+          {currentCombinations && (
+            <div className="mb-4 bg-gray-100 p-2 shadow">
+              <table className="table-fixed w-full">
+                <thead>
+                  <tr className="text-left text-sm md:text-base">
+                    <th className="py-1 pr-1 w-7/12 md:w-7/12">Værelser</th>
+                    <th className="py-1 pr-1 w-2/12 md:w-2/12">Rejseinfo</th>
+                    <th className="py-1 pr-1 w-2/12 md:w-2/12">Dato</th>
+                    <th className="py-1 pr-1 w-1/12 md:w-1/12">Pris</th>
+                    <th className="w-2/12"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentCombinations?.map((combination, index) => (
+                    <tr key={index} className="text-sm">
+                      <td className="text-xs py-1 pr-1">
+                        {combination.rooms.rooms_description}
+                      </td>
+                      <td className="py-1 pr-1 text-xs">
+                        {combination.transport_code_name}, {combination.current_week.display_days} dage
+                      </td>
+                      <td className="py-1 pr-1 text-xs">
+                        {combination.current_week.departure_date}
+                      </td>
+                      <td className="py-1 pr-1 text-xs font-semibold">
+                        {formatter.format(combination.current_week.price)}
+                      </td>
+                      <td className="text-right">
+                        <Button
+                          onClick={() => {
+                            fetchOrderCreate(combination.rooms.room_string);
+                            history.push("order");
+                          }}
+                          color="primary"
+                          variant="contained"
+                        >
+                          Bestil
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
+          </div>
+
+        {post?.meta?.hotel_beskrivelse && (
+          <div
+            className={`${
+              tabIndex === 1 ? "block" : "hidden"
+            } hotel_beskrivelse`}
+            dangerouslySetInnerHTML={{
+              __html: post?.meta?.hotel_beskrivelse,
+            }}
+          />
+        )}
 
           {post?.meta?.hotel_fakta && (
             <div
               className={`${
-                tabIndex === 1 ? "block" : "hidden"
+                tabIndex === 2 ? "block" : "hidden"
               } hotel_beliggenhed`}
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_fakta,
@@ -190,7 +161,7 @@ const Details = () => {
           {post?.meta?.hotel_beliggenhed && (
             <div
               className={`${
-                tabIndex === 2 ? "block" : "hidden"
+                tabIndex === 3 ? "block" : "hidden"
               } hotel_beliggenhed`}
               dangerouslySetInnerHTML={{
                 __html: post?.meta?.hotel_beliggenhed,

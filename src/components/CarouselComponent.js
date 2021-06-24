@@ -10,13 +10,13 @@ const CarouselComponent = ({ images, DetailsPage }) => {
           {images?.map((img, index) => (
             <img
               key={index}
-              src={img.url}
+              src={img.sizes['gallery-image']}
               loading="lazy"
               alt="CarouselComponent"
             />
           ))}
         </Carousel>
-      ) : (
+            ) : (
         <Carousel
           className={`md:min-h-full md:w-5/12`}
           showIndicators={false}
@@ -28,7 +28,7 @@ const CarouselComponent = ({ images, DetailsPage }) => {
               key={index}
               className={`bg-cover bg-center h-52 md:h-64`}
               style={{
-                backgroundImage: `url(${img.url})`,
+                backgroundImage: `url(${img.sizes["gallery-image"]})`,
               }}
             />
           ))}

@@ -26,6 +26,11 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
+  var formatter = new Intl.NumberFormat('da-DK', {
+    style: 'currency',
+    currency: 'DKK',
+  });
+
   return (
     <div  className="mt-4 mb-4 p-4 rounded border border-solid border-1 border-gray-400">
       <h2 className="font-semibold text-sm mb-4">
@@ -101,9 +106,9 @@ const Participant = ({ participant, personCount }) => {
               <MenuItem disabled>-- Vælg --</MenuItem>
               {!serviceitem.standard && <MenuItem value={false}>Fravalgt</MenuItem>}
               {serviceitem.results.map((subItem, subItemIndex) => (
-                  <MenuItem           className={classes.formControl}
+                  <MenuItem className={classes.formControl}
 value={subItem.service_price_id} key={subItemIndex}>
-                    {subItem.description}
+                    {subItem.description} ({formatter.format(subItem.service_price)})
                   </MenuItem>
                 ))}
               </Select>
