@@ -106,7 +106,7 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
           </div>
         </div>
       </form>
-      <div className="flex justify-around">
+      <div className="flex justify-between">
         <Button
           onClick={() => {
             history.goBack();

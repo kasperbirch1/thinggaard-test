@@ -37,30 +37,15 @@ const Participant = ({ participant, personCount }) => {
   });
 
   return (
-    <div className="mt-4 mb-4 p-4 rounded border border-solid border-1 border-gray-400">
+    <div className="my-6 p-4 rounded border border-solid border-1 border-gray-400">
       <div className="grid grid-cols-12 mb-4">
-        <div className="col-span-8">
-          <h2 className="font-semibold text-sm">
+        <div className="col-span-12">
+          <h2 className="font-semibold text-lg text-center">
             {(participant.age > 17 ? "Voksen" : "Barn") +
               " (deltager " +
               (personCount + 1) +
               ")"}
           </h2>
-        </div>
-        <div className="text-right col-span-4">
-          <Button
-            size="small"
-            onClick={() => {
-              handleParticipantSave(
-                participant.participant_id,
-                participantsDataNew[participant.participant_id]
-              );
-            }}
-            color="secondary"
-            variant="contained"
-          >
-            Gem deltager
-          </Button>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4">
@@ -212,17 +197,9 @@ const Participant = ({ participant, personCount }) => {
         ))}
       </div>
       <div className="grid grid-cols-12 mb-4">
-        <div className="col-span-8">
-          <h2 className="font-semibold text-sm">
-            {(participant.age > 17 ? "Voksen" : "Barn") +
-              " (deltager " +
-              (personCount + 1) +
-              ")"}
-          </h2>
-        </div>
-        <div className="text-right col-span-4">
+        <div className="col-span-12 text-center">
           <Button
-            size="small"
+            size="medium"
             onClick={() => {
               handleParticipantSave(
                 participant.participant_id,
