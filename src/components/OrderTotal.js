@@ -3,25 +3,29 @@ import globalContext from "../context/global/globalContext";
 
 const OrderTotal = ({ tailwindCSS }) => {
   const { currentTrip, order, participantsData } = useContext(globalContext);
-  let extraPrice=0;
-  let totalPrice=order? order.booking_amount : 0;
+  let extraPrice = 0;
+  let totalPrice = order ? order.booking_amount : 0;
 
-  var formatter = new Intl.NumberFormat('da-DK', {
-    style: 'currency',
-    currency: 'DKK',
+  var formatter = new Intl.NumberFormat("da-DK", {
+    style: "currency",
+    currency: "DKK",
   });
 
   participantsData.map((participant, participantKey) => {
     order.participants.map((orderParticipant, orderParticipantKey) => {
-      if(participantKey===orderParticipant.participant_id)
-      {
-        orderParticipant.services.map((orderParticipantService, orderParticipantServiceKey) => {
-          if(orderParticipantService.service_price_id===participant[orderParticipantService.service_group_id])
-          {
-            extraPrice=extraPrice+parseFloat(orderParticipantService.service_price);
-            console.log(extraPrice);
+      if (participantKey === orderParticipant.participant_id) {
+        orderParticipant.services.map(
+          (orderParticipantService, orderParticipantServiceKey) => {
+            if (
+              orderParticipantService.service_price_id ===
+              participant[orderParticipantService.service_group_id]
+            ) {
+              extraPrice =
+                extraPrice + parseFloat(orderParticipantService.service_price);
+              console.log(extraPrice);
+            }
           }
-        })
+        );
       }
     });
   });
@@ -70,7 +74,9 @@ const OrderTotal = ({ tailwindCSS }) => {
         </div>
         <div className="md:flex md:justify-between md:items-center border-black border-t pt-4">
           <h2 className="font-bold text-2xl">Totalpris</h2>
-          <h3 className="font-semibold">{formatter.format(totalPrice+extraPrice)}</h3>
+          <h3 className="font-semibold">
+            {formatter.format(totalPrice + extraPrice)}
+          </h3>
         </div>
       </div>
     </div>

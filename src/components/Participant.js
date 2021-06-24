@@ -26,13 +26,13 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
-  var formatter = new Intl.NumberFormat('da-DK', {
-    style: 'currency',
-    currency: 'DKK',
+  var formatter = new Intl.NumberFormat("da-DK", {
+    style: "currency",
+    currency: "DKK",
   });
 
   return (
-    <div  className="mt-4 mb-4 p-4 rounded border border-solid border-1 border-gray-400">
+    <div className="mt-4 mb-4 p-4 rounded border border-solid border-1 border-gray-400">
       <h2 className="font-semibold text-sm mb-4">
         {(participant.age > 17 ? "Voksen" : "Barn") +
           " (deltager " +
@@ -41,8 +41,8 @@ const Participant = ({ participant, personCount }) => {
       </h2>
       <div className="grid grid-cols-3 gap-4">
         <TextField
-        className={classes.formControl}
-        id="name"
+          className={classes.formControl}
+          id="name"
           label="Navn"
           variant="outlined"
           type="text"
@@ -50,18 +50,15 @@ const Participant = ({ participant, personCount }) => {
           defaultValue={participant.full_name}
         />
         <TextField
-        className={classes.formControl}
-        id="age"
+          className={classes.formControl}
+          id="age"
           label="Alder"
           variant="outlined"
           type="number"
           name="age"
           defaultValue={participant.age}
         />
-        <FormControl
-        className={classes.formControl}
-        variant="outlined"
-        >
+        <FormControl className={classes.formControl} variant="outlined">
           <InputLabel id="køn">Køn</InputLabel>
           <Select id="køn" label="køn">
             <MenuItem disabled>-- Køn --</MenuItem>
@@ -81,21 +78,33 @@ const Participant = ({ participant, personCount }) => {
               <h2>{serviceitem.title}</h2>
             </div>
             <FormControl
-            key={serviceitem.id}
+              key={serviceitem.id}
               variant="outlined"
               className={classes.formControl}
-              >
+            >
               <InputLabel id={serviceitem.title}>
                 {serviceitem.title}
               </InputLabel>
               <Select
                 id={serviceitem.title}
-                value={participantsDataNew[participant.participant_id] && participantsDataNew[participant.participant_id][serviceitem.id]  ? participantsDataNew[participant.participant_id][serviceitem.id] : serviceitem.standard ? serviceitem.standard : false}
+                value={
+                  participantsDataNew[participant.participant_id] &&
+                  participantsDataNew[participant.participant_id][
+                    serviceitem.id
+                  ]
+                    ? participantsDataNew[participant.participant_id][
+                        serviceitem.id
+                      ]
+                    : serviceitem.standard
+                    ? serviceitem.standard
+                    : false
+                }
                 onChange={(e) => {
-                  var pushedValue=participantsDataNew[participant.participant_id];
-                  pushedValue=pushedValue ? pushedValue : {};
-                  pushedValue[serviceitem.id]=e.target.value;
-                  participantsDataNew[participant.participant_id]=pushedValue;
+                  var pushedValue =
+                    participantsDataNew[participant.participant_id];
+                  pushedValue = pushedValue ? pushedValue : {};
+                  pushedValue[serviceitem.id] = e.target.value;
+                  participantsDataNew[participant.participant_id] = pushedValue;
                   setParticipantsDataNew(participantsDataNew);
                   dispatch({
                     type: SET_PARTICIPANTS_DATA,
@@ -103,12 +112,18 @@ const Participant = ({ participant, personCount }) => {
                   });
                 }}
               >
-              <MenuItem disabled>-- Vælg --</MenuItem>
-              {!serviceitem.standard && <MenuItem value={false}>Fravalgt</MenuItem>}
-              {serviceitem.results.map((subItem, subItemIndex) => (
-                  <MenuItem className={classes.formControl}
-value={subItem.service_price_id} key={subItemIndex}>
-                    {subItem.description} ({formatter.format(subItem.service_price)})
+                <MenuItem disabled>-- Vælg --</MenuItem>
+                {!serviceitem.standard && (
+                  <MenuItem value={false}>Fravalgt</MenuItem>
+                )}
+                {serviceitem.results.map((subItem, subItemIndex) => (
+                  <MenuItem
+                    className={classes.formControl}
+                    value={subItem.service_price_id}
+                    key={subItemIndex}
+                  >
+                    {subItem.description} (
+                    {formatter.format(subItem.service_price)})
                   </MenuItem>
                 ))}
               </Select>

@@ -6,7 +6,8 @@ import HotelRating from "./HotelRating";
 import HotelReviews from "./HotelReviews";
 import globalContext from "../context/global/globalContext";
 import { useHistory } from "react-router-dom";
-import { Button, Tab, Tabs } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import { Button, Tab, Tabs, TabPane, Box, Typography } from "@material-ui/core";
 
 const Details = () => {
   const history = useHistory();
@@ -30,9 +31,9 @@ const Details = () => {
     period_id,
   } = currentTrip;
 
-  var formatter = new Intl.NumberFormat('da-DK', {
-    style: 'currency',
-    currency: 'DKK',
+  var formatter = new Intl.NumberFormat("da-DK", {
+    style: "currency",
+    currency: "DKK",
   });
 
   useEffect(() => {
@@ -54,99 +55,115 @@ const Details = () => {
     };
   };
 
-  const tempRating = ((Math.random() * 1.5) + 3.5).toFixed(1);
+  const TabPanel = (props) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  };
+
+  const tempRating = (Math.random() * 1.5 + 3.5).toFixed(1);
   return (
     <>
-    <h1 className="mb-2 mt-2 text-themeColor font-semibold text-xl text-center">
-      {post?.post_title},
-      <span className="ml-2 text-gray-500 font-normal text-sm">
-        {destination_name}
-      </span>
-    </h1>
-<div className="relative">
-      <div className={"p-4"} style={{maxWidth: "960px", margin: "0 auto"}}>
-      <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
-      </div>
+      <h1 className="mb-2 mt-2 text-themeColor font-semibold text-xl text-center">
+        {post?.post_title},
+        <span className="ml-2 text-gray-500 font-normal text-sm">
+          {destination_name}
+        </span>
+      </h1>
+      <div className="relative">
+        <div className={"p-4"} style={{ maxWidth: "960px", margin: "0 auto" }}>
+          <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
+        </div>
       </div>
       <HotelReviews rating={tempRating} />
 
       <div className="p-3">
-
-        <Tabs
-          value={tabIndex}
-          onChange={handleTabIndex}
-          aria-label="Muligheder"
-        >
-        <Tab label="Priser" {...a11yProps(0)} />
-        <Tab label="Hotellet" {...a11yProps(1)} />
-        <Tab label="Fakta" {...a11yProps(2)} />
-        <Tab label="Kort" {...a11yProps(3)} />
-        </Tabs>
-
-        <div>
-          <div
-            className={`${
-              tabIndex === 0 ? "block" : "hidden"
-            } hotel_priser`}
+        <AppBar position={"static"}>
+          <Tabs
+            value={tabIndex}
+            onChange={handleTabIndex}
+            aria-label="Muligheder"
           >
+            <Tab label="Priser" {...a11yProps(0)} />
+            <Tab label="Hotellet" {...a11yProps(1)} />
+            <Tab label="Fakta" {...a11yProps(2)} />
+            <Tab label="Kort" {...a11yProps(3)} />
+          </Tabs>
+        </AppBar>
+
+        <TabPanel className="mb-4 py-4" value={tabIndex} index={0}>
           {currentCombinations && (
-            <div className="mb-4 bg-gray-100 p-2 shadow">
-              <table className="table-fixed w-full">
-                <thead>
-                  <tr className="text-left text-sm md:text-base">
-                    <th className="py-1 pr-1 w-7/12 md:w-7/12">Værelser</th>
-                    <th className="py-1 pr-1 w-2/12 md:w-2/12">Rejseinfo</th>
-                    <th className="py-1 pr-1 w-2/12 md:w-2/12">Dato</th>
-                    <th className="py-1 pr-1 w-1/12 md:w-1/12">Pris</th>
-                    <th className="w-2/12"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentCombinations?.map((combination, index) => (
-                    <tr key={index} className="text-sm">
-                      <td className="text-xs py-1 pr-1">
-                        {combination.rooms.rooms_description}
-                      </td>
-                      <td className="py-1 pr-1 text-xs">
-                        {combination.transport_code_name}, {combination.current_week.display_days} dage
-                      </td>
-                      <td className="py-1 pr-1 text-xs">
-                        {combination.current_week.departure_date}
-                      </td>
-                      <td className="py-1 pr-1 text-xs font-semibold">
-                        {formatter.format(combination.current_week.price)}
-                      </td>
-                      <td className="text-right">
-                        <Button
-                          onClick={() => {
-                            fetchOrderCreate(combination.rooms.room_string);
-                            history.push("order");
-                          }}
-                          color="primary"
-                          variant="contained"
-                        >
-                          Bestil
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <>
+              <div className="grid bg-gray-400 p-4 grid-cols-12">
+                <div className="col-span-5">Værelser</div>
+                <div className="col-span-2">Rejseinfo</div>
+                <div className="col-span-2">Dato</div>
+                <div className="col-span-2">Pris</div>
+                <div className=""></div>
+              </div>
+              {currentCombinations?.map((combination, index) => (
+                <div
+                  key={index}
+                  className={`${
+                    index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
+                  } grid grid-cols-12 p-4`}
+                >
+                  <div className="col-span-5 pt-2 text-sm">
+                    {combination.rooms.rooms_description}
+                  </div>
+                  <div className="col-span-2 pt-2 text-sm">
+                    {combination.transport_code_name},{" "}
+                    {combination.current_week.display_days} dage
+                  </div>
+                  <div className="col-span-2 text-sm pt-2 ">
+                    {combination.current_week.departure_date}
+                  </div>
+                  <div className="col-span-2 text-sm pt-2 font-semibold">
+                    {formatter.format(combination.current_week.price)}
+                  </div>
+                  <div className="text-sm text-right">
+                    <Button
+                      onClick={() => {
+                        fetchOrderCreate(combination.rooms.room_string);
+                        history.push("order");
+                      }}
+                      color="primary"
+                      variant="contained"
+                    >
+                      Bestil
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </>
           )}
-          </div>
+        </TabPanel>
 
-        {post?.meta?.hotel_beskrivelse && (
-          <div
-            className={`${
-              tabIndex === 1 ? "block" : "hidden"
-            } hotel_beskrivelse`}
-            dangerouslySetInnerHTML={{
-              __html: post?.meta?.hotel_beskrivelse,
-            }}
-          />
-        )}
+        <TabPanel className="mb-4 py-4" value={tabIndex} index={1}>
+          {post?.meta?.hotel_beskrivelse && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: post?.meta?.hotel_beskrivelse,
+              }}
+            />
+          )}
+        </TabPanel>
 
+        <TabPanel className="mb-4 py-4" value={tabIndex} index={2}>
           {post?.meta?.hotel_fakta && (
             <div
               className={`${
@@ -157,7 +174,9 @@ const Details = () => {
               }}
             />
           )}
+        </TabPanel>
 
+        <TabPanel className="mb-4 py-4" value={tabIndex} index={3}>
           {post?.meta?.hotel_beliggenhed && (
             <div
               className={`${
@@ -168,7 +187,7 @@ const Details = () => {
               }}
             />
           )}
-        </div>
+        </TabPanel>
       </div>
     </>
   );
