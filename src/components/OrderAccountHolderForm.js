@@ -106,7 +106,15 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
           </div>
         </div>
       </form>
-      <div className="text-center">
+      <div className="flex justify-around">
+        <Button
+          onClick={() => {
+            history.goBack();
+          }}
+          variant="outlined"
+        >
+          Tilbage
+        </Button>
         <Button
           onClick={() => {
             history.push("orderconfirm");

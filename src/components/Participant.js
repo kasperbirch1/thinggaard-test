@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import {
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -26,6 +27,10 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
+  const handleParticipantSave = (participantId, participantServices) => {
+    console.log(participantsDataNew);
+  };
+
   var formatter = new Intl.NumberFormat("da-DK", {
     style: "currency",
     currency: "DKK",
@@ -33,12 +38,31 @@ const Participant = ({ participant, personCount }) => {
 
   return (
     <div className="mt-4 mb-4 p-4 rounded border border-solid border-1 border-gray-400">
-      <h2 className="font-semibold text-sm mb-4">
-        {(participant.age > 17 ? "Voksen" : "Barn") +
-          " (deltager " +
-          (personCount + 1) +
-          ")"}
-      </h2>
+      <div className="grid grid-cols-12 mb-4">
+        <div className="col-span-8">
+          <h2 className="font-semibold text-sm">
+            {(participant.age > 17 ? "Voksen" : "Barn") +
+              " (deltager " +
+              (personCount + 1) +
+              ")"}
+          </h2>
+        </div>
+        <div className="text-right col-span-4">
+          <Button
+            size="small"
+            onClick={() => {
+              handleParticipantSave(
+                participant.participant_id,
+                participantsDataNew[participant.participant_id]
+              );
+            }}
+            color="secondary"
+            variant="contained"
+          >
+            Gem deltager
+          </Button>
+        </div>
+      </div>
       <div className="grid grid-cols-3 gap-4">
         <TextField
           className={classes.formControl}
@@ -48,6 +72,23 @@ const Participant = ({ participant, personCount }) => {
           type="text"
           name="name"
           defaultValue={participant.full_name}
+          value={
+            participantsDataNew[participant.participant_id] &&
+            participantsDataNew[participant.participant_id]["name"]
+              ? participantsDataNew[participant.participant_id]["name"]
+              : participant.full_name
+          }
+          onChange={(e) => {
+            var pushedValue = participantsDataNew[participant.participant_id];
+            pushedValue = pushedValue ? pushedValue : {};
+            pushedValue["name"] = e.target.value;
+            participantsDataNew[participant.participant_id] = pushedValue;
+            setParticipantsDataNew(participantsDataNew);
+            dispatch({
+              type: SET_PARTICIPANTS_DATA,
+              payload: participantsDataNew,
+            });
+          }}
         />
         <TextField
           className={classes.formControl}
@@ -57,10 +98,47 @@ const Participant = ({ participant, personCount }) => {
           type="number"
           name="age"
           defaultValue={participant.age}
+          value={
+            participantsDataNew[participant.participant_id] &&
+            participantsDataNew[participant.participant_id]["age"]
+              ? participantsDataNew[participant.participant_id]["age"]
+              : participant.age
+          }
+          onChange={(e) => {
+            var pushedValue = participantsDataNew[participant.participant_id];
+            pushedValue = pushedValue ? pushedValue : {};
+            pushedValue["age"] = e.target.value;
+            participantsDataNew[participant.participant_id] = pushedValue;
+            setParticipantsDataNew(participantsDataNew);
+            dispatch({
+              type: SET_PARTICIPANTS_DATA,
+              payload: participantsDataNew,
+            });
+          }}
         />
         <FormControl className={classes.formControl} variant="outlined">
           <InputLabel id="køn">Køn</InputLabel>
-          <Select id="køn" label="køn">
+          <Select
+            id="køn"
+            label="køn"
+            value={
+              participantsDataNew[participant.participant_id] &&
+              participantsDataNew[participant.participant_id]["gender"]
+                ? participantsDataNew[participant.participant_id]["gender"]
+                : participant.full_name
+            }
+            onChange={(e) => {
+              var pushedValue = participantsDataNew[participant.participant_id];
+              pushedValue = pushedValue ? pushedValue : {};
+              pushedValue["gender"] = e.target.value;
+              participantsDataNew[participant.participant_id] = pushedValue;
+              setParticipantsDataNew(participantsDataNew);
+              dispatch({
+                type: SET_PARTICIPANTS_DATA,
+                payload: participantsDataNew,
+              });
+            }}
+          >
             <MenuItem disabled>-- Køn --</MenuItem>
             <MenuItem value="M">Mand</MenuItem>
             <MenuItem value="K">Kvinde</MenuItem>
@@ -89,22 +167,24 @@ const Participant = ({ participant, personCount }) => {
                 id={serviceitem.title}
                 value={
                   participantsDataNew[participant.participant_id] &&
-                  participantsDataNew[participant.participant_id][
+                  participantsDataNew[participant.participant_id]["services"] &&
+                  participantsDataNew[participant.participant_id]["services"][
                     serviceitem.id
                   ]
                     ? participantsDataNew[participant.participant_id][
-                        serviceitem.id
-                      ]
+                        "services"
+                      ][serviceitem.id]
                     : serviceitem.standard
                     ? serviceitem.standard
                     : false
                 }
                 onChange={(e) => {
                   var pushedValue =
-                    participantsDataNew[participant.participant_id];
+                    participantsDataNew[participant.participant_id]["services"];
                   pushedValue = pushedValue ? pushedValue : {};
                   pushedValue[serviceitem.id] = e.target.value;
-                  participantsDataNew[participant.participant_id] = pushedValue;
+                  participantsDataNew[participant.participant_id]["services"] =
+                    pushedValue;
                   setParticipantsDataNew(participantsDataNew);
                   dispatch({
                     type: SET_PARTICIPANTS_DATA,
@@ -131,6 +211,31 @@ const Participant = ({ participant, personCount }) => {
           </div>
         ))}
       </div>
+      <div className="grid grid-cols-12 mb-4">
+        <div className="col-span-8">
+          <h2 className="font-semibold text-sm">
+            {(participant.age > 17 ? "Voksen" : "Barn") +
+              " (deltager " +
+              (personCount + 1) +
+              ")"}
+          </h2>
+        </div>
+        <div className="text-right col-span-4">
+          <Button
+            size="small"
+            onClick={() => {
+              handleParticipantSave(
+                participant.participant_id,
+                participantsDataNew[participant.participant_id]
+              );
+            }}
+            color="secondary"
+            variant="contained"
+          >
+            Gem deltager
+          </Button>
+        </div>
+      </div>{" "}
     </div>
   );
 };

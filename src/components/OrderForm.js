@@ -33,7 +33,15 @@ const OrderForm = ({ tailwindCSS }) => {
           ))}
         </ul>
       </form>
-      <div className="text-center">
+      <div className="flex justify-between">
+        <Button
+          onClick={() => {
+            history.goBack();
+          }}
+          variant="outlined"
+        >
+          Tilbage
+        </Button>
         <Button
           onClick={() => {
             history.push("orderdetails");
