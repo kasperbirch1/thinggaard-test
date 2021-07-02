@@ -16,6 +16,7 @@ import {
   SET_CURRENT_TRIP,
   SET_ORDER,
   SET_PARTICIPANTS_DATA,
+  SET_CUSTOMER_DATA,
 } from "../types";
 import axios from "axios";
 
@@ -42,6 +43,7 @@ const GlobalState = (props) => {
     participantsData: [],
     participant_service_group_id: "",
     participant_service_price_id: "",
+    customerData: {},
     order: null,
   };
 
@@ -179,14 +181,37 @@ const GlobalState = (props) => {
     }
   };
 
-  const setParticipantServices = async (roomString) => {
+  const setParticipantsData = async (saveData) => {
+    const postData = {
+      token: state.token,
+      order_id: state.order.id,
+      pin_code: state.order.pin_code,
+      participants: state.participantsData,
+    };
+
     try {
-      const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/orders/participants/attach?token=${state.token}&order_id=${state.order_id}&parcipant_id=${state.participant_id}&service_group_id=${state.participant_service_group_id}&&service_price_id=${state.participant_serice_price_id}`
-      );
-      dispatch({
-        type: SET_PARTICIPANTS_DATA,
-        payload: data.result,
+      const { data } = await axios({
+        url: "https://thinggaard.dk/wp-json/thinggaard/v1/orders/participants/attach",
+        method: "POST",
+        data: postData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setCustomerData = async (saveData) => {
+    const postData = {
+      token: state.token,
+      order_id: state.order.id,
+      customer: JSON.stringify(state.customerData),
+    };
+
+    try {
+      const { data } = await axios({
+        url: "https://thinggaard.dk/wp-json/thinggaard/v1/orders/customers/patch",
+        method: "POST",
+        data: postData,
       });
     } catch (error) {
       console.log(error);
@@ -298,10 +323,13 @@ const GlobalState = (props) => {
         childrenAges: state.childrenAges,
         order: state.order,
         participantsData: state.participantsData,
+        customerData: state.customerData,
         dispatch,
         handleSubmit,
         fetchCombinations,
         fetchOrderCreate,
+        setParticipantsData,
+        setCustomerData,
       }}
     >
       {props.children}

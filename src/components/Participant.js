@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Button,
   FormControl,
@@ -21,20 +21,40 @@ import { useStyles } from "../styles";
 const Participant = ({ participant, personCount }) => {
   const classes = useStyles();
 
-  const { participantsData, dispatch } = useContext(globalContext);
+  const { participantsData, setParticipantsData, dispatch } =
+    useContext(globalContext);
+
+  console.log(participantsData);
 
   const [participantsDataNew, setParticipantsDataNew] = useState(
     participantsData ? participantsData : []
   );
 
-  const handleParticipantSave = (participantId, participantServices) => {
-    console.log(participantsDataNew);
+  const handleParticipantSave = () => {
+    setParticipantsData(participantsDataNew);
   };
 
   var formatter = new Intl.NumberFormat("da-DK", {
     style: "currency",
     currency: "DKK",
   });
+
+  useEffect(() => {
+    var pushedValue = participantsDataNew ? participantsDataNew : [];
+    pushedValue[personCount] = pushedValue[personCount] ?? {};
+    pushedValue[personCount].id = participant.participant_id;
+    pushedValue[personCount].name = participant.full_name;
+    pushedValue[personCount].age = participant.age;
+    pushedValue[personCount].gender = participant.gender;
+    pushedValue[personCount].services = {};
+    setParticipantsDataNew(pushedValue);
+    dispatch({
+      type: SET_PARTICIPANTS_DATA,
+      payload: participantsDataNew,
+    });
+    console.log("loaded");
+    console.log(pushedValue);
+  }, []);
 
   return (
     <div className="my-6 p-4 rounded border border-solid border-1 border-gray-400">
@@ -52,23 +72,23 @@ const Participant = ({ participant, personCount }) => {
         <TextField
           className={classes.formControl}
           id="name"
-          label="Navn"
+          label="Fulde navn"
           variant="outlined"
           type="text"
           name="name"
           defaultValue={participant.full_name}
           value={
-            participantsDataNew[participant.participant_id] &&
-            participantsDataNew[participant.participant_id]["name"]
-              ? participantsDataNew[participant.participant_id]["name"]
+            participantsDataNew[personCount] &&
+            participantsDataNew[personCount].name
+              ? participantsDataNew[personCount].name
               : participant.full_name
           }
           onChange={(e) => {
-            var pushedValue = participantsDataNew[participant.participant_id];
-            pushedValue = pushedValue ? pushedValue : {};
-            pushedValue["name"] = e.target.value;
-            participantsDataNew[participant.participant_id] = pushedValue;
-            setParticipantsDataNew(participantsDataNew);
+            var pushedValue = participantsDataNew ? participantsDataNew : [];
+            pushedValue[personCount] = pushedValue[personCount] ?? {};
+            pushedValue[personCount].id = participant.participant_id;
+            pushedValue[personCount].name = e.target.value;
+            setParticipantsDataNew(pushedValue);
             dispatch({
               type: SET_PARTICIPANTS_DATA,
               payload: participantsDataNew,
@@ -84,17 +104,17 @@ const Participant = ({ participant, personCount }) => {
           name="age"
           defaultValue={participant.age}
           value={
-            participantsDataNew[participant.participant_id] &&
-            participantsDataNew[participant.participant_id]["age"]
-              ? participantsDataNew[participant.participant_id]["age"]
+            participantsDataNew[personCount] &&
+            participantsDataNew[personCount].age
+              ? participantsDataNew[personCount].age
               : participant.age
           }
           onChange={(e) => {
-            var pushedValue = participantsDataNew[participant.participant_id];
-            pushedValue = pushedValue ? pushedValue : {};
-            pushedValue["age"] = e.target.value;
-            participantsDataNew[participant.participant_id] = pushedValue;
-            setParticipantsDataNew(participantsDataNew);
+            var pushedValue = participantsDataNew ? participantsDataNew : [];
+            pushedValue[personCount] = pushedValue[personCount] ?? {};
+            pushedValue[personCount].id = participant.participant_id;
+            pushedValue[personCount].age = e.target.value;
+            setParticipantsDataNew(pushedValue);
             dispatch({
               type: SET_PARTICIPANTS_DATA,
               payload: participantsDataNew,
@@ -107,17 +127,17 @@ const Participant = ({ participant, personCount }) => {
             id="køn"
             label="køn"
             value={
-              participantsDataNew[participant.participant_id] &&
-              participantsDataNew[participant.participant_id]["gender"]
-                ? participantsDataNew[participant.participant_id]["gender"]
-                : participant.full_name
+              participantsDataNew[personCount] &&
+              participantsDataNew[personCount].gender
+                ? participantsDataNew[personCount].gender
+                : false
             }
             onChange={(e) => {
-              var pushedValue = participantsDataNew[participant.participant_id];
-              pushedValue = pushedValue ? pushedValue : {};
-              pushedValue["gender"] = e.target.value;
-              participantsDataNew[participant.participant_id] = pushedValue;
-              setParticipantsDataNew(participantsDataNew);
+              var pushedValue = participantsDataNew ? participantsDataNew : [];
+              pushedValue[personCount] = pushedValue[personCount] ?? {};
+              pushedValue[personCount].id = participant.participant_id;
+              pushedValue[personCount].gender = e.target.value;
+              setParticipantsDataNew(pushedValue);
               dispatch({
                 type: SET_PARTICIPANTS_DATA,
                 payload: participantsDataNew,
@@ -148,31 +168,37 @@ const Participant = ({ participant, personCount }) => {
                 <Select
                   id={serviceitem.title}
                   value={
-                    participantsDataNew[participant.participant_id] &&
-                    participantsDataNew[participant.participant_id][
-                      "services"
-                    ] &&
-                    participantsDataNew[participant.participant_id]["services"][
-                      serviceitem.id
-                    ]
-                      ? participantsDataNew[participant.participant_id][
-                          "services"
-                        ][serviceitem.id]
+                    participantsDataNew[personCount] &&
+                    participantsDataNew[personCount].services &&
+                    participantsDataNew[personCount].services[servicekey]
+                      ? participantsDataNew[personCount].services[servicekey]
+                          .service_price_id
                       : serviceitem.standard
                       ? serviceitem.standard
                       : false
                   }
                   onChange={(e) => {
-                    var pushedValue =
-                      participantsDataNew[participant.participant_id][
-                        "services"
-                      ];
-                    pushedValue = pushedValue ? pushedValue : {};
-                    pushedValue[serviceitem.id] = e.target.value;
-                    participantsDataNew[participant.participant_id][
-                      "services"
-                    ] = pushedValue;
-                    setParticipantsDataNew(participantsDataNew);
+                    var pushedValue = participantsDataNew
+                      ? participantsDataNew
+                      : [];
+                    pushedValue[personCount] = pushedValue[personCount] ?? {};
+
+                    pushedValue[personCount].id = participant.participant_id;
+                    pushedValue[personCount].services =
+                      pushedValue[personCount].services ?? [];
+
+                    pushedValue[personCount].services[servicekey] = {};
+
+                    console.log(pushedValue[personCount].services);
+                    console.log(pushedValue);
+
+                    pushedValue[personCount].services[servicekey]
+                      ? (pushedValue[personCount].services[servicekey] = {
+                          service_group_id: serviceitem.id,
+                          service_price_id: e.target.value,
+                        })
+                      : (pushedValue[personCount].services[servicekey] = {});
+                    setParticipantsDataNew(pushedValue);
                     dispatch({
                       type: SET_PARTICIPANTS_DATA,
                       payload: participantsDataNew,
@@ -202,12 +228,16 @@ const Participant = ({ participant, personCount }) => {
       <div className="grid grid-cols-12">
         <div className="col-span-12 text-right">
           <Button
+            disabled={
+              participantsDataNew[personCount]?.name &&
+              participantsDataNew[personCount]?.age &&
+              participantsDataNew[personCount]?.gender
+                ? false
+                : true
+            }
             size="large"
             onClick={() => {
-              handleParticipantSave(
-                participant.participant_id,
-                participantsDataNew[participant.participant_id]
-              );
+              handleParticipantSave();
             }}
             color="secondary"
             variant="contained"

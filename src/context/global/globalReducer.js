@@ -19,6 +19,7 @@ import {
   SET_CHILDREN_AGES,
   SET_ORDER,
   SET_PARTICIPANTS_DATA,
+  SET_CUSTOMER_DATA,
 } from "../types";
 
 const globalReducer = (state, action) => {
@@ -117,6 +118,11 @@ const globalReducer = (state, action) => {
       return {
         ...state,
         participantsData: action.payload,
+      };
+    case SET_CUSTOMER_DATA:
+      return {
+        ...state,
+        customerData: action.payload,
       };
     case SET_ORDER: {
       return {

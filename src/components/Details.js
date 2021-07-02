@@ -5,6 +5,7 @@ import CarouselComponent from "./CarouselComponent";
 import HotelRating from "./HotelRating";
 import HotelReviews from "./HotelReviews";
 import globalContext from "../context/global/globalContext";
+import { SET_PARTICIPANTS_DATA } from "../context/types";
 import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import { Button, Tab, Tabs, TabPane, Box, Typography } from "@material-ui/core";
@@ -19,6 +20,8 @@ const Details = () => {
     currentCombinations,
     fetchOrderCreate,
   } = useContext(globalContext);
+
+  const { participantsData, dispatch } = useContext(globalContext);
 
   const {
     destination_name,
@@ -138,6 +141,11 @@ const Details = () => {
                   <div className="text-sm text-right">
                     <Button
                       onClick={() => {
+                        dispatch({
+                          type: SET_PARTICIPANTS_DATA,
+                          payload: [],
+                        });
+
                         fetchOrderCreate(combination.rooms.room_string);
                         history.push("order");
                       }}
