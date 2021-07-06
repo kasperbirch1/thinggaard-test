@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import globalContext from "../context/global/globalContext";
 
 const OrderTotal = ({ tailwindCSS }) => {
@@ -12,23 +12,18 @@ const OrderTotal = ({ tailwindCSS }) => {
   });
 
   participantsData.map((participant, participantKey) => {
-    order.participants.map((orderParticipant, orderParticipantKey) => {
-      if (participantKey === orderParticipant.participant_id) {
-        orderParticipant.services.map(
-          (orderParticipantService, orderParticipantServiceKey) => {
-            if (
-              orderParticipantService.service_price_id ===
-              participant[orderParticipantService.service_group_id]
-            ) {
-              extraPrice =
-                extraPrice + parseFloat(orderParticipantService.service_price);
-              console.log(extraPrice);
-            }
-          }
-        );
+    for (const [participantServiceKey, participantService] of Object.entries(
+      participant.services
+    )) {
+      var serviceItem = JSON.parse(participantService.item);
+
+      if (serviceItem) {
+        extraPrice = extraPrice + parseFloat(serviceItem.cost);
+        console.log(JSON.parse(participantService.item));
       }
-    });
+    }
   });
+
   return (
     <div className={`rounded bg-gray-100 shadow ${tailwindCSS}`}>
       <div className="bg-themeColor rounded-t px-4 py-6">

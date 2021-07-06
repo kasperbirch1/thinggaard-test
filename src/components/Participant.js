@@ -24,8 +24,6 @@ const Participant = ({ participant, personCount }) => {
   const { participantsData, setParticipantsData, dispatch } =
     useContext(globalContext);
 
-  console.log(participantsData);
-
   const [participantsDataNew, setParticipantsDataNew] = useState(
     participantsData ? participantsData : []
   );
@@ -52,8 +50,6 @@ const Participant = ({ participant, personCount }) => {
       type: SET_PARTICIPANTS_DATA,
       payload: participantsDataNew,
     });
-    console.log("loaded");
-    console.log(pushedValue);
   }, []);
 
   return (
@@ -150,81 +146,94 @@ const Participant = ({ participant, personCount }) => {
           </Select>
         </FormControl>
       </div>
-      <div className={"pt-4"}>
-        {participant?.services_ordered.map((serviceitem, servicekey) => (
-          <div className="mb-4" key={servicekey}>
-            <div className="grid grid-cols-12">
-              <div className="col-span-5">
-                <h2>{serviceitem.title}</h2>
-              </div>
-              <FormControl
-                key={serviceitem.id}
-                variant="outlined"
-                className="col-span-7"
-              >
-                <InputLabel id={serviceitem.title}>
-                  {serviceitem.title}
-                </InputLabel>
-                <Select
-                  id={serviceitem.title}
-                  value={
-                    participantsDataNew[personCount] &&
-                    participantsDataNew[personCount].services &&
-                    participantsDataNew[personCount].services[servicekey]
-                      ? participantsDataNew[personCount].services[servicekey]
-                          .service_price_id
-                      : serviceitem.standard
-                      ? serviceitem.standard
-                      : false
-                  }
-                  onChange={(e) => {
-                    var pushedValue = participantsDataNew
-                      ? participantsDataNew
-                      : [];
-                    pushedValue[personCount] = pushedValue[personCount] ?? {};
+      {participantsDataNew[personCount]?.name &&
+        participantsDataNew[personCount]?.age &&
+        participantsDataNew[personCount]?.gender && (
+          <div className={"pt-4"}>
+            {participant?.services_ordered.map((serviceitem, servicekey) => (
+              <div className="mb-4" key={servicekey}>
+                <div className="grid grid-cols-12">
+                  <div className="col-span-5">
+                    <h2>{serviceitem.title}</h2>
+                  </div>
+                  <FormControl
+                    key={serviceitem.id}
+                    variant="outlined"
+                    className="col-span-7"
+                  >
+                    <InputLabel id={serviceitem.title}>
+                      {serviceitem.title}
+                    </InputLabel>
+                    <Select
+                      id={serviceitem.title}
+                      value={
+                        participantsDataNew[personCount] &&
+                        participantsDataNew[personCount].services &&
+                        participantsDataNew[personCount].services[servicekey] &&
+                        participantsDataNew[personCount].services[servicekey]
+                          .item
+                          ? participantsDataNew[personCount].services[
+                              servicekey
+                            ].item
+                          : serviceitem.standard
+                          ? JSON.stringify({
+                              id: serviceitem.standard,
+                              cost: "0.0",
+                            })
+                          : false
+                      }
+                      onChange={(e) => {
+                        var pushedValue = participantsDataNew
+                          ? participantsDataNew
+                          : [];
+                        pushedValue[personCount] =
+                          pushedValue[personCount] ?? {};
 
-                    pushedValue[personCount].id = participant.participant_id;
-                    pushedValue[personCount].services =
-                      pushedValue[personCount].services ?? [];
+                        pushedValue[personCount].id =
+                          participant.participant_id;
+                        pushedValue[personCount].services =
+                          pushedValue[personCount].services ?? [];
 
-                    pushedValue[personCount].services[servicekey] = {};
+                        pushedValue[personCount].services[servicekey] = {};
 
-                    console.log(pushedValue[personCount].services);
-                    console.log(pushedValue);
-
-                    pushedValue[personCount].services[servicekey]
-                      ? (pushedValue[personCount].services[servicekey] = {
-                          service_group_id: serviceitem.id,
-                          service_price_id: e.target.value,
-                        })
-                      : (pushedValue[personCount].services[servicekey] = {});
-                    setParticipantsDataNew(pushedValue);
-                    dispatch({
-                      type: SET_PARTICIPANTS_DATA,
-                      payload: participantsDataNew,
-                    });
-                  }}
-                >
-                  <MenuItem disabled>-- Vælg --</MenuItem>
-                  {!serviceitem.standard && (
-                    <MenuItem value={false}>Fravalgt</MenuItem>
-                  )}
-                  {serviceitem.results.map((subItem, subItemIndex) => (
-                    <MenuItem
-                      className={classes.formControl}
-                      value={subItem.service_price_id}
-                      key={subItemIndex}
+                        pushedValue[personCount].services[servicekey]
+                          ? (pushedValue[personCount].services[servicekey] = {
+                              service_group_id: serviceitem.id,
+                              item: e.target.value,
+                            })
+                          : (pushedValue[personCount].services[servicekey] =
+                              {});
+                        setParticipantsDataNew(pushedValue);
+                        dispatch({
+                          type: SET_PARTICIPANTS_DATA,
+                          payload: participantsDataNew,
+                        });
+                      }}
                     >
-                      {subItem.description} (
-                      {formatter.format(subItem.service_price)})
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+                      <MenuItem disabled>-- Vælg --</MenuItem>
+                      {!serviceitem.standard && (
+                        <MenuItem value={false}>Fravalgt</MenuItem>
+                      )}
+                      {serviceitem.results.map((subItem, subItemIndex) => (
+                        <MenuItem
+                          className={classes.formControl}
+                          value={JSON.stringify({
+                            id: subItem.service_price_id,
+                            cost: subItem.service_price,
+                          })}
+                          key={subItemIndex}
+                        >
+                          {subItem.description} (
+                          {formatter.format(subItem.service_price)})
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        )}
       <div className="grid grid-cols-12">
         <div className="col-span-12 text-right">
           <Button
