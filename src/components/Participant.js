@@ -28,8 +28,13 @@ const Participant = ({ participant, personCount }) => {
     participantsData ? participantsData : []
   );
 
-  const handleParticipantSave = () => {
+  const handleParticipantSave = (person) => {
+    participantsDataNew[person].saved = true;
     setParticipantsData(participantsDataNew);
+    dispatch({
+      type: SET_PARTICIPANTS_DATA,
+      payload: participantsDataNew,
+    });
   };
 
   var formatter = new Intl.NumberFormat("da-DK", {
@@ -235,7 +240,7 @@ const Participant = ({ participant, personCount }) => {
           </div>
         )}
       <div className="grid grid-cols-12">
-        <div className="col-span-12 text-right">
+        <div className="col-span-12 mt-4 text-right">
           <Button
             disabled={
               participantsDataNew[personCount]?.name &&
@@ -246,12 +251,15 @@ const Participant = ({ participant, personCount }) => {
             }
             size="large"
             onClick={() => {
-              handleParticipantSave();
+              handleParticipantSave(personCount);
             }}
             color="secondary"
             variant="contained"
           >
-            Gem deltager
+            {participantsDataNew[personCount] &&
+            participantsDataNew[personCount].saved
+              ? "Opdater deltager"
+              : "Gem Deltager"}
           </Button>
         </div>
       </div>{" "}
