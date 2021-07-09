@@ -135,7 +135,7 @@ const Details = () => {
                   <div className="col-span-2 text-sm pt-2 ">
                     {combination.current_week.departure_date}
                   </div>
-                  <div className="col-span-2 text-sm pt-2 font-semibold">
+                  <div className="col-span-1 text-sm pt-2 font-semibold">
                     {formatter.format(combination.current_week.price)}
                   </div>
                   <div className="text-sm text-right">

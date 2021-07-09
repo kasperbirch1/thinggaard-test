@@ -15,6 +15,7 @@ import {
   SET_CURRENT_COMBINATIONS,
   SET_CURRENT_TRIP,
   SET_ORDER,
+  SET_CUSTOMER_CONFIRM,
   SET_PARTICIPANTS_DATA,
   SET_CUSTOMER_DATA,
 } from "../types";
@@ -218,6 +219,25 @@ const GlobalState = (props) => {
     }
   };
 
+  const setCustomerConfirm = async (saveData) => {
+    const postData = {
+      token: state.token,
+      order_id: state.order.id,
+      pin_code: state.order.pin_code,
+      customer: JSON.stringify(state.customerData),
+    };
+
+    try {
+      const { data } = await axios({
+        url: "https://thinggaard.dk/wp-json/thinggaard/v1/orders/finalize",
+        method: "POST",
+        data: postData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const countAdults = (number) => {
     let countAdults = [];
     for (let i = 0; i < state.adults; i++) {
@@ -324,12 +344,14 @@ const GlobalState = (props) => {
         order: state.order,
         participantsData: state.participantsData,
         customerData: state.customerData,
+        customerConfirm: state.customerConfirm,
         dispatch,
         handleSubmit,
         fetchCombinations,
         fetchOrderCreate,
         setParticipantsData,
         setCustomerData,
+        setCustomerConfirm,
       }}
     >
       {props.children}

@@ -20,6 +20,7 @@ import {
   SET_ORDER,
   SET_PARTICIPANTS_DATA,
   SET_CUSTOMER_DATA,
+  SET_CUSTOMER_CONFIRM,
 } from "../types";
 
 const globalReducer = (state, action) => {
@@ -123,6 +124,11 @@ const globalReducer = (state, action) => {
       return {
         ...state,
         customerData: action.payload,
+      };
+    case SET_CUSTOMER_CONFIRM:
+      return {
+        ...state,
+        customerConfirm: action.payload,
       };
     case SET_ORDER: {
       return {

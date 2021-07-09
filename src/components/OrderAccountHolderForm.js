@@ -1,13 +1,97 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import globalContext from "../context/global/globalContext";
 import { useStyles } from "../styles";
 import { useHistory } from "react-router-dom";
+import { SET_CUSTOMER_DATA } from "../context/types";
+import { SET_CUSTOMER_CONFIRM } from "../context/types";
 
 const OrderAccountHolderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { order, participantsdata } = useContext(globalContext);
+  const {
+    order,
+    customerData,
+    setCustomerData,
+    customerConfirm,
+    setCustomerConfirm,
+    participantsdata,
+    dispatch,
+  } = useContext(globalContext);
+
+  const [customerNameFirst, setCustomerNameFirst] = useState(
+    customerData.first_name ? customerData.first_name : ""
+  );
+  const [customerNameLast, setCustomerNameLast] = useState(
+    customerData.last_name ? customerData.last_name : ""
+  );
+  const [customerEmail, setCustomerEmail] = useState(
+    customerData.email_address ? customerData.email_address : ""
+  );
+  const [customerPhone, setCustomerPhone] = useState(
+    customerData.phone ? customerData.phone : ""
+  );
+  const [customerAddress1, setCustomerAddress1] = useState(
+    customerData.address1 ? customerData.address1 : ""
+  );
+  const [customerAddress2, setCustomerAddress2] = useState(
+    customerData.address2 ? customerData.address2 : ""
+  );
+  const [customerZip, setCustomerZip] = useState(
+    customerData.zip ? customerData.zip : ""
+  );
+  const [customerCity, setCustomerCity] = useState(
+    customerData.city ? customerData.city : ""
+  );
+
+  const [customerStatus, setCustomerStatus] = useState(false);
+
+  useEffect(() => {
+    if (
+      customerEmail &&
+      customerNameFirst &&
+      customerNameLast &&
+      customerPhone &&
+      customerAddress1 &&
+      customerZip &&
+      customerCity
+    ) {
+      setCustomerStatus(true);
+    } else {
+      setCustomerStatus(false);
+    }
+  }, [
+    customerNameFirst,
+    customerNameLast,
+    customerEmail,
+    customerPhone,
+    customerAddress1,
+    customerAddress2,
+    customerZip,
+    customerCity,
+  ]);
+
+  const handleCustomerFinalize = () => {
+    let customerDataTemp = customerData ? customerData : {};
+    customerDataTemp.pin_code = order.pin_code;
+    customerDataTemp.first_name = customerNameFirst;
+    customerDataTemp.last_name = customerNameLast;
+    customerDataTemp.email_address = customerEmail;
+    customerDataTemp.phone = customerPhone;
+    customerDataTemp.address1 = customerAddress1;
+    customerDataTemp.address2 = customerAddress2;
+    customerDataTemp.zip = customerZip;
+    customerDataTemp.city = customerCity;
+
+    dispatch({
+      type: SET_CUSTOMER_DATA,
+      payload: customerData,
+    });
+
+    setCustomerData(customerDataTemp);
+
+    setCustomerConfirm(customerDataTemp);
+  };
 
   return (
     <div className={` ${tailwindCSS}`}>
@@ -25,6 +109,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="firstname"
+              value={customerNameFirst}
+              onChange={(e) => {
+                setCustomerNameFirst(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -36,6 +124,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="lastname"
+              value={customerNameLast}
+              onChange={(e) => {
+                setCustomerNameLast(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -47,6 +139,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="email"
               name="email"
+              value={customerEmail}
+              onChange={(e) => {
+                setCustomerEmail(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -58,6 +154,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="phone"
+              value={customerPhone}
+              onChange={(e) => {
+                setCustomerPhone(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -69,6 +169,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="address1"
+              value={customerAddress1}
+              onChange={(e) => {
+                setCustomerAddress1(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -80,6 +184,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="address2"
+              value={customerAddress2}
+              onChange={(e) => {
+                setCustomerAddress2(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -91,6 +199,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="zip"
+              value={customerZip}
+              onChange={(e) => {
+                setCustomerZip(e.target.value);
+              }}
             />
           </div>
           <div className="col-span-6">
@@ -102,6 +214,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
               variant="outlined"
               type="text"
               name="city"
+              value={customerCity}
+              onChange={(e) => {
+                setCustomerCity(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -115,15 +231,18 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
         >
           Tilbage
         </Button>
-        <Button
-          onClick={() => {
-            history.push("orderconfirm");
-          }}
-          color="primary"
-          variant="contained"
-        >
-          Bekræft
-        </Button>
+        {customerStatus && (
+          <Button
+            onClick={() => {
+              handleCustomerFinalize();
+              history.push("orderconfirmation");
+            }}
+            color="primary"
+            variant="contained"
+          >
+            Bekræft
+          </Button>
+        )}
       </div>
     </div>
   );
