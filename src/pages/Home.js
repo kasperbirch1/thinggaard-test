@@ -19,29 +19,31 @@ const Home = () => {
   return (
     <>
       {destinations && (
-        <>
-          <form
-            onSubmit={handleSubmit}
-            className="mt-6 flex mx-auto justify-center md:space-x-2"
-          >
-            <DestinationsSelect />
-            <DurationsSelect />
-            <TransportsSelect />
-            <AdultsSelect />
-            <ChildrenSelect />
-            <DatesSelect />
-            <FormControl className={classes.formControl}>
-              <Button
-                size="large"
-                color="primary"
-                type="submit"
-                variant="contained"
-                style={{ minHeight: "56px" }}
-              >
-                Find Rejse
-              </Button>
-            </FormControl>
-          </form>
+        <div className={trips ? "trip-search-trips" : "trip-search-home"}>
+          <div className="trip-search-form">
+            <form
+              onSubmit={handleSubmit}
+              className="flex mx-auto justify-center md:space-x-2"
+            >
+              <DestinationsSelect />
+              <DurationsSelect />
+              <TransportsSelect />
+              <AdultsSelect />
+              <ChildrenSelect />
+              <DatesSelect />
+              <FormControl className={classes.formControl}>
+                <Button
+                  size="large"
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  style={{ minHeight: "56px" }}
+                >
+                  Find Rejse
+                </Button>
+              </FormControl>
+            </form>
+          </div>
 
           {currentTrip && <Details />}
 
@@ -60,7 +62,7 @@ const Home = () => {
               </p>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );

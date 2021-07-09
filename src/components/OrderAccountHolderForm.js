@@ -47,6 +47,10 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
   const [customerStatus, setCustomerStatus] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (
       customerEmail &&
       customerNameFirst &&

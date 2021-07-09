@@ -25,6 +25,10 @@ const OrderForm = ({ tailwindCSS }) => {
 
   const [customerStatus, setCustomerStatus] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCustomerSave = () => {
     let customerDataTemp = customerData ? customerData : {};
     customerDataTemp.pin_code = order.pin_code;

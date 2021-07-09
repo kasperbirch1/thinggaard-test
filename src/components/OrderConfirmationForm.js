@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import globalContext from "../context/global/globalContext";
 import { useStyles } from "../styles";
 import { useHistory } from "react-router-dom";
@@ -8,6 +8,9 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   const history = useHistory();
   const { order, customerData, dispatch } = useContext(globalContext);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className={` ${tailwindCSS}`}>
       <h2 className="bg-gray-100 p-4 text-4xl text text-center font-bold text-themeColor mb-4 rounded shadow">

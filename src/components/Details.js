@@ -48,6 +48,10 @@ const Details = () => {
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleTabIndex = (event, newValue) => {
     setTabIndex(newValue);
   };
