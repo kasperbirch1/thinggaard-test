@@ -6,19 +6,19 @@ const CarouselComponent = ({ images, DetailsPage }) => {
   return (
     <>
       {DetailsPage ? (
-        <Carousel autoPlay={false} dynamicHeight={true}>
+        <Carousel autoPlay={false} showThumbs={false} dynamicHeight={true}>
           {images?.map((img, index) => (
             <img
               key={index}
-              src={img.sizes['gallery-image']}
+              src={img.sizes["gallery-image"]}
               loading="lazy"
               alt="CarouselComponent"
             />
           ))}
         </Carousel>
-            ) : (
+      ) : (
         <Carousel
-          className={`md:min-h-full md:w-5/12`}
+          className={`md:min-h-full`}
           showIndicators={false}
           showThumbs={false}
           autoPlay={false}

@@ -255,6 +255,7 @@ const Participant = ({ participant, personCount }) => {
             }}
             color="secondary"
             variant="contained"
+            size="large"
           >
             {participantsDataNew[personCount] &&
             participantsDataNew[personCount].saved

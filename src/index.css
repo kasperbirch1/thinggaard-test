@@ -21,6 +21,15 @@
   }
 }
 
+.trip-search-trips .carousel .thumbs-wrapper {
+  margin: 10px 0 0;
+}
+
 .MuiOutlinedInput-adornedEnd {
   padding: 0 !important;
+}
+
+.booking-container {
+  max-width: 1140px;
+  margin: 0 auto;
 }

@@ -99,7 +99,7 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
 
   return (
     <div className={` ${tailwindCSS}`}>
-      <h2 className="bg-gray-100 p-4 text-4xl text text-center font-bold text-themeColor mb-4 rounded shadow">
+      <h2 className="p-2 text-4xl text text-center font-bold mb-4">
         Bestiller
       </h2>
       <form className="mb-4">
@@ -232,21 +232,22 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
             history.goBack();
           }}
           variant="outlined"
+          size="large"
         >
           Tilbage
         </Button>
-        {customerStatus && (
-          <Button
-            onClick={() => {
-              handleCustomerFinalize();
-              history.push("orderconfirmation");
-            }}
-            color="primary"
-            variant="contained"
-          >
-            Bekræft
-          </Button>
-        )}
+        <Button
+          onClick={() => {
+            handleCustomerFinalize();
+            history.push("orderconfirmation");
+          }}
+          color="primary"
+          size="large"
+          disabled={customerStatus ? false : true}
+          variant="contained"
+        >
+          Bekræft
+        </Button>
       </div>
     </div>
   );

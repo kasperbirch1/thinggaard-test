@@ -34,7 +34,9 @@ const TransportsSelect = () => {
               key={item.transport_category_id}
               value={item.transport_category_id}
             >
-              {item.transport_category_name}
+              {item.transport_category_name == "Car"
+                ? "Bil"
+                : item.transport_category_name}
             </MenuItem>
           ))}
         </Select>

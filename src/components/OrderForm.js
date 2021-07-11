@@ -47,108 +47,105 @@ const OrderForm = ({ tailwindCSS }) => {
 
   return (
     <div className={` ${tailwindCSS}`}>
-      <h2 className="bg-gray-100 p-4 text-4xl text text-center font-bold text-themeColor mb-4 rounded shadow">
+      <h2 className="p-2 text-4xl text text-center font-bold mb-4">
         Deltagere
       </h2>
-      <form className="">
-        <div className="p-4 border border-solid rounded border-gray-400">
-          <h2 className="font-semibold text-sm mb-4">Bestiller Information</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <TextField
-                fullWidth
-                id="nameFirst"
-                label="Fornavn"
-                variant="outlined"
-                type="text"
-                name="nameFirst"
-                value={customerNameFirst}
-                onChange={(e) => {
-                  setCustomerNameFirst(e.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <TextField
-                fullWidth
-                id="nameLast"
-                label="Efternavn"
-                variant="outlined"
-                type="text"
-                name="nameLast"
-                value={customerNameLast}
-                onChange={(e) => {
-                  setCustomerNameLast(e.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <TextField
-                fullWidth
-                id="email"
-                label="Email"
-                variant="outlined"
-                type="email"
-                name="email"
-                value={customerEmail}
-                onChange={(e) => {
-                  setCustomerEmail(e.target.value);
-                }}
-              />
-            </div>
+      <div className="p-4 border border-solid rounded border-gray-400">
+        <h2 className="font-semibold text-sm mb-4">Bestiller Information</h2>
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <TextField
+              fullWidth
+              id="nameFirst"
+              label="Fornavn"
+              variant="outlined"
+              type="text"
+              name="nameFirst"
+              value={customerNameFirst}
+              onChange={(e) => {
+                setCustomerNameFirst(e.target.value);
+              }}
+            />
           </div>
-          <div className="mt-4 text-right">
-            {customerStatus ? (
-              <Button
-                disabled={
-                  customerEmail && customerNameFirst && customerNameLast
-                    ? false
-                    : true
-                }
-                size="large"
-                onClick={() => {
-                  handleCustomerSave();
-                }}
-                color="secondary"
-                variant="contained"
-              >
-                Opdater bestiller
-              </Button>
-            ) : (
-              <Button
-                disabled={
-                  customerEmail && customerNameFirst && customerNameLast
-                    ? false
-                    : true
-                }
-                size="large"
-                onClick={() => {
-                  handleCustomerSave();
-                }}
-                color="secondary"
-                variant="contained"
-              >
-                Gem bestiller
-              </Button>
-            )}
-            {customerStatus && <h3 className="mt-4">Bestiller gemt</h3>}
+          <div>
+            <TextField
+              fullWidth
+              id="nameLast"
+              label="Efternavn"
+              variant="outlined"
+              type="text"
+              name="nameLast"
+              value={customerNameLast}
+              onChange={(e) => {
+                setCustomerNameLast(e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            <TextField
+              fullWidth
+              id="email"
+              label="Email"
+              variant="outlined"
+              type="email"
+              name="email"
+              value={customerEmail}
+              onChange={(e) => {
+                setCustomerEmail(e.target.value);
+              }}
+            />
           </div>
         </div>
+        <div className="mt-4 text-right">
+          {customerStatus ? (
+            <Button
+              disabled={
+                customerEmail && customerNameFirst && customerNameLast
+                  ? false
+                  : true
+              }
+              size="large"
+              onClick={() => {
+                handleCustomerSave();
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              Opdater bestiller
+            </Button>
+          ) : (
+            <Button
+              disabled={
+                customerEmail && customerNameFirst && customerNameLast
+                  ? false
+                  : true
+              }
+              size="large"
+              onClick={() => {
+                handleCustomerSave();
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              Gem bestiller
+            </Button>
+          )}
+          {customerStatus && <h3 className="mt-4">Bestiller gemt</h3>}
+        </div>
+      </div>
+      {customerStatus &&
+        order?.participants &&
+        order.participants.map((item, index) => (
+          <Participant participant={item} personCount={index} />
+        ))}
 
-        {customerStatus && (
-          <ul>
-            {order?.participants.map((item, index) => (
-              <Participant participant={item} personCount={index} />
-            ))}
-          </ul>
-        )}
-      </form>
       <div className="mt-4 flex justify-between">
         <Button
           onClick={() => {
             history.goBack();
           }}
           variant="outlined"
+          size="large"
         >
           Tilbage
         </Button>
@@ -158,6 +155,7 @@ const OrderForm = ({ tailwindCSS }) => {
           }}
           color="primary"
           variant="contained"
+          size="large"
         >
           Fortsæt
         </Button>

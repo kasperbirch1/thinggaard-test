@@ -85,18 +85,22 @@ const Details = () => {
   const tempRating = (Math.random() * 1.5 + 3.5).toFixed(1);
   return (
     <>
-      <h1 className="mb-2 mt-2 text-themeColor font-semibold text-xl text-center">
-        {post?.post_title},
-        <span className="ml-2 text-gray-500 font-normal text-sm">
-          {destination_name}
-        </span>
-      </h1>
+      <div className="grid mb-2 mt-4 grid-cols-12">
+        <h1 className="col-span-12 font-semibold text-2xl text-center">
+          {post?.post_title},
+          <span className="ml-2 text-gray-500 font-normal">
+            {destination_name}
+          </span>
+        </h1>
+        {/*
+          <HotelReviews className="col-span-4" rating={tempRating} />
+          */}
+      </div>
       <div className="relative">
-        <div className={"p-4"} style={{ maxWidth: "960px", margin: "0 auto" }}>
+        <div className={"py-4"} style={{ maxWidth: "960px", margin: "0 auto" }}>
           <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
         </div>
       </div>
-      <HotelReviews rating={tempRating} />
 
       <div className="p-3">
         <AppBar position={"static"}>
@@ -112,15 +116,15 @@ const Details = () => {
           </Tabs>
         </AppBar>
 
-        <TabPanel className="mb-4 py-4" value={tabIndex} index={0}>
+        <TabPanel className="pt-4" value={tabIndex} index={0}>
           {currentCombinations && (
             <>
               <div className="grid bg-gray-400 p-4 grid-cols-12">
-                <div className="col-span-5">Værelser</div>
+                <div className="col-span-4">Værelser</div>
                 <div className="col-span-2">Rejseinfo</div>
                 <div className="col-span-2">Dato</div>
                 <div className="col-span-2">Pris</div>
-                <div className=""></div>
+                <div className="col-span-2"></div>
               </div>
               {currentCombinations?.map((combination, index) => (
                 <div
@@ -129,20 +133,20 @@ const Details = () => {
                     index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
                   } grid grid-cols-12 p-4`}
                 >
-                  <div className="col-span-5 pt-2 text-sm">
+                  <div className="col-span-4 pt-2 pr-4 text-xs">
                     {combination.rooms.rooms_description}
                   </div>
-                  <div className="col-span-2 pt-2 text-sm">
+                  <div className="col-span-2 pt-2 text-xs">
                     {combination.transport_code_name},{" "}
                     {combination.current_week.display_days} dage
                   </div>
-                  <div className="col-span-2 text-sm pt-2 ">
+                  <div className="col-span-2 text-xs pt-2 ">
                     {combination.current_week.departure_date}
                   </div>
-                  <div className="col-span-1 text-sm pt-2 font-semibold">
+                  <div className="col-span-2 text-xs pt-2 font-semibold">
                     {formatter.format(combination.current_week.price)}
                   </div>
-                  <div className="text-sm text-right">
+                  <div className="col-span-2 text-sm text-right">
                     <Button
                       onClick={() => {
                         dispatch({
@@ -165,7 +169,7 @@ const Details = () => {
           )}
         </TabPanel>
 
-        <TabPanel className="mb-4 py-4" value={tabIndex} index={1}>
+        <TabPanel className="pt-4" value={tabIndex} index={1}>
           {post?.meta?.hotel_beskrivelse && (
             <div
               dangerouslySetInnerHTML={{
@@ -175,7 +179,7 @@ const Details = () => {
           )}
         </TabPanel>
 
-        <TabPanel className="mb-4 py-4" value={tabIndex} index={2}>
+        <TabPanel className="pt-4" value={tabIndex} index={2}>
           {post?.meta?.hotel_fakta && (
             <div
               className={`${
@@ -188,7 +192,7 @@ const Details = () => {
           )}
         </TabPanel>
 
-        <TabPanel className="mb-4 py-4" value={tabIndex} index={3}>
+        <TabPanel className="pt-4" value={tabIndex} index={3}>
           {post?.meta?.hotel_beliggenhed && (
             <div
               className={`${

@@ -19,7 +19,6 @@ const OrderTotal = ({ tailwindCSS }) => {
 
       if (serviceItem) {
         extraPrice = extraPrice + parseFloat(serviceItem.cost);
-        console.log(JSON.parse(participantService.item));
       }
     }
   });

@@ -20,7 +20,7 @@ const Home = () => {
     <>
       {destinations && (
         <div className={trips ? "trip-search-trips" : "trip-search-home"}>
-          <div className="trip-search-form">
+          <div className="trip-search-form booking-container">
             <form
               onSubmit={handleSubmit}
               className="flex mx-auto justify-center md:space-x-2"
@@ -52,7 +52,7 @@ const Home = () => {
           ))}
 
           {trips === undefined && (
-            <div className="m-4 p-3 text-center shadow">
+            <div className="m-4 p-3 text-center">
               <p className="font-bold">
                 Vi kunne desværre ikke finde din rejse
               </p>

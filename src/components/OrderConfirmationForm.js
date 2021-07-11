@@ -13,7 +13,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   }, []);
   return (
     <div className={` ${tailwindCSS}`}>
-      <h2 className="bg-gray-100 p-4 text-4xl text text-center font-bold text-themeColor mb-4 rounded shadow">
+      <h2 className="p-2 text-4xl text text-center font-bold mb-4">
         Bekræftelse
       </h2>
       <p className="text-center">
