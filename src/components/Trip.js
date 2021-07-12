@@ -26,31 +26,31 @@ const Trip = ({ trip }) => {
   }
 
   return (
-    <div className="relative my-4 booking-container p-4 border border-solid border-1 border-gray-300 rounded md:flex">
+    <div className="relative mt-4 mb-8 booking-container p-4 border border-solid border-1 border-gray-300 rounded">
       <div className="grid grid-cols-12">
-        <div className="col-span-5 pr-4">
+        <div className="col-span-5 pr-6">
           <CarouselComponent images={post.meta.gallery_settings} />
           {/* <Link
         to={`hotel/${accomodation_code}/${period_id}`}
         className="block md:w-7/12"
       > */}
         </div>
-        <div className="col-span-8">
-          <div className="grid grid-cols-12">
+        <div className="col-span-7">
+          <div className="grid grid-cols-12 mb-2">
             <div className="col-span-8">
-              <h2 className="mb-2 font-semibold text-xl">
+              <h2 className="py-2 mb-0 font-semibold text-xl">
                 {post?.post_title},
-                <span className="ml-2 text-gray-500 font-normal text-sm">
+                <span className="ml-2 text-gray-500 font-normal">
                   {destination_name}
                 </span>
               </h2>
             </div>
-            <div className="col-span-4">
-              <p className="m-0 self-end text-red-500 font-black text-right">{`Pris: ${minimum_price} kr.`}</p>
+            <div className="col-span-4 border">
+              <h2 className="py-2 m-0 font-bold text-center">{`Pris fra ${minimum_price} kr.`}</h2>
             </div>
           </div>
 
-          <p>{room_description}</p>
+          <div className="text-xs font-bold">{room_description}</div>
 
           {post?.meta?.hotel_beskrivelse && (
             <div
@@ -62,9 +62,15 @@ const Trip = ({ trip }) => {
           )}
 
           <div className="grid grid-cols-12">
-            <div className="col-span-6">
-              <p className="m-0">Rejselængde: {travel_length}</p>
-              <p className="m-0">Hjemrejse: {return_date}</p>
+            <div className="col-span-6 text-sm">
+              <div className="grid grid-cols-12 m-0">
+                <div className="col-span-6 font-semibold">Rejselængde:</div>
+                <div className="col-span-6">{travel_length} dage</div>
+              </div>
+              <div className="grid grid-cols-12 m-0">
+                <div className="col-span-6 font-semibold">Hjemrejse:</div>
+                <div className="col-span-6">{return_date}</div>
+              </div>
             </div>
             <div className="col-span-6 text-right">
               <Button

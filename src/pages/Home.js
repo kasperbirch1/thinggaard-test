@@ -1,12 +1,12 @@
 import { Button, FormControl, TextField } from "@material-ui/core";
 import { useContext } from "react";
+import globalContext from "../context/global/globalContext";
 import DatesSelect from "../components/form-inputs/DatesSelect";
 import DestinationsSelect from "../components/form-inputs/DestinationsSelect";
 import DurationsSelect from "../components/form-inputs/DurationsSelect";
 import TransportsSelect from "../components/form-inputs/TransportsSelect";
 import Trip from "../components/Trip";
 import { useStyles } from "../styles";
-import globalContext from "../context/global/globalContext";
 import Details from "../components/Details";
 import AdultsSelect from "../components/form-inputs/AdultsSelect";
 import ChildrenSelect from "../components/form-inputs/ChildrenSelect";
@@ -23,7 +23,7 @@ const Home = () => {
           <div className="trip-search-form booking-container">
             <form
               onSubmit={handleSubmit}
-              className="flex mx-auto justify-center md:space-x-2"
+              className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-7 justify-center"
             >
               <DestinationsSelect />
               <DurationsSelect />

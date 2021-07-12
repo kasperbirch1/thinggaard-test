@@ -84,7 +84,7 @@ const Details = () => {
 
   const tempRating = (Math.random() * 1.5 + 3.5).toFixed(1);
   return (
-    <>
+    <div className="booking-container rounded p-4 mt-4">
       <div className="grid mb-2 mt-4 grid-cols-12">
         <h1 className="col-span-12 font-semibold text-2xl text-center">
           {post?.post_title},
@@ -96,13 +96,11 @@ const Details = () => {
           <HotelReviews className="col-span-4" rating={tempRating} />
           */}
       </div>
-      <div className="relative">
-        <div className={"py-4"} style={{ maxWidth: "960px", margin: "0 auto" }}>
-          <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
-        </div>
+      <div className={"pt-4"}>
+        <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
       </div>
 
-      <div className="p-3">
+      <div className="py-4">
         <AppBar position={"static"}>
           <Tabs
             value={tabIndex}
@@ -205,7 +203,7 @@ const Details = () => {
           )}
         </TabPanel>
       </div>
-    </>
+    </div>
   );
 };
 

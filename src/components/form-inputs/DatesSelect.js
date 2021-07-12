@@ -36,32 +36,33 @@ const DatesSelect = () => {
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        onClick={() => setPickerStatus(true)}
-        onClose={() => setPickerStatus(false)}
-        open={pickerStatus}
-        disableToolbar
-        shouldDisableDate={disableDays}
-        className={classes.formControl}
-        clearable
-        autoOk={true}
-        animateYearScrolling={true}
-        value={currentDate}
-        label="Dato"
-        onChange={(date) => {
-          dispatch({
-            type: SET_CURRENT_DATE,
-            payload: date,
-          });
-        }}
-        minDate={new Date()}
-        format="MM/dd/yyyy"
-        // renderDay={renderDayInPicker}
-        inputVariant="outlined"
-        variant="dialog"
-      />
-    </MuiPickersUtilsProvider>
+    <div className="mr-2">
+      <MuiPickersUtilsProvider className="col-span-1" utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          onClick={() => setPickerStatus(true)}
+          onClose={() => setPickerStatus(false)}
+          open={pickerStatus}
+          disableToolbar
+          shouldDisableDate={disableDays}
+          clearable
+          autoOk={true}
+          animateYearScrolling={true}
+          value={currentDate}
+          label="Dato"
+          onChange={(date) => {
+            dispatch({
+              type: SET_CURRENT_DATE,
+              payload: date,
+            });
+          }}
+          minDate={new Date()}
+          format="MM/dd/yyyy"
+          // renderDay={renderDayInPicker}
+          inputVariant="outlined"
+          variant="dialog"
+        />
+      </MuiPickersUtilsProvider>
+    </div>
   );
 };
 

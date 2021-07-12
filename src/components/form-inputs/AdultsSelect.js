@@ -10,11 +10,11 @@ const AdultsSelect = () => {
 
   return (
     <>
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl variant="outlined" className="col-span-1">
         <div
-          className="form-wrap"
+          className="form-wrap mr-2"
           style={{
-            padding: "0 20px",
+            padding: "0 10px",
             borderRadius: "5px",
             border: "1px solid #bbb",
           }}

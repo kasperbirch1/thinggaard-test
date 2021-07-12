@@ -10,12 +10,13 @@ const DestinationsSelect = () => {
     useContext(globalContext);
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl variant="outlined" className="col-span-1 pr-2">
       <InputLabel id="destinations">Rejsemål</InputLabel>
       <Select
         id="destinations"
         value={currentDestination}
         label="destinations"
+        className="mr-2"
         onChange={(e) => {
           dispatch({
             type: SET_CURRENT_DESTINATION,

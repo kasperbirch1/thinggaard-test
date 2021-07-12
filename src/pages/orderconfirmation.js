@@ -16,9 +16,9 @@ const OrderConfirmation = () => {
 
   return (
     <>
-      <div className="md:flex">
-        <OrderConfirmationForm tailwindCSS="md:w-8/12 md:p-2" />
-        <OrderTotal tailwindCSS="md:w-4/12 md:m-2" />
+      <div className="booking-container p-4 rounded grid grid-cols-12">
+        <OrderConfirmationForm tailwindCSS="col-span-8 pr-6" />
+        <OrderTotal tailwindCSS="col-span-4" />
       </div>
       {/* <pre>{JSON.stringify(order, null, 2)}</pre> */}
     </>

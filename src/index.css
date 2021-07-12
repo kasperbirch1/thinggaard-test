@@ -29,7 +29,32 @@
   padding: 0 !important;
 }
 
+#root {
+  margin-top: 65px;
+  background-color: #eaeaea;
+}
+
+.trip-outer-home {
+  padding: 240px 0;
+  background-image: url(https://thinggaard.dk/wp-content/uploads/thinggaard_search_header.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.trip-outer-trips {
+  padding: 40px 0;
+}
+
+.trip-search-form {
+  padding: 15px;
+  border-radius: 5px;
+  background: #fff;
+}
+
 .booking-container {
   max-width: 1140px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
 }

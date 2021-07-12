@@ -30,7 +30,7 @@ const Participant = ({ participant, personCount }) => {
 
   const handleParticipantSave = (person) => {
     participantsDataNew[person].saved = true;
-    setParticipantsData(participantsDataNew);
+
     dispatch({
       type: SET_PARTICIPANTS_DATA,
       payload: participantsDataNew,

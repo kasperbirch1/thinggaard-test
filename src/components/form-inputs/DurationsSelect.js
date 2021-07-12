@@ -9,12 +9,13 @@ const DurationsSelect = () => {
   const { durations, currentDuration, dispatch } = useContext(globalContext);
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl variant="outlined" className="col-span-1 pr-2">
       <InputLabel id="DurationsSelect">Rejselængde</InputLabel>
       <Select
         id="DurationsSelect"
         value={currentDuration}
         label="DurationsSelect"
+        className="mr-2"
         onChange={(e) => {
           dispatch({
             type: SET_CURRENT_DURATION,

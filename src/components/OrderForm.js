@@ -5,6 +5,9 @@ import globalContext from "../context/global/globalContext";
 import { useStyles } from "../styles";
 import Participant from "./Participant";
 import { SET_CUSTOMER_DATA } from "../context/types";
+import "animate.css";
+
+var customerTimer;
 
 const OrderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
@@ -12,6 +15,8 @@ const OrderForm = ({ tailwindCSS }) => {
 
   const { order, customerData, setCustomerData, dispatch } =
     useContext(globalContext);
+
+  const [customerSaved, setCustomerSaved] = useState(false);
 
   const [customerNameFirst, setCustomerNameFirst] = useState(
     customerData.first_name ? customerData.first_name : ""
@@ -30,6 +35,8 @@ const OrderForm = ({ tailwindCSS }) => {
   }, []);
 
   const handleCustomerSave = () => {
+    window.clearTimeout(customerTimer);
+    setCustomerSaved(true);
     let customerDataTemp = customerData ? customerData : {};
     customerDataTemp.pin_code = order.pin_code;
     customerDataTemp.first_name = customerNameFirst;
@@ -39,6 +46,9 @@ const OrderForm = ({ tailwindCSS }) => {
       setCustomerStatus(true);
     }
     setCustomerData(customerDataTemp);
+    customerTimer = window.setTimeout(() => {
+      setCustomerSaved(false);
+    }, 3000);
     dispatch({
       type: SET_CUSTOMER_DATA,
       payload: customerData,
@@ -47,7 +57,7 @@ const OrderForm = ({ tailwindCSS }) => {
 
   return (
     <div className={` ${tailwindCSS}`}>
-      <h2 className="p-2 text-4xl text text-center font-bold mb-4">
+      <h2 className="p-0 text-4xl text text-center font-bold mb-4">
         Deltagere
       </h2>
       <div className="p-4 border border-solid rounded border-gray-400">
@@ -130,13 +140,19 @@ const OrderForm = ({ tailwindCSS }) => {
               Gem bestiller
             </Button>
           )}
-          {customerStatus && <h3 className="mt-4">Bestiller gemt</h3>}
         </div>
+        {customerStatus && customerSaved && (
+          <div className="mt-4 text-center">
+            <h3 className="animate__animated animate__shakeX animate__slow">
+              Bestiller gemt
+            </h3>
+          </div>
+        )}
       </div>
       {customerStatus &&
         order?.participants &&
         order.participants.map((item, index) => (
-          <Participant participant={item} personCount={index} />
+          <Participant key={index} participant={item} personCount={index} />
         ))}
 
       <div className="mt-4 flex justify-between">
