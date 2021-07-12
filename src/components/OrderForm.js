@@ -28,10 +28,16 @@ const OrderForm = ({ tailwindCSS }) => {
     customerData.email_address ? customerData.email_address : ""
   );
 
-  const [customerStatus, setCustomerStatus] = useState(false);
+  const [customerStatus, setCustomerStatus] = useState(
+    customerEmail && customerNameFirst && customerNameLast ? true : false
+  );
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, []);
 
   const handleCustomerSave = () => {

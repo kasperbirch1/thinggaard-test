@@ -9,7 +9,11 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   const { order, customerData, dispatch } = useContext(globalContext);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, []);
   return (
     <div className={` ${tailwindCSS}`}>

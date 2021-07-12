@@ -2,12 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   Button,
   FormControl,
-  FormControlLabel,
-  FormLabel,
   InputLabel,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
 } from "@material-ui/core";
@@ -19,6 +15,7 @@ import { SET_PARTICIPANTS_DATA } from "../context/types";
 import { useStyles } from "../styles";
 
 const Participant = ({ participant, personCount }) => {
+  console.log(participant);
   const classes = useStyles();
 
   const { participantsData, setParticipantsData, dispatch } =
@@ -62,10 +59,12 @@ const Participant = ({ participant, personCount }) => {
       <div className="grid grid-cols-12">
         <div className="col-span-12 mb-4">
           <h2 className="font-semibold text-lg text-center">
-            {(participant.age > 17 ? "Voksen" : "Barn") +
-              " (deltager " +
-              (personCount + 1) +
-              ")"}
+            {participantsDataNew[personCount]?.name
+              ? participantsDataNew[personCount].name
+              : participant.age > 17
+              ? "Voksen"
+              : "Barn"}
+            <span className="ml-2 text-xs">(Deltager {personCount + 1})</span>
           </h2>
         </div>
       </div>
