@@ -168,6 +168,20 @@ const GlobalState = (props) => {
     }
   };
 
+  const fetchOrder = async (order_id, pin_code) => {
+    try {
+      const { data } = await axios.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/orders/get?order_id=${order_id}&pin_code=${pin_code}&token=${state.token}`
+      );
+      dispatch({
+        type: SET_ORDER,
+        payload: data.result,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchOrderCreate = async (roomString) => {
     try {
       const { data } = await axios.get(
@@ -353,6 +367,7 @@ const GlobalState = (props) => {
         dispatch,
         handleSubmit,
         fetchCombinations,
+        fetchOrder,
         fetchOrderCreate,
         setParticipantsData,
         setCustomerData,

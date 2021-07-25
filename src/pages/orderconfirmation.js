@@ -8,12 +8,6 @@ const OrderConfirmation = () => {
   const history = useHistory();
   const { order } = useContext(globalContext);
 
-  //   useEffect(() => {
-  //     if (order === null) {
-  //       history.replace("/");
-  //     }
-  //   }, []);
-
   return (
     <>
       <div className="booking-container p-4 rounded grid grid-cols-12">

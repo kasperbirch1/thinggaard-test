@@ -243,7 +243,12 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
         <Button
           onClick={() => {
             handleCustomerFinalize();
-            history.push("orderconfirmation");
+            history.push(
+              "orderconfirmation?orderid=" +
+                order.id +
+                "&pincode=" +
+                order.pin_code
+            );
           }}
           color="primary"
           size="large"

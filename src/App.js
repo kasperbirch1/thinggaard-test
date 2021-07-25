@@ -9,13 +9,13 @@ import { useContext } from "react";
 import globalContext from "./context/global/globalContext";
 
 const App = () => {
-  const { trips } = useContext(globalContext);
+  const { trips, order } = useContext(globalContext);
   return (
     <ThemeProvider theme={theme}>
       <main>
         <div
           className={
-            trips
+            order || trips
               ? "booking-outer trip-outer-trips"
               : "booking-outer trip-outer-home"
           }
