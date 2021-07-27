@@ -168,10 +168,10 @@ const GlobalState = (props) => {
     }
   };
 
-  const fetchOrder = async (order_id, pin_code) => {
+  const fetchOrder = async (order_id, pincode) => {
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/orders/get?order_id=${order_id}&pin_code=${pin_code}&token=${state.token}`
+        `https://thinggaard.dk/wp-json/thinggaard/v1/orders/get?order_id=${order_id}&pincode=${pincode}&token=${state.token}`
       );
       dispatch({
         type: SET_ORDER,
@@ -200,7 +200,7 @@ const GlobalState = (props) => {
     const postData = {
       token: state.token,
       order_id: state.order.id,
-      pin_code: state.order.pin_code,
+      pincode: state.order.pin_code,
       participants: state.participantsData,
     };
 
@@ -237,7 +237,7 @@ const GlobalState = (props) => {
     const postData = {
       token: state.token,
       order_id: state.order.id,
-      pin_code: state.order.pin_code,
+      pincode: state.order.pin_code,
       customer: JSON.stringify(state.customerData),
     };
 

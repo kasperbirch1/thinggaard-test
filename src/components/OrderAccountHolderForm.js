@@ -91,12 +91,12 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
     customerDataTemp.zip = customerZip;
     customerDataTemp.city = customerCity;
 
+    setCustomerData(customerDataTemp);
+
     dispatch({
       type: SET_CUSTOMER_DATA,
-      payload: customerData,
+      payload: customerDataTemp,
     });
-
-    setCustomerData(customerDataTemp);
 
     setCustomerConfirm(customerDataTemp);
   };

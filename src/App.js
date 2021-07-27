@@ -34,6 +34,15 @@ const App = () => {
               <Route path="/orderconfirmation">
                 <OrderConfirmation />
               </Route>
+              <Route path="/orderpaymentconfirmation">
+                <OrderConfirmation />
+              </Route>
+              <Route path="/orderpaymentcallback">
+                <OrderConfirmation />
+              </Route>
+              <Route path="/orderpaymentcancel">
+                <OrderConfirmation />
+              </Route>
             </Switch>
           </Router>
         </div>

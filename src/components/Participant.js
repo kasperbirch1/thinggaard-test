@@ -15,7 +15,6 @@ import { SET_PARTICIPANTS_DATA } from "../context/types";
 import { useStyles } from "../styles";
 
 const Participant = ({ participant, personCount }) => {
-  console.log(participant);
   const classes = useStyles();
 
   const { participantsData, setParticipantsData, dispatch } =
@@ -27,11 +26,12 @@ const Participant = ({ participant, personCount }) => {
 
   const handleParticipantSave = (person) => {
     participantsDataNew[person].saved = true;
-
+    setParticipantsDataNew(participantsDataNew);
     dispatch({
       type: SET_PARTICIPANTS_DATA,
       payload: participantsDataNew,
     });
+    setParticipantsData(participantsDataNew);
   };
 
   var formatter = new Intl.NumberFormat("da-DK", {
