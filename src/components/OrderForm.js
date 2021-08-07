@@ -9,14 +9,21 @@ import "animate.css";
 
 var customerTimer;
 
+var formatter = new Intl.NumberFormat("da-DK", {
+  style: "currency",
+  currency: "DKK",
+});
+
 const OrderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { order, customerData, setCustomerData, dispatch } =
+  const { order, customerData, setCustomerData, participantsData, dispatch } =
     useContext(globalContext);
 
   const [customerSaved, setCustomerSaved] = useState(false);
+
+  const [continueStatus, setContinueStatus] = useState(true);
 
   const [customerNameFirst, setCustomerNameFirst] = useState(
     customerData.first_name ? customerData.first_name : ""
@@ -31,6 +38,19 @@ const OrderForm = ({ tailwindCSS }) => {
   const [customerStatus, setCustomerStatus] = useState(
     customerEmail && customerNameFirst && customerNameLast ? true : false
   );
+
+  useEffect(() => {
+    let participantsFilled = false;
+    if (participantsData && customerStatus) {
+      participantsFilled = true;
+      participantsData.map((item, index) => {
+        if (!item.name || !item.age || !item.gender) {
+          participantsFilled = false;
+        }
+      });
+    }
+    setContinueStatus(participantsFilled);
+  }, [customerStatus, participantsData, Object.values(participantsData)]);
 
   useEffect(() => {
     window.scrollTo({
@@ -172,6 +192,7 @@ const OrderForm = ({ tailwindCSS }) => {
           Tilbage
         </Button>
         <Button
+          disabled={continueStatus ? false : true}
           onClick={() => {
             history.push("orderdetails");
           }}
