@@ -1,4 +1,10 @@
-import { FormControl, Typography, Slider, TextField } from "@material-ui/core";
+import {
+  FormControl,
+  Typography,
+  Slider,
+  Button,
+  TextField,
+} from "@material-ui/core";
 import React, { useContext } from "react";
 import globalContext from "../../context/global/globalContext";
 import { SET_CHILDREN, SET_CHILDREN_AGES } from "../../context/types";
@@ -25,47 +31,96 @@ const ChildrenSelect = (props) => {
             padding: "0 10px",
             borderRadius: "5px",
             border: "1px solid #bbb",
+            minHeight: "56px",
           }}
         >
-          <Typography id="children-slider-label" variant="body2">
-            Antal børn: {children}
+          <Typography
+            className="text-center text-gray-500"
+            style={{ fontSize: 12 }}
+            id="children-slider-label"
+          >
+            Antal børn
           </Typography>
-          <Slider
-            aria-labelledby="children-slider-label"
-            step={1}
-            min={0}
-            max={10}
-            marks
-            valueLabelDisplay="off"
-            onChange={(e, newvalue) => {
-              dispatch({
-                type: SET_CHILDREN,
-                payload: newvalue,
-              });
-            }}
-          />
-          {children > 0 &&
-            countChildren(children).map((item, count) => (
-              <div className="mb-2" key={count}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label={"Barn " + (count + 1) + " alder"}
-                  type="number"
-                  inputProps={{ style: { fontSize: 13 } }} // font size of input text
-                  InputLabelProps={{ style: { fontSize: 11 } }} // font size of input label
-                  variant="outlined"
-                  value={childrenAges[count] ? childrenAges[count] : false}
-                  onChange={(myEvent) => {
-                    childrenAges[count] = myEvent.target.value;
-                    dispatch({
-                      type: SET_CHILDREN_AGES,
-                      payload: childrenAges,
-                    });
-                  }}
-                />
-              </div>
-            ))}
+          <div className="mb-1 grid grid-cols-3 justify-center">
+            <div className="text-center col-span-1">
+              <Button
+                className="text-center"
+                disabled={children > 0 ? false : true}
+                style={{
+                  borderRadius: "100%",
+                  fontWeight: 900,
+                  padding: 0,
+                  minWidth: "16px",
+                  width: "32px",
+                  textAlign: "center",
+                }}
+                onClick={() => {
+                  dispatch({
+                    type: SET_CHILDREN,
+                    payload: children - 1,
+                  });
+                }}
+              >
+                -
+              </Button>
+            </div>
+            <span
+              className="col-span-1"
+              style={{ textAlign: "center", fontSize: "20px" }}
+            >
+              {children}
+            </span>
+            <div className="text-center col-span-1">
+              <Button
+                className="text-center"
+                style={{
+                  borderRadius: "100%",
+                  fontWeight: 900,
+                  padding: 0,
+                  minWidth: "16px",
+                  width: "32px",
+                }}
+                disabled={children < 10 ? false : true}
+                onClick={() => {
+                  dispatch({
+                    type: SET_CHILDREN,
+                    payload: children + 1,
+                  });
+                }}
+              >
+                +
+              </Button>
+            </div>
+          </div>
+          {children > 0 && (
+            <div className="grid grid-cols-2">
+              {countChildren(children).map((item, count) => (
+                <div className="my-2 col-span-2" key={count}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label={"Barn " + (count + 1) + " alder"}
+                    type="number"
+                    inputProps={{
+                      max: 17,
+                      min: 0,
+                      style: { fontSize: 15 },
+                    }} // font size of input text
+                    InputLabelProps={{ style: { fontSize: 13 } }} // font size of input label
+                    variant="outlined"
+                    value={childrenAges[count] ? childrenAges[count] : 2}
+                    onChange={(myEvent) => {
+                      childrenAges[count] = myEvent.target.value;
+                      dispatch({
+                        type: SET_CHILDREN_AGES,
+                        payload: childrenAges,
+                      });
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </FormControl>
     </>

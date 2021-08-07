@@ -30,10 +30,6 @@ const Trip = ({ trip }) => {
       <div className="grid grid-cols-12">
         <div className="col-span-5 pr-6">
           <CarouselComponent images={post.meta.gallery_settings} />
-          {/* <Link
-        to={`hotel/${accomodation_code}/${period_id}`}
-        className="block md:w-7/12"
-      > */}
         </div>
         <div className="col-span-7">
           <div className="grid grid-cols-12 mb-2">
@@ -82,7 +78,6 @@ const Trip = ({ trip }) => {
                     type: SET_CURRENT_TRIP,
                     payload: trip,
                   });
-                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
                 Se {post?.post_title ? post.post_title : "hotel"}

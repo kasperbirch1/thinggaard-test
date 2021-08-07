@@ -263,11 +263,6 @@ const GlobalState = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
     dispatch({
       type: SET_CURRENT_TRIP,
       payload: null,

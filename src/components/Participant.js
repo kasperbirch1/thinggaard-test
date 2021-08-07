@@ -52,7 +52,7 @@ const Participant = ({ participant, personCount }) => {
       type: SET_PARTICIPANTS_DATA,
       payload: participantsDataNew,
     });
-  }, []);
+  }, [personCount, participantsDataNew, participant, dispatch]);
 
   return (
     <div className="my-6 p-4 rounded border border-solid border-1 border-gray-400">

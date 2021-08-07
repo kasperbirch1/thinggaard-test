@@ -12,6 +12,7 @@ const TransportsSelect = () => {
     <FormControl variant="outlined" className="col-span-1">
       <InputLabel id="label-transport">Transport</InputLabel>
       <Select
+        disabled={transports ? false : true}
         labelId="label-transport"
         label="transport"
         id="select-transport"
@@ -25,17 +26,13 @@ const TransportsSelect = () => {
           });
         }}
       >
-        <MenuItem value={false} disabled>
-          -- Vælg transportform --
-        </MenuItem>
-
         {transports?.map((item) => (
           <MenuItem
             key={item.transport_category_id}
-            value={item.transport_category_id}
+            value={"transport_" + item.transport_category_id}
           >
             {item.transport_category_name == "Car"
-              ? "Bil"
+              ? "Egen transport"
               : item.transport_category_name}
           </MenuItem>
         ))}

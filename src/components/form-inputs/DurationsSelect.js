@@ -6,12 +6,14 @@ import { SET_CURRENT_DURATION } from "../../context/types";
 
 const DurationsSelect = () => {
   const classes = useStyles();
-  const { durations, currentDuration, dispatch } = useContext(globalContext);
+  const { durations, currentDuration, currentDestination, dispatch } =
+    useContext(globalContext);
 
   return (
     <FormControl variant="outlined" className="col-span-1 pr-2">
       <InputLabel id="DurationsSelect">Rejselængde</InputLabel>
       <Select
+        disabled={durations ? false : true}
         id="DurationsSelect"
         value={currentDuration}
         label="DurationsSelect"
@@ -23,9 +25,6 @@ const DurationsSelect = () => {
           });
         }}
       >
-        <MenuItem disabled selected value>
-          -- Vælg rejselængde --
-        </MenuItem>
         {durations?.map((duration, index) => (
           <MenuItem key={index} value={duration.days}>
             {duration.days} dage

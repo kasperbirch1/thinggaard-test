@@ -1,5 +1,5 @@
 import { Button, FormControl, TextField } from "@material-ui/core";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import globalContext from "../context/global/globalContext";
 import DatesSelect from "../components/form-inputs/DatesSelect";
 import DestinationsSelect from "../components/form-inputs/DestinationsSelect";
@@ -13,8 +13,30 @@ import ChildrenSelect from "../components/form-inputs/ChildrenSelect";
 
 const Home = () => {
   const classes = useStyles();
-  const { destinations, handleSubmit, adults, dispatch, trips, currentTrip } =
-    useContext(globalContext);
+  const {
+    destinations,
+    handleSubmit,
+    adults,
+    currentDestination,
+    currentDuration,
+    currentTransport,
+    currentDate,
+    dispatch,
+    trips,
+    currentTrip,
+  } = useContext(globalContext);
+
+  useEffect(() => {
+    if (trips) {
+      document.getElementById("trips").scrollIntoView({ behavior: "smooth" });
+    }
+  }, [trips]);
+
+  useEffect(() => {
+    if (currentTrip) {
+      document.getElementById("trip").scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentTrip]);
 
   return (
     <>
@@ -33,6 +55,14 @@ const Home = () => {
               <DatesSelect />
               <FormControl className={classes.formControl}>
                 <Button
+                  disabled={
+                    currentDestination &&
+                    currentDuration &&
+                    currentTransport &&
+                    currentDate
+                      ? false
+                      : true
+                  }
                   size="large"
                   color="primary"
                   type="submit"
@@ -45,14 +75,22 @@ const Home = () => {
             </form>
           </div>
 
-          {currentTrip && <Details />}
+          {currentTrip && (
+            <div id="trip">
+              <Details />
+            </div>
+          )}
 
-          {trips?.map((trip) => (
-            <Trip key={trip.accomodation_code} trip={trip} />
-          ))}
+          {trips && (
+            <div id="trips">
+              {trips.map((trip) => (
+                <Trip key={trip.accomodation_code} trip={trip} />
+              ))}
+            </div>
+          )}
 
           {trips === undefined && (
-            <div className="m-4 p-3 text-center">
+            <div className="m-4 p-3 text-center booking-container">
               <p className="font-bold">
                 Vi kunne desværre ikke finde din rejse
               </p>

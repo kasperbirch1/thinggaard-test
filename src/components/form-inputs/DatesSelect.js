@@ -13,7 +13,14 @@ const DatesSelect = () => {
   const [pickerStatus, setPickerStatus] = useState(false);
 
   const classes = useStyles();
-  const { dates, currentDate, dispatch } = useContext(globalContext);
+  const {
+    destinations,
+    currentDuration,
+    currentTransport,
+    dates,
+    currentDate,
+    dispatch,
+  } = useContext(globalContext);
 
   const daylist = dates?.map((date) => date.date);
 
@@ -39,6 +46,9 @@ const DatesSelect = () => {
     <div className="mr-2">
       <MuiPickersUtilsProvider className="col-span-1" utils={DateFnsUtils}>
         <KeyboardDatePicker
+          disabled={
+            destinations && currentTransport && currentDuration ? false : true
+          }
           onClick={() => setPickerStatus(true)}
           onClose={() => setPickerStatus(false)}
           open={pickerStatus}
@@ -56,7 +66,7 @@ const DatesSelect = () => {
             });
           }}
           minDate={new Date()}
-          format="MM/dd/yyyy"
+          format="dd/MM/yyyy"
           // renderDay={renderDayInPicker}
           inputVariant="outlined"
           variant="dialog"

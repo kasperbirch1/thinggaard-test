@@ -17,6 +17,11 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
 
   let query = new URLSearchParams(useLocation().search);
 
+  var formatter = new Intl.NumberFormat("da-DK", {
+    style: "currency",
+    currency: "DKK",
+  });
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -119,63 +124,73 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
           </p>
         </>
       )}
-      <h2 className="p-2 text-4xl text text-center font-bold mb-4">Kunde</h2>
-      <div className="grid grid-cols-12 mb-4 p-4 border border-solid rounded border-gray-400">
-        <div className="col-span-6">Navn</div>
-        <div className="col-span-6">
-          {order?.customer?.first_name} {order?.customer?.last_name}
-        </div>
-        <div className="col-span-6">Adresse</div>
-        <div className="col-span-6">{order?.customer?.address}</div>
-        <div className="col-span-6">By</div>
-        <div className="col-span-6">{order?.customer?.city}</div>
-        <div className="col-span-6">Postnr</div>
-        <div className="col-span-6">{order?.customer?.postal_code}</div>
-        <div className="col-span-6">Land</div>
-        <div className="col-span-6">{order?.customer?.country}</div>
-        <div className="col-span-6">Telefon</div>
-        <div className="col-span-6">{order?.customer?.phone_number}</div>
-        <div className="col-span-6">Email</div>
-        <div className="col-span-6">{order?.customer?.email_address}</div>
-      </div>
-      <div>
-        <h2 className="p-2 text-4xl text text-center font-bold mb-4">
-          Deltagere
-        </h2>
-        {order?.participants.map((participantItem, participantKey) => (
-          <div
-            className="mb-4 p-4 border border-solid rounded border-gray-400"
-            key={participantKey}
-          >
-            <div className="grid grid-cols-12 gap-4 participant_content">
-              <div className="col-span-3">Navn</div>
-              <div className="col-span-6">{participantItem.full_name}</div>
-              <div className="col-span-3 text-right">
-                {participantItem.age} år -{" "}
-                {participantItem.gender == "M" ? "Mand" : "Kvinde"}
-              </div>
+      {order?.customer?.first_name && (
+        <div>
+          <h2 className="p-2 text-4xl text text-center font-bold mb-4">
+            Kunde
+          </h2>
+          <div className="grid grid-cols-12 mb-4 p-4 border border-solid rounded border-gray-400">
+            <div className="col-span-3 font-bold">Navn</div>
+            <div className="col-span-9">
+              {order?.customer?.first_name} {order?.customer?.last_name}
             </div>
-            {participantItem.services.map(
-              (serviceItem, serviceKey) =>
-                serviceItem.selected === 1 && (
-                  <div
-                    className="grid grid-cols-12"
-                    style={{ fontSize: "12px" }}
-                    key={serviceKey}
-                  >
-                    <div className="col-span-3">
-                      {serviceItem.service_group}
-                    </div>
-                    <div className="col-span-6">{serviceItem.description}</div>
-                    <div className="col-span-3 text-right">
-                      {serviceItem.list_price}
-                    </div>
-                  </div>
-                )
-            )}
+            <div className="col-span-3 font-bold">Adresse</div>
+            <div className="col-span-9">{order?.customer?.address}</div>
+            <div className="col-span-3 font-bold">By</div>
+            <div className="col-span-9">{order?.customer?.city}</div>
+            <div className="col-span-3 font-bold">Postnr</div>
+            <div className="col-span-9">{order?.customer?.postal_code}</div>
+            <div className="col-span-3 font-bold">Land</div>
+            <div className="col-span-9">{order?.customer?.country}</div>
+            <div className="col-span-3 font-bold">Telefon</div>
+            <div className="col-span-9">{order?.customer?.phone_number}</div>
+            <div className="col-span-3 font-bold">Email</div>
+            <div className="col-span-9">{order?.customer?.email_address}</div>
           </div>
-        ))}
-      </div>
+          <div>
+            <h2 className="p-2 text-4xl text text-center font-bold mb-4">
+              Deltagere
+            </h2>
+            {order?.participants.map((participantItem, participantKey) => (
+              <div
+                className="mb-4 p-4 border border-solid rounded border-gray-400"
+                key={participantKey}
+              >
+                <div className="grid grid-cols-12 participant_content">
+                  <div className="col-span-3 font-bold">Navn</div>
+                  <div className="col-span-6 font-semibold">
+                    {participantItem.full_name}
+                  </div>
+                  <div className="col-span-3 text-right font-light">
+                    {participantItem.age} år -{" "}
+                    {participantItem.gender == "M" ? "Mand" : "Kvinde"}
+                  </div>
+                </div>
+                {participantItem.services.map(
+                  (serviceItem, serviceKey) =>
+                    serviceItem.selected === 1 && (
+                      <div
+                        className="grid grid-cols-12"
+                        style={{ fontSize: "12px" }}
+                        key={serviceKey}
+                      >
+                        <div className="col-span-3 font-bold">
+                          {serviceItem.service_group}
+                        </div>
+                        <div className="col-span-6">
+                          {serviceItem.description}
+                        </div>
+                        <div className="col-span-3 text-right">
+                          {formatter.format(serviceItem.list_price)}
+                        </div>
+                      </div>
+                    )
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-12 gap-4">
         {quickpayForm && (
