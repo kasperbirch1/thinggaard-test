@@ -1,4 +1,5 @@
 import { Button, FormControl, TextField } from "@material-ui/core";
+import { scroll, scroller } from "react-scroll";
 import { useEffect, useContext } from "react";
 import globalContext from "../context/global/globalContext";
 import DatesSelect from "../components/form-inputs/DatesSelect";
@@ -28,13 +29,23 @@ const Home = () => {
 
   useEffect(() => {
     if (trips) {
-      document.getElementById("trips").scrollIntoView({ behavior: "smooth" });
+      scroller.scrollTo("trips", {
+        duration: 800,
+        offset: -50,
+        delay: 0,
+        smooth: "easeInOutQuart",
+      });
     }
   }, [trips]);
 
   useEffect(() => {
     if (currentTrip) {
-      document.getElementById("trip").scrollIntoView({ behavior: "smooth" });
+      scroller.scrollTo("trip", {
+        duration: 800,
+        offset: -50,
+        delay: 0,
+        smooth: "easeInOutQuart",
+      });
     }
   }, [currentTrip]);
 

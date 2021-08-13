@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-// import { useParams } from "react-router";
+import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
 import HotelRating from "./HotelRating";
 import HotelReviews from "./HotelReviews";
@@ -93,7 +93,9 @@ const Details = () => {
           */}
       </div>
       <div className={"pt-4"}>
-        <CarouselComponent images={post?.meta.gallery_settings} DetailsPage />
+        {post?.meta?.gallery_settings && (
+          <CarouselComponent images={post.meta.gallery_settings} DetailsPage />
+        )}
       </div>
 
       <div className="py-4">
@@ -165,11 +167,7 @@ const Details = () => {
 
         <TabPanel className="pt-4" value={tabIndex} index={1}>
           {post?.meta?.hotel_beskrivelse && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_beskrivelse,
-              }}
-            />
+            <div>{parse(post?.meta?.hotel_beskrivelse)}</div>
           )}
         </TabPanel>
 
@@ -179,10 +177,9 @@ const Details = () => {
               className={`${
                 tabIndex === 2 ? "block" : "hidden"
               } hotel_beliggenhed`}
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_fakta,
-              }}
-            />
+            >
+              {parse(post?.meta?.hotel_fakta)}
+            </div>
           )}
         </TabPanel>
 
@@ -192,10 +189,9 @@ const Details = () => {
               className={`${
                 tabIndex === 3 ? "block" : "hidden"
               } hotel_beliggenhed`}
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_beliggenhed,
-              }}
-            />
+            >
+              {parse(post?.meta?.hotel_beliggenhed)}
+            </div>
           )}
         </TabPanel>
       </div>

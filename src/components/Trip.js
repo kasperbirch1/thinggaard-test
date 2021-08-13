@@ -1,11 +1,14 @@
 // import { Link } from "react-router-dom";
 import React, { useContext } from "react";
+import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
+import HotelMetaComponent from "./HotelMetaComponent";
 import { SET_CURRENT_TRIP } from "../context/types";
 import globalContext from "../context/global/globalContext";
 import HotelRating from "./HotelRating";
 import HotelReviews from "./HotelReviews";
 import { Button } from "@material-ui/core";
+
 // import format from "date-fns/format";
 
 const Trip = ({ trip }) => {
@@ -25,11 +28,18 @@ const Trip = ({ trip }) => {
     return null;
   }
 
+  var formatter = new Intl.NumberFormat("da-DK", {
+    style: "currency",
+    currency: "DKK",
+  });
+
   return (
     <div className="relative mt-4 mb-8 booking-container p-4 border border-solid border-1 border-gray-300 rounded">
       <div className="grid grid-cols-12">
         <div className="col-span-5 pr-6">
-          <CarouselComponent images={post.meta.gallery_settings} />
+          {post?.meta?.gallery_settings && (
+            <CarouselComponent images={post.meta.gallery_settings} />
+          )}
         </div>
         <div className="col-span-7">
           <div className="grid grid-cols-12 mb-2">
@@ -42,20 +52,19 @@ const Trip = ({ trip }) => {
               </h2>
             </div>
             <div className="col-span-4 border">
-              <h2 className="py-2 m-0 font-bold text-center">{`Pris fra ${minimum_price} kr.`}</h2>
+              <h2 className="py-2 m-0 font-bold text-center">{`Pris fra ${formatter.format(
+                minimum_price
+              )}`}</h2>
             </div>
           </div>
-
           <div className="text-xs font-bold">{room_description}</div>
-
           {post?.meta?.hotel_beskrivelse && (
-            <div
-              className="hotel_beskrivelse--reduceret"
-              dangerouslySetInnerHTML={{
-                __html: post?.meta?.hotel_beskrivelse,
-              }}
-            ></div>
+            <div className="hotel_beskrivelse--reduceret">
+              {parse(post?.meta?.hotel_beskrivelse)}
+            </div>
           )}
+
+          {post?.meta && <HotelMetaComponent post={post} />}
 
           <div className="grid grid-cols-12">
             <div className="col-span-6 text-sm">
@@ -80,7 +89,7 @@ const Trip = ({ trip }) => {
                   });
                 }}
               >
-                Se {post?.post_title ? post.post_title : "hotel"}
+                Se Hotel & Priser
               </Button>
             </div>
           </div>
