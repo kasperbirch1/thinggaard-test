@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import globalReducer from "./globalReducer";
 import GlobalContext from "./globalContext";
 import {
-  // SET_LOADING,
+  SET_LOADING,
   SET_TOKEN,
   SET_DESTINATIONS,
   SET_ALL_DURATIONS,
@@ -24,7 +24,7 @@ import axios from "axios";
 const GlobalState = (props) => {
   const initialState = {
     token: "",
-    loading: false,
+    loading: "0",
     destinations: [],
     allDurations: [],
     countries: null,
@@ -49,6 +49,40 @@ const GlobalState = (props) => {
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);
+
+  let outstandingRequests = 0;
+
+  axios.interceptors.request.use(
+    function (config) {
+      outstandingRequests++;
+      if (outstandingRequests > 0 && state.loading !== "1") {
+        dispatch({
+          type: SET_LOADING,
+          payload: "1",
+        });
+      }
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
+
+  axios.interceptors.response.use(
+    function (response) {
+      outstandingRequests--;
+      if (outstandingRequests === 0 && state.loading !== "0") {
+        dispatch({
+          type: SET_LOADING,
+          payload: "0",
+        });
+      }
+      return response;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
 
   const getAuthentication = async (source) => {
     try {

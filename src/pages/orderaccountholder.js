@@ -16,7 +16,7 @@ const OrderAccountHolder = () => {
 
   return (
     <>
-      <div className="booking-container p-4 rounded grid grid-cols-12">
+      <div className="grid grid-cols-12">
         <OrderAccountHolderForm tailwindCSS="col-span-8 pr-6" />
         <OrderTotal tailwindCSS="col-span-4" />
       </div>

@@ -53,7 +53,7 @@ const Home = () => {
     <>
       {destinations && (
         <div className={trips ? "trip-search-trips" : "trip-search-home"}>
-          <div className="trip-search-form booking-container">
+          <div className="trip-search-form">
             <form
               onSubmit={handleSubmit}
               className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-7 justify-center"
