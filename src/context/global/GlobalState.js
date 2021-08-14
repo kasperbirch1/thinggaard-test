@@ -24,7 +24,6 @@ import axios from "axios";
 const GlobalState = (props) => {
   const initialState = {
     token: "",
-    loading: "0",
     destinations: [],
     allDurations: [],
     countries: null,
@@ -49,40 +48,6 @@ const GlobalState = (props) => {
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);
-
-  let outstandingRequests = 0;
-
-  axios.interceptors.request.use(
-    function (config) {
-      outstandingRequests++;
-      if (outstandingRequests > 0 && state.loading !== "1") {
-        dispatch({
-          type: SET_LOADING,
-          payload: "1",
-        });
-      }
-      return config;
-    },
-    function (error) {
-      return Promise.reject(error);
-    }
-  );
-
-  axios.interceptors.response.use(
-    function (response) {
-      outstandingRequests--;
-      if (outstandingRequests === 0 && state.loading !== "0") {
-        dispatch({
-          type: SET_LOADING,
-          payload: "0",
-        });
-      }
-      return response;
-    },
-    function (error) {
-      return Promise.reject(error);
-    }
-  );
 
   const getAuthentication = async (source) => {
     try {
@@ -371,7 +336,6 @@ const GlobalState = (props) => {
   return (
     <GlobalContext.Provider
       value={{
-        loading: state.loading,
         token: state.token,
         destinations: state.destinations,
         allDurations: state.allDurations,
