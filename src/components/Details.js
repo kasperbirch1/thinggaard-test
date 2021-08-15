@@ -2,13 +2,12 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
-import HotelRating from "./HotelRating";
-import HotelReviews from "./HotelReviews";
 import globalContext from "../context/global/globalContext";
 import { SET_PARTICIPANTS_DATA } from "../context/types";
 import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import { Button, Tab, Tabs, TabPane, Box, Typography } from "@material-ui/core";
+import HotelMetaComponent from "./HotelMetaComponent";
 
 const Details = () => {
   const history = useHistory();
@@ -78,24 +77,29 @@ const Details = () => {
     );
   };
 
-  const tempRating = (Math.random() * 1.5 + 3.5).toFixed(1);
   return (
-    <div className="booking-container rounded p-4 mt-4">
+    <div className="mt-4">
       <div className="grid mb-2 mt-4 grid-cols-12">
-        <h1 className="col-span-12 font-semibold text-2xl text-center">
-          {post?.post_title},
-          <span className="ml-2 text-gray-500 font-normal">
-            {destination_name}
-          </span>
-        </h1>
-        {/*
-          <HotelReviews className="col-span-4" rating={tempRating} />
-          */}
-      </div>
-      <div className={"pt-4"}>
-        {post?.meta?.gallery_settings && (
-          <CarouselComponent images={post.meta.gallery_settings} DetailsPage />
-        )}
+        <div className={"col-span-6"}>
+          {post?.meta?.gallery_settings && (
+            <CarouselComponent
+              images={post.meta.gallery_settings}
+              DetailsPage
+            />
+          )}
+        </div>
+        <div className="col-span-6 ml-5">
+          <h1 className="font-semibold text-2xl">
+            {post?.post_title},
+            <span className="ml-2 text-gray-500 font-normal">
+              {destination_name}
+            </span>
+          </h1>
+          <div className="hotel_details_description text-sm mb-4">
+            {post?.snippet}...
+          </div>
+          {post?.meta && <HotelMetaComponent post={post} />}
+        </div>
       </div>
 
       <div className="py-4">
@@ -166,9 +170,7 @@ const Details = () => {
         </TabPanel>
 
         <TabPanel className="pt-4" value={tabIndex} index={1}>
-          {post?.meta?.hotel_beskrivelse && (
-            <div>{parse(post?.meta?.hotel_beskrivelse)}</div>
-          )}
+          {post?.description && <div>{post?.description}</div>}
         </TabPanel>
 
         <TabPanel className="pt-4" value={tabIndex} index={2}>
@@ -178,11 +180,12 @@ const Details = () => {
                 tabIndex === 2 ? "block" : "hidden"
               } hotel_beliggenhed`}
             >
-              {parse(post?.meta?.hotel_fakta)}
+              <HotelMetaComponent post={post} />
             </div>
           )}
         </TabPanel>
 
+        {/*
         <TabPanel className="pt-4" value={tabIndex} index={3}>
           {post?.meta?.hotel_beliggenhed && (
             <div
@@ -194,6 +197,10 @@ const Details = () => {
             </div>
           )}
         </TabPanel>
+            */}
+      </div>
+      <div className="p-4 rounded bg-gray-400 text-center text-xl font-semibold text-white">
+        <h1>Andre rejser</h1>
       </div>
     </div>
   );

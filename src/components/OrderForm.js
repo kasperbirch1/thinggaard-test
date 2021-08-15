@@ -61,7 +61,6 @@ const OrderForm = ({ tailwindCSS }) => {
   }, []);
 
   const handleCustomerSave = () => {
-    window.clearTimeout(customerTimer);
     setCustomerSaved(true);
     let customerDataTemp = customerData ? customerData : {};
     customerDataTemp.pin_code = order.pin_code;
@@ -77,7 +76,7 @@ const OrderForm = ({ tailwindCSS }) => {
     }, 3000);
     dispatch({
       type: SET_CUSTOMER_DATA,
-      payload: customerData,
+      payload: customerDataTemp,
     });
   };
 

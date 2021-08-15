@@ -5,12 +5,44 @@ import theme from "./styles/theme.js";
 import Home from "./pages/Home";
 import Order from "./pages/order";
 import OrderConfirmation from "./pages/orderconfirmation";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import globalContext from "./context/global/globalContext";
-import Loader from "react-loader-spinner";
+import { PuffLoader } from "react-spinners";
+import axios from "axios";
+import { SET_LOADING } from "./context/types.js";
 
 const App = () => {
-  const { trips, order, loading } = useContext(globalContext);
+  const { trips, order, dispatch } = useContext(globalContext);
+
+  const [loading, setLoading] = useState(false);
+
+  let outstandingRequests = 0;
+
+  axios.interceptors.request.use(
+    function (config) {
+      outstandingRequests++;
+      if (outstandingRequests > 0 && loading !== "1") {
+        setLoading(true);
+      }
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
+
+  axios.interceptors.response.use(
+    function (response) {
+      outstandingRequests--;
+      if (outstandingRequests === 0 && loading !== "0") {
+        setLoading(false);
+      }
+      return response;
+    },
+    function (error) {
+      return Promise.reject(error);
+    }
+  );
   return (
     <ThemeProvider theme={theme}>
       <main>
@@ -21,38 +53,29 @@ const App = () => {
               : "booking-outer trip-outer-home"
           }
         >
+          <PuffLoader
+            loading={loading && loading > 0 ? true : false}
+            css={{
+              position: "fixed",
+              zIndex: "9998",
+              left: "50%",
+              top: "50%",
+              transform: `translate(-50%, -50%)`,
+            }}
+            color="#0e6c56"
+            size={150}
+          />{" "}
           <div
             className="booking-outer-wrap booking-container p-4 rounded "
-            style={{ position: "relative" }}
+            style={{
+              position: "relative",
+              transition: "all 120ms ease-in-out",
+              filter:
+                loading && loading > 0
+                  ? "brightness(90%) blur(2px)"
+                  : "brightness(100%) blur(0px)",
+            }}
           >
-            {loading > 0 && (
-              <div
-                className="loader rounded"
-                style={{
-                  position: "absolute",
-                  zIndex: "9999",
-                  left: 0,
-                  top: 0,
-                  width: "100%",
-                  height: "100%",
-                  background: "#ffffff80",
-                }}
-              >
-                <Loader
-                  style={{
-                    position: "absolute",
-                    left: "50%",
-                    top: "40px",
-                    transform: `translate(-50%, -50%)`,
-                  }}
-                  type="TailSpin"
-                  color="#0e6c56"
-                  height={100}
-                  width={100}
-                  timeout={0} //3 secs
-                />
-              </div>
-            )}{" "}
             <Router>
               <Switch>
                 <Route exact path="/">

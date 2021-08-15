@@ -35,20 +35,9 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
       fetchOrder(query.get("orderid"), query.get("pincode"));
       setOrderFetched(true);
     }
-  }, [token, query]);
+  }, [token, query, fetchOrder, orderFetched]);
 
   console.log(order);
-
-  useEffect(() => {
-    if (orderFetched && order && order.id) {
-      if (order.booking_amount_remaining > 0) {
-        getQuickpayForm();
-      }
-      if (order.deposit_amount_remaining > 0) {
-        getQuickpayFormDeposit();
-      }
-    }
-  }, [order]);
 
   const getQuickpayForm = async () => {
     try {
@@ -91,6 +80,17 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (orderFetched && order && order.id) {
+      if (order.booking_amount_remaining > 0) {
+        getQuickpayForm();
+      }
+      if (order.deposit_amount_remaining > 0) {
+        getQuickpayFormDeposit();
+      }
+    }
+  }, [order, orderFetched]);
 
   return (
     <div className={` ${tailwindCSS}`}>

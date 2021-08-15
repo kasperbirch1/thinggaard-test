@@ -1,26 +1,30 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import globalContext from "../context/global/globalContext";
+import axios from "axios";
 
-const OrderTotal = ({ tailwindCSS }) => {
-  const { currentTrip, order, participantsData } = useContext(globalContext);
-  let extraPrice = 0;
-  let totalPrice = order ? order.booking_amount : 0;
+const OrderTotal = ({ order, tailwindCSS }) => {
+  const [hotel, setHotel] = useState(false);
+
+  useEffect(() => {
+    const getHotel = async (source) => {
+      try {
+        const { data } = await axios.get(
+          `https://thinggaard.dk/wp-json/thinggaard/v1/hotel?accomodation_code=${order?.accomodation_code}`
+        );
+        setHotel(data.result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (order && !hotel) {
+      getHotel();
+    }
+  }, [order, hotel]);
 
   var formatter = new Intl.NumberFormat("da-DK", {
     style: "currency",
     currency: "DKK",
-  });
-
-  participantsData.map((participant, participantKey) => {
-    for (const [participantServiceKey, participantService] of Object.entries(
-      participant.services
-    )) {
-      var serviceItem = JSON.parse(participantService.item);
-
-      if (serviceItem) {
-        extraPrice = extraPrice + parseFloat(serviceItem.cost);
-      }
-    }
   });
 
   return (
@@ -35,16 +39,12 @@ const OrderTotal = ({ tailwindCSS }) => {
       <div
         className={`mx-4 bg-cover bg-center h-36`}
         style={{
-          backgroundImage: `url(${currentTrip?.post?.images?.full[0]})`,
+          backgroundImage: `url(${hotel?.images?.full[0]})`,
         }}
       />
       <div className={`p-4`}>
         <div className="pb-4">
-          <h2 className="font-bold text-xl">
-            {currentTrip?.post.post_title}
-            {", "}
-            <span>{currentTrip?.destination_name}</span>
-          </h2>
+          <h2 className="font-bold text-xl">{hotel?.post_title}</h2>
 
           <p className="text-xs m-0">
             {order?.participants[0]?.room_description}
@@ -53,7 +53,7 @@ const OrderTotal = ({ tailwindCSS }) => {
         <div className="order-total-items border-b border-t border-gray-400 py-4">
           <div className="flex justify-between my-1 text-sm">
             <p className="m-0 font-semibold">Uge</p>
-            <p className="m-0">{currentTrip?.weekno}</p>
+            <p className="m-0">{order?.week_no}</p>
           </div>
           <div className="flex justify-between my-1 text-sm">
             <p className="m-0 font-semibold">Tjek ind</p>
@@ -65,17 +65,17 @@ const OrderTotal = ({ tailwindCSS }) => {
           </div>
           <div className="flex justify-between my-1 text-sm">
             <p className="m-0 font-semibold">Rejselængde</p>
-            <p className="m-0">{currentTrip?.travel_length} dage</p>
+            <p className="m-0">{order?.travel_length} dage</p>
           </div>
           <div className="flex justify-between my-1 text-sm">
             <p className="m-0 font-semibold">Transport</p>
-            <p className="m-0">{currentTrip?.transport_name}</p>
+            <p className="m-0">{order?.transport_name}</p>
           </div>
         </div>
         <div className="md:flex md:justify-between md:items-center pt-4">
           <h2 className="font-bold">Totalpris</h2>
           <h2 className="font-bold">
-            {formatter.format(totalPrice + extraPrice)}
+            {formatter.format(order?.booking_amount)}
           </h2>
         </div>
       </div>

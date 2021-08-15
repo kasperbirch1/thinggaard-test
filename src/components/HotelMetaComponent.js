@@ -84,7 +84,9 @@ const HotelMetaComponent = ({ post }) => {
           <div className="text-xs">
             {post?.meta?.hotel_meta_options &&
               post.meta.hotel_meta_options.map((option, index) => (
-                <div className="text-xs">{option.label}</div>
+                <div key={index} className="text-xs">
+                  {option.label}
+                </div>
               ))}
           </div>
         </div>

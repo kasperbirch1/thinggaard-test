@@ -18,7 +18,7 @@ const OrderAccountHolder = () => {
     <>
       <div className="grid grid-cols-12">
         <OrderAccountHolderForm tailwindCSS="col-span-8 pr-6" />
-        <OrderTotal tailwindCSS="col-span-4" />
+        <OrderTotal order={order && order} tailwindCSS="col-span-4" />
       </div>
       {/* <pre>{JSON.stringify(order, null, 2)}</pre> */}
     </>

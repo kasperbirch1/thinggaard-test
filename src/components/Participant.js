@@ -17,7 +17,7 @@ import { useStyles } from "../styles";
 const Participant = ({ participant, personCount }) => {
   const classes = useStyles();
 
-  const { participantsData, setParticipantsData, dispatch } =
+  const { order, participantsData, setParticipantsData, dispatch } =
     useContext(globalContext);
 
   const [participantsDataNew, setParticipantsDataNew] = useState(
@@ -262,7 +262,7 @@ const Participant = ({ participant, personCount }) => {
               : "Gem Deltager"}
           </Button>
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 };

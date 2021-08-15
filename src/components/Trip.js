@@ -5,8 +5,6 @@ import CarouselComponent from "./CarouselComponent";
 import HotelMetaComponent from "./HotelMetaComponent";
 import { SET_CURRENT_TRIP } from "../context/types";
 import globalContext from "../context/global/globalContext";
-import HotelRating from "./HotelRating";
-import HotelReviews from "./HotelReviews";
 import { Button } from "@material-ui/core";
 
 // import format from "date-fns/format";
@@ -58,9 +56,9 @@ const Trip = ({ trip }) => {
             </div>
           </div>
           <div className="text-xs font-bold">{room_description}</div>
-          {post?.meta?.hotel_beskrivelse && (
-            <div className="hotel_beskrivelse--reduceret">
-              {parse(post?.meta?.hotel_beskrivelse)}
+          {post?.snippet && (
+            <div className="hotel_beskrivelse--reduceret text-sm mb-4">
+              {parse(post?.snippet)}...
             </div>
           )}
 
