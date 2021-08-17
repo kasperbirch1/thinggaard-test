@@ -33,7 +33,7 @@ const Trip = ({ trip }) => {
 
   return (
     <div className="relative mt-4 mb-8 booking-container p-4 border border-solid border-1 border-gray-300 rounded">
-      <div className="grid grid-cols-12">
+      <div className="grid md:grid-cols-12 grid-cols-1">
         <div className="col-span-5 pr-6">
           {post?.meta?.gallery_settings && (
             <CarouselComponent images={post.meta.gallery_settings} />

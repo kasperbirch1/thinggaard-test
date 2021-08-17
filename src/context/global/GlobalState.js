@@ -131,7 +131,7 @@ const GlobalState = (props) => {
   const fetchDates = async (source) => {
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/dates?destination_id=${state.currentDestination?.code}&token=${state.token}`,
+        `https://thinggaard.dk/wp-json/thinggaard/v1/dates?destination_id=${state.currentDestination?.code}&duration_from=${state.currentDuration}&duration_to=${state.currentDuration}&token=${state.token}`,
         {
           cancelToken: source.token,
         }

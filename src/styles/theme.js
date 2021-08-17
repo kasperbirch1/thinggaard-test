@@ -15,6 +15,46 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
+  overrides: {
+    MuiPickersToolbar: {
+      toolbar: {},
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        // backgroundColor: lightBlue.A200,
+        // color: "white",
+      },
+    },
+    MuiPickersDay: {
+      day: {
+        color: "#111",
+        background: "#eee",
+        border: "2px solid white",
+        "&:hover": {
+          color: "#333",
+          background: "#0e6c5680",
+        },
+      },
+      daySelected: {
+        backgroundColor: "#0e6c56",
+        border: "none",
+        "&:hover": {
+          color: "#fff",
+        },
+      },
+      dayDisabled: {
+        border: "none",
+        color: "#aaa",
+        background: "transparent",
+      },
+      current: {
+        color: "#0f0",
+      },
+    },
+    MuiPickersModal: {
+      dialogAction: {},
+    },
+  },
 });
 
 export default theme;

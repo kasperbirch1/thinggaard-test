@@ -49,6 +49,9 @@ const Home = () => {
     }
   }, [currentTrip]);
 
+  console.log(currentTrip);
+  console.log(trips);
+
   return (
     <>
       {destinations && (
@@ -94,9 +97,14 @@ const Home = () => {
 
           {trips && (
             <div id="trips">
-              {trips.map((trip) => (
-                <Trip key={trip.accomodation_code} trip={trip} />
-              ))}
+              {trips.map(
+                (trip) =>
+                  (!currentTrip ||
+                    currentTrip.accomodation_code !==
+                      trip.accomodation_code) && (
+                    <Trip key={trip.accomodation_code} trip={trip} />
+                  )
+              )}
             </div>
           )}
 

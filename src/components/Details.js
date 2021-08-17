@@ -45,7 +45,7 @@ const Details = () => {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [currentTrip]);
 
   const handleTabIndex = (event, newValue) => {
     setTabIndex(newValue);

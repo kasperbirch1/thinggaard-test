@@ -4,6 +4,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import da from "date-fns/locale/da";
 import format from "date-fns/format";
 import { useStyles } from "../../styles";
 import globalContext from "../../context/global/globalContext";
@@ -24,17 +25,21 @@ const DatesSelect = () => {
 
   const daylist = dates?.map((date) => date.date);
 
-  // const renderDayInPicker = (
-  //   date,
-  //   selectedDate,
-  //   dayInCurrentMonth,
-  //   dayComponent
-  // ) => {
-  //   if (daylist.includes(format(date, "yyyy-MM-dd"))) {
-  //     return <div style={{ backgroundColor: "green" }}>{dayComponent}</div>;
-  //   }
-  //   return dayComponent;
-  // };
+  const renderDayInPicker = (
+    date,
+    selectedDate,
+    dayInCurrentMonth,
+    dayComponent
+  ) => {
+    for (var i = 0; i < currentDuration; i++) {
+      let rangeDate = new Date(date);
+      rangeDate.setDate(rangeDate.getDate() - i);
+      if (daylist.includes(format(rangeDate, "yyyy-MM-dd"))) {
+        return <div className="day-in-range">{dayComponent}</div>;
+      }
+    }
+    return dayComponent;
+  };
 
   const disableDays = (date) => {
     if (!daylist.includes(format(date, "yyyy-MM-dd"))) {
@@ -44,17 +49,25 @@ const DatesSelect = () => {
 
   return (
     <div className="mr-2">
-      <MuiPickersUtilsProvider className="col-span-1" utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider
+        className="col-span-1"
+        utils={DateFnsUtils}
+        locale={da}
+      >
         <KeyboardDatePicker
           disabled={
             destinations && currentTransport && currentDuration ? false : true
           }
-          onClick={() => setPickerStatus(true)}
+          onClick={() =>
+            setPickerStatus(
+              destinations && currentTransport && currentDuration ? true : false
+            )
+          }
           onClose={() => setPickerStatus(false)}
           open={pickerStatus}
           disableToolbar
           shouldDisableDate={disableDays}
-          clearable
+          clearable={false}
           autoOk={true}
           animateYearScrolling={true}
           value={currentDate}
@@ -67,8 +80,15 @@ const DatesSelect = () => {
           }}
           minDate={new Date()}
           format="dd/MM/yyyy"
-          // renderDay={renderDayInPicker}
+          renderDay={renderDayInPicker}
           inputVariant="outlined"
+          KeyboardButtonProps={{
+            style: {
+              marginLeft: "-8px",
+              paddingLeft: "6px",
+            },
+          }}
+          inputProps={{ style: { letterSpacing: "-0.2px" } }}
           variant="dialog"
         />
       </MuiPickersUtilsProvider>
