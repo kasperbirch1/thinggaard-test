@@ -98,7 +98,14 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
       payload: customerDataTemp,
     });
 
-    setCustomerConfirm(customerDataTemp);
+    dispatch({
+      type: SET_CUSTOMER_CONFIRM,
+      payload: customerDataTemp,
+    });
+
+    history.push(
+      "orderconfirmation?orderid=" + order.id + "&pincode=" + order.pin_code
+    );
   };
 
   return (
@@ -243,12 +250,6 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
         <Button
           onClick={() => {
             handleCustomerFinalize();
-            history.push(
-              "orderconfirmation?orderid=" +
-                order.id +
-                "&pincode=" +
-                order.pin_code
-            );
           }}
           color="primary"
           size="large"

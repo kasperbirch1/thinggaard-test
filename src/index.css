@@ -21,10 +21,23 @@
   }
 }
 
-.trip-search-trips .carousel .thumbs-wrapper {
-  margin: 10px 0 0;
+.carousel-arrow {
+  background: rgba(255, 255, 255, 0.65);
+  transition: all 150ms ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.65);
+  color: #555;
 }
 
+.carousel-arrow:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transition: all 150ms ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.95);
+  color: #333;
+}
+
+.carousel-arrow-disabled {
+  opacity: 0.25;
+}
 .MuiOutlinedInput-adornedEnd {
   padding: 0 !important;
 }

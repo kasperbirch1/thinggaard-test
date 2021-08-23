@@ -49,9 +49,6 @@ const Home = () => {
     }
   }, [currentTrip]);
 
-  console.log(currentTrip);
-  console.log(trips);
-
   return (
     <>
       {destinations && (
@@ -64,9 +61,9 @@ const Home = () => {
               <DestinationsSelect />
               <DurationsSelect />
               <TransportsSelect />
+              <DatesSelect />
               <AdultsSelect />
               <ChildrenSelect />
-              <DatesSelect />
               <FormControl className={classes.formControl}>
                 <Button
                   disabled={

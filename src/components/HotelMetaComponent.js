@@ -9,8 +9,8 @@ import HotelOutlinedIcon from "@material-ui/icons/HotelOutlined";
 
 const HotelMetaComponent = ({ post }) => {
   return (
-    <div className="grid grid-cols-12 mb-4">
-      <div className="col-span-8 grid grid-cols-12 mb-4">
+    <div className="grid grid-cols-12 mb-4 rounded bg-white p-4 border border-gray-200">
+      <div className="col-span-8 grid grid-cols-12">
         <div className="grid grid-cols-2 col-span-12 text-left">
           <div className="text-xs font-semibold">
             <LocationCityOutlinedIcon
@@ -21,7 +21,7 @@ const HotelMetaComponent = ({ post }) => {
             Distance til centrum
           </div>
           <div className="text-xs">
-            {post?.meta?.hotel_meta_distance_center}
+            {post?.meta?.hotel_meta_distance_center} m.
           </div>
         </div>
         <div className="grid grid-cols-2 col-span-12 text-left">
@@ -33,7 +33,9 @@ const HotelMetaComponent = ({ post }) => {
             />
             Distance til lift
           </div>
-          <div className="text-xs">{post?.meta?.hotel_meta_distance_lift}</div>
+          <div className="text-xs">
+            {post?.meta?.hotel_meta_distance_lift} m.
+          </div>
         </div>
         <div className="grid grid-cols-2 col-span-12 text-left">
           <div className="text-xs font-semibold">
@@ -45,7 +47,7 @@ const HotelMetaComponent = ({ post }) => {
             Distance til skibus
           </div>
           <div className="text-xs">
-            {post?.meta?.hotel_meta_distance_skibus}
+            {post?.meta?.hotel_meta_distance_skibus} m.
           </div>
         </div>
         <div className="grid grid-cols-2 col-span-12 text-left">

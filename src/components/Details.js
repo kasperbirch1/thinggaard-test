@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import { Button, Tab, Tabs, TabPane, Box, Typography } from "@material-ui/core";
 import HotelMetaComponent from "./HotelMetaComponent";
+import HotelPreviewComponent from "./HotelPreviewComponent";
 
 const Details = () => {
   const history = useHistory();
@@ -24,7 +25,7 @@ const Details = () => {
 
   const {
     destination_name,
-    // travel_length,
+    room_description,
     minimum_price,
     post,
     // accommodation_checkin,
@@ -80,7 +81,7 @@ const Details = () => {
   return (
     <div className="mt-4">
       <div className="grid mb-2 mt-4 grid-cols-12">
-        <div className={"col-span-6"}>
+        <div className={"col-span-5"}>
           {post?.meta?.gallery_settings && (
             <CarouselComponent
               images={post.meta.gallery_settings}
@@ -88,16 +89,16 @@ const Details = () => {
             />
           )}
         </div>
-        <div className="col-span-6 ml-5">
-          <h1 className="font-semibold text-2xl">
-            {post?.post_title},
-            <span className="ml-2 text-gray-500 font-normal">
-              {destination_name}
-            </span>
-          </h1>
-          <div className="hotel_details_description text-sm mb-4">
-            {post?.snippet}...
-          </div>
+        <div className="col-span-7 ml-5">
+          {post && destination_name && room_description && minimum_price && (
+            <HotelPreviewComponent
+              post={post}
+              destination_name={destination_name}
+              room_description={room_description}
+              minimum_price={minimum_price}
+            />
+          )}
+
           {post?.meta && <HotelMetaComponent post={post} />}
         </div>
       </div>
@@ -116,58 +117,60 @@ const Details = () => {
           </Tabs>
         </AppBar>
 
-        <TabPanel className="pt-4" value={tabIndex} index={0}>
-          {currentCombinations && (
-            <>
-              <div className="grid bg-gray-400 p-4 grid-cols-12">
-                <div className="col-span-4">Værelser</div>
-                <div className="col-span-2">Rejseinfo</div>
-                <div className="col-span-2">Dato</div>
-                <div className="col-span-2">Pris</div>
-                <div className="col-span-2"></div>
-              </div>
-              {currentCombinations?.map((combination, index) => (
-                <div
-                  key={index}
-                  className={`${
-                    index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
-                  } grid grid-cols-12 p-4`}
-                >
-                  <div className="col-span-4 pt-2 pr-4 text-xs">
-                    {combination.rooms.rooms_description}
-                  </div>
-                  <div className="col-span-2 pt-2 text-xs">
-                    {combination.transport_code_name},{" "}
-                    {combination.current_week.display_days} dage
-                  </div>
-                  <div className="col-span-2 text-xs pt-2 ">
-                    {combination.current_week.departure_date}
-                  </div>
-                  <div className="col-span-2 text-xs pt-2 font-semibold">
-                    {formatter.format(combination.current_week.price)}
-                  </div>
-                  <div className="col-span-2 text-sm text-right">
-                    <Button
-                      onClick={() => {
-                        dispatch({
-                          type: SET_PARTICIPANTS_DATA,
-                          payload: [],
-                        });
-
-                        fetchOrderCreate(combination.rooms.room_string);
-                        history.push("order");
-                      }}
-                      color="primary"
-                      variant="contained"
-                    >
-                      Bestil
-                    </Button>
-                  </div>
+        <span>
+          <TabPanel className="pt-4" value={tabIndex} index={0}>
+            {currentCombinations && (
+              <>
+                <div className="grid bg-gray-400 p-4 grid-cols-12">
+                  <div className="col-span-4">Værelser</div>
+                  <div className="col-span-2">Rejseinfo</div>
+                  <div className="col-span-2">Dato</div>
+                  <div className="col-span-2">Pris</div>
+                  <div className="col-span-2"></div>
                 </div>
-              ))}
-            </>
-          )}
-        </TabPanel>
+                {currentCombinations?.map((combination, index) => (
+                  <div
+                    key={index}
+                    className={`${
+                      index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
+                    } grid grid-cols-12 p-4`}
+                  >
+                    <div className="col-span-4 pt-2 pr-4 text-xs">
+                      {combination.rooms.rooms_description}
+                    </div>
+                    <div className="col-span-2 pt-2 text-xs">
+                      {combination.transport_code_name},{" "}
+                      {combination.current_week.display_days} dage
+                    </div>
+                    <div className="col-span-2 text-xs pt-2 ">
+                      {combination.current_week.departure_date}
+                    </div>
+                    <div className="col-span-2 text-xs pt-2 font-semibold">
+                      {formatter.format(combination.current_week.price)}
+                    </div>
+                    <div className="col-span-2 text-sm text-right">
+                      <Button
+                        onClick={() => {
+                          dispatch({
+                            type: SET_PARTICIPANTS_DATA,
+                            payload: [],
+                          });
+
+                          fetchOrderCreate(combination.rooms.room_string);
+                          history.push("order");
+                        }}
+                        color="primary"
+                        variant="contained"
+                      >
+                        Bestil
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+          </TabPanel>
+        </span>
 
         <TabPanel className="pt-4" value={tabIndex} index={1}>
           {post?.description && <div>{post?.description}</div>}
