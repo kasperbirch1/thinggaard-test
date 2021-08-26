@@ -3,19 +3,18 @@ import React, { useContext, useEffect, useState } from "react";
 import globalContext from "../context/global/globalContext";
 import { useStyles } from "../styles";
 import { useHistory } from "react-router-dom";
-import { SET_CUSTOMER_DATA } from "../context/types";
-import { SET_CUSTOMER_CONFIRM } from "../context/types";
+import { SET_CUSTOMER_DATA, SET_CUSTOMER_CONFIRM } from "../context/types";
+import axios from "axios";
 
 const OrderAccountHolderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
   const history = useHistory();
   const {
+    token,
     order,
     customerData,
     setCustomerData,
-    customerConfirm,
-    setCustomerConfirm,
-    participantsdata,
+    participantsData,
     dispatch,
   } = useContext(globalContext);
 
@@ -46,6 +45,8 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
 
   const [customerStatus, setCustomerStatus] = useState(false);
 
+  const [customerObject, setCustomerObject] = useState({});
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -65,6 +66,17 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
       customerCity
     ) {
       setCustomerStatus(true);
+      let customerDataTemp = customerData ? customerData : {};
+      customerDataTemp.pin_code = order.pin_code;
+      customerDataTemp.first_name = customerNameFirst;
+      customerDataTemp.last_name = customerNameLast;
+      customerDataTemp.email_address = customerEmail;
+      customerDataTemp.phone = customerPhone;
+      customerDataTemp.address1 = customerAddress1;
+      customerDataTemp.address2 = customerAddress2;
+      customerDataTemp.zip = customerZip;
+      customerDataTemp.city = customerCity;
+      setCustomerObject(customerDataTemp);
     } else {
       setCustomerStatus(false);
     }
@@ -77,6 +89,9 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
     customerAddress2,
     customerZip,
     customerCity,
+    customerData,
+    customerObject,
+    order,
   ]);
 
   const handleCustomerFinalize = () => {
@@ -90,22 +105,44 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
     customerDataTemp.address2 = customerAddress2;
     customerDataTemp.zip = customerZip;
     customerDataTemp.city = customerCity;
+    setCustomerObject(customerDataTemp);
 
-    setCustomerData(customerDataTemp);
+    const postData = {
+      token: token,
+      order_id: order.id,
+      customer: JSON.stringify(customerDataTemp),
+    };
 
-    dispatch({
-      type: SET_CUSTOMER_DATA,
-      payload: customerDataTemp,
-    });
+    const postDataConfirm = {
+      token: token,
+      order_id: order.id,
+      pincode: order.pin_code,
+    };
 
-    dispatch({
-      type: SET_CUSTOMER_CONFIRM,
-      payload: customerDataTemp,
-    });
+    console.log(postData);
 
-    history.push(
-      "orderconfirmation?orderid=" + order.id + "&pincode=" + order.pin_code
-    );
+    console.log(postDataConfirm);
+
+    axios
+      .post(
+        "https://thinggaard.dk/wp-json/thinggaard/v1/orders/customers/patch",
+        postData
+      )
+      .then(() => {
+        axios
+          .post(
+            "https://thinggaard.dk/wp-json/thinggaard/v1/orders/finalize",
+            postDataConfirm
+          )
+          .then(() => {
+            history.push(
+              "orderconfirmation?orderid=" +
+                order.id +
+                "&pincode=" +
+                order.pin_code
+            );
+          });
+      });
   };
 
   return (

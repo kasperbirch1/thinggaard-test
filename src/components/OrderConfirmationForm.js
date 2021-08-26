@@ -82,15 +82,15 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   };
 
   useEffect(() => {
-    if (orderFetched && order && order.id) {
+    if (orderFetched && order && order.id && !quickpayForm) {
       if (order.booking_amount_remaining > 0) {
         getQuickpayForm();
       }
-      if (order.deposit_amount_remaining > 0) {
+      if (order.deposit_amount_remaining > 0 && !quickpayFormDeposit) {
         getQuickpayFormDeposit();
       }
     }
-  }, [order, orderFetched]);
+  }, [order, orderFetched, quickpayForm, quickpayFormDeposit]);
 
   return (
     <div className={` ${tailwindCSS}`}>
@@ -205,6 +205,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
                   type="hidden"
                   name={formItem.field_key}
                   value={formItem.field_value}
+                  key={formKey}
                 />
               ))}
               <Button

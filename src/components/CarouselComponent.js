@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import KeyboardArrowLeftOutlinedIcon from "@material-ui/icons/KeyboardArrowLeftOutlined";
 import KeyboardArrowRightOutlinedIcon from "@material-ui/icons/KeyboardArrowRightOutlined";
 
-const CarouselComponent = ({ images, className, DetailsPage }) => {
+const CarouselComponent = ({ images, className }) => {
+  let carousel = useRef(null);
+
+  useEffect(() => {
+    if (carousel && carousel?.state?.selectedItem > 0) {
+      carousel.state.selectedItem = 0;
+    }
+  }, [images]);
+
   return (
     <>
       <Carousel
+        ref={(el) => (carousel = el)}
+        selectedItem={0}
         className={className}
         showIndicators={false}
         useKeyboardArrows={true}

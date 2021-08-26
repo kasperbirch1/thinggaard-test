@@ -41,7 +41,6 @@ const Details = () => {
 
   useEffect(() => {
     let source = axios.CancelToken.source();
-    // fetchCombinations(source, currentAccomodationCode, currentPeriodId);
     fetchCombinations(source, accomodation_code, period_id);
     return () => {
       source.cancel();
@@ -85,7 +84,7 @@ const Details = () => {
           {post?.meta?.gallery_settings && (
             <CarouselComponent
               images={post.meta.gallery_settings}
-              DetailsPage
+              className="border-4 border-white shadow rounded"
             />
           )}
         </div>
