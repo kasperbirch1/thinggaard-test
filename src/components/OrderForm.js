@@ -18,8 +18,14 @@ const OrderForm = ({ tailwindCSS }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { order, customerData, setCustomerData, participantsData, dispatch } =
-    useContext(globalContext);
+  const {
+    order,
+    customerData,
+    setCustomerData,
+    createCustomerData,
+    participantsData,
+    dispatch,
+  } = useContext(globalContext);
 
   const [customerSaved, setCustomerSaved] = useState(false);
 
@@ -70,14 +76,10 @@ const OrderForm = ({ tailwindCSS }) => {
     if (customerEmail && customerNameFirst && customerNameLast) {
       setCustomerStatus(true);
     }
-    setCustomerData(customerDataTemp);
+    createCustomerData(customerDataTemp);
     customerTimer = window.setTimeout(() => {
       setCustomerSaved(false);
     }, 3000);
-    dispatch({
-      type: SET_CUSTOMER_DATA,
-      payload: customerDataTemp,
-    });
   };
 
   return (

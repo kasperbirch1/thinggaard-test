@@ -17,6 +17,7 @@ import {
   SET_ORDER,
   SET_PARTICIPANTS_DATA,
   SET_CUSTOMER_DATA,
+  CREATE_CUSTOMER_DATA,
 } from "../types";
 import axios from "axios";
 
@@ -235,6 +236,21 @@ const GlobalState = (props) => {
       .then(() => {});
   };
 
+  const createCustomerData = (saveData) => {
+    const postData = {
+      token: state.token,
+      order_id: state.order.id,
+      customer: JSON.stringify(saveData),
+    };
+
+    axios
+      .post(
+        "https://thinggaard.dk/wp-json/thinggaard/v1/orders/customers/create",
+        postData
+      )
+      .then(() => {});
+  };
+
   const countAdults = (number) => {
     let countAdults = [];
     for (let i = 0; i < state.adults; i++) {
@@ -347,6 +363,7 @@ const GlobalState = (props) => {
         fetchOrderCreate,
         setParticipantsData,
         setCustomerData,
+        createCustomerData,
       }}
     >
       {props.children}
