@@ -11,8 +11,8 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   const history = useHistory();
   const { order, token, fetchOrder, customerData, dispatch } =
     useContext(globalContext);
-  const [quickpayForm, setQuickpayForm] = useState([]);
-  const [quickpayFormDeposit, setQuickpayFormDeposit] = useState([]);
+  const [quickpayForm, setQuickpayForm] = useState(false);
+  const [quickpayFormDeposit, setQuickpayFormDeposit] = useState(false);
   const [orderFetched, setOrderFetched] = useState(false);
 
   let query = new URLSearchParams(useLocation().search);
@@ -82,6 +82,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   };
 
   useEffect(() => {
+    console.log(quickpayForm);
     if (orderFetched && order && order.id && !quickpayForm) {
       if (order.booking_amount_remaining > 0) {
         getQuickpayForm();
