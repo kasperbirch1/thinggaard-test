@@ -74,9 +74,7 @@ const OrderTotal = ({ order, tailwindCSS }) => {
         </div>
         <div className="md:flex md:justify-between md:items-center pt-4">
           <h2 className="font-bold">Totalpris</h2>
-          <h2 className="font-bold">
-            {formatter.format(order?.booking_amount)}
-          </h2>
+          <h2 className="font-bold">{formatter.format(order?.total_amount)}</h2>
         </div>
       </div>
     </div>

@@ -80,7 +80,7 @@ const DatesSelect = () => {
             onChange={(date) => {
               dispatch({
                 type: SET_CURRENT_DATE,
-                payload: date,
+                payload: date.getTime(),
               });
             }}
             minDate={new Date()}

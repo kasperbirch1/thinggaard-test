@@ -37,6 +37,8 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
     }
   }, [token, query, fetchOrder, orderFetched]);
 
+  const getQuickpayForm = async () => {
+    try {
       const { data } = await axios({
         url:
           "https://thinggaard.dk/wp-json/thinggaard/v1/orders/payments/quickpay?order_id=" +
@@ -80,6 +82,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
   useEffect(() => {
     if (orderFetched && order && order.id && !quickpayForm) {
       if (order.booking_amount_remaining > 0) {
+        getQuickpayForm();
       }
       if (order.deposit_amount_remaining > 0 && !quickpayFormDeposit) {
         getQuickpayFormDeposit();
@@ -108,9 +111,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
           <p className="text-center">
             Tak for din indbetaling. Vi har registreret følgende på din rejse
           </p>
-          <p className="text-center">
-            Tak for din indbetaling. Vi har registreret følgende på din rejse
-          </p>
+        </>
       )}
       {query.get("status") === "cancel" && (
         <>
@@ -124,26 +125,12 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
         </>
       )}
       <h2 className="p-2 text-4xl text text-center font-bold mb-4">Betaling</h2>
-      <h2 className="p-2 text-4xl text text-center font-bold mb-4">Betaling</h2>
       <div className="grid grid-cols-2 gap-4 mb-4 p-4 border border-solid rounded border-gray-400 text-xs md:text-sm">
         <div className="col font-bold">Registreret indbetalt totalt</div>
         <div className="col font-semibold">
           {order?.booking_amount_paid &&
             formatter.format(order.booking_amount_paid)}
         </div>
-        <div className="col font-bold">Resterende beløb til indbetaling</div>
-        <div className="col font-semibold">
-          {order?.booking_amount_remaining &&
-            formatter.format(order.booking_amount_remaining)}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 mb-4 p-4 border border-solid rounded border-gray-400 text-xs md:text-sm">
-        <div className="col font-bold">Registreret indbetalt totalt</div>
-        <div className="col font-semibold">
-          {order?.booking_amount_paid &&
-            formatter.format(order.booking_amount_paid)}
-          <div className="grid grid-cols-12 mb-4 p-4 border border-solid rounded border-gray-400 text-xs md:text-sm">
         <div className="col font-bold">Resterende beløb til indbetaling</div>
         <div className="col font-semibold">
           {order?.booking_amount_remaining &&
@@ -167,79 +154,39 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
             <div className="col-span-9">{order?.customer?.city}</div>
             <div className="col-span-3 font-bold">Postnr</div>
             <div className="col-span-9">{order?.customer?.postal_code}</div>
-                className="mb-4 p-4 border border-solid rounded border-gray-400 text-xs md:text-sm"
+            <div className="col-span-3 font-bold">Land</div>
             <div className="col-span-9">{order?.customer?.country}</div>
             <div className="col-span-3 font-bold">Telefon</div>
-                <div className="grid grid-cols-12 participant_content mb-4 md:md-0">
-                  <div className="col-span-12 md:col-span-3 font-bold">
-                    Navn
-                  </div>
-                  <div className="col-span-8 md:col-span-6 font-semibold">
+            <div className="col-span-9">{order?.customer?.phone_number}</div>
+            <div className="col-span-3 font-bold">Email</div>
+            <div className="col-span-9">{order?.customer?.email_address}</div>
           </div>
           <div>
-                  <div className="col-span-4 md:col-span-3 text-right font-light">
+            <h2 className="p-2 text-4xl text text-center font-bold mb-4">
               Deltagere
-                    {participantItem.gender === "M" ? "Mand" : "Kvinde"}
+            </h2>
             {order?.participants.map((participantItem, participantKey) => (
               <div
                 className="mb-4 p-4 border border-solid rounded border-gray-400 text-xs md:text-sm"
                 key={participantKey}
               >
                 <div className="grid grid-cols-12 participant_content mb-4 md:md-0">
-                        className="grid grid-cols-12  mb-4 md:md-0"
+                  <div className="col-span-12 md:col-span-3 font-bold">
                     Navn
                   </div>
                   <div className="col-span-8 md:col-span-6 font-semibold">
-                        <div className="col-span-12 md:col-span-3 font-bold">
+                    {participantItem.full_name}
                   </div>
                   <div className="col-span-4 md:col-span-3 text-right font-light">
-                        <div className="col-span-8 md:col-span-6">
+                    {participantItem.age} år -{" "}
                     {participantItem.gender === "M" ? "Mand" : "Kvinde"}
                   </div>
-                        <div className="col-span-4 md:col-span-3 text-right">
-                          {formatter.format(serviceItem.service_price)}
+                </div>
+                {participantItem.services.map(
                   (serviceItem, serviceKey) =>
                     serviceItem.selected === 1 && (
                       <div
                         className="grid grid-cols-12  mb-4 md:md-0"
-                {order?.transport_code !== 0 &&
-                  participantItem.location_for_departure && (
-                    <div
-                      className="grid grid-cols-12"
-                      style={{ fontSize: "12px" }}
-                    >
-                      <div className="col-span-12 md:col-span-3 font-bold">
-                        Afrejse opsamling
-                      </div>
-                      <div className="col-span-12 md:col-span-6">
-                        {participantItem.location_for_departure}{" "}
-                      </div>
-                      <div className="col-span-12 md:col-span-3 md:text-right">
-                        {formatter.format(
-                          participantItem.location_for_departure_price
-                        )}
-                      </div>
-                    </div>
-                  )}{" "}
-                {order?.transport_code !== 0 &&
-                  participantItem.location_for_departure && (
-                    <div
-                      className="grid grid-cols-12"
-                      style={{ fontSize: "12px" }}
-                    >
-                      <div className="col-span-12 md:col-span-3 font-bold">
-                        Hjemrejse destination
-                      </div>
-                      <div className="col-span-12 md:col-span-6">
-                        {participantItem.location_for_return}
-                      </div>
-                      <div className="col-span-12 md:col-span-3 md:text-right">
-                        {formatter.format(
-                          participantItem.location_for_return_price
-                        )}
-                      </div>
-                    </div>
-                  )}
                         style={{ fontSize: "12px" }}
                         key={serviceKey}
                       >
@@ -249,7 +196,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
                         <div className="col-span-8 md:col-span-6">
                           {serviceItem.description}
                         </div>
-            className="col-span-12 md:col-span-6"
+                        <div className="col-span-4 md:col-span-3 text-right">
                           {formatter.format(serviceItem.service_price)}
                         </div>
                       </div>
@@ -263,7 +210,6 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
                     >
                       <div className="col-span-12 md:col-span-3 font-bold">
                         Afrejse opsamling
-                className="w-full"
                       </div>
                       <div className="col-span-12 md:col-span-6">
                         {participantItem.location_for_departure}{" "}
@@ -276,7 +222,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
                     </div>
                   )}{" "}
                 {order?.transport_code !== 0 &&
-            className="col-span-12 md:col-span-6 text-right"
+                  participantItem.location_for_departure && (
                     <div
                       className="grid grid-cols-12"
                       style={{ fontSize: "12px" }}
@@ -289,7 +235,6 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
                       </div>
                       <div className="col-span-12 md:col-span-3 md:text-right">
                         {formatter.format(
-                className="w-full"
                           participantItem.location_for_return_price
                         )}
                       </div>
