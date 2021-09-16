@@ -8,6 +8,22 @@ const TransportsSelect = () => {
   const classes = useStyles();
   const { transports, currentTransport, dispatch } = useContext(globalContext);
 
+  const GetTransportTitle = (props) => {
+    let returnTitle = props.title.toLowerCase();
+    switch (returnTitle) {
+      case "car":
+        returnTitle = "Egen Transport";
+        break;
+      case "flight":
+        returnTitle = "Fly";
+        break;
+      default:
+        returnTitle = "Bus";
+        break;
+    }
+    return returnTitle;
+  };
+
   return (
     <FormControl variant="outlined" className="col-span-1">
       <InputLabel id="label-transport">Transport</InputLabel>
@@ -31,9 +47,7 @@ const TransportsSelect = () => {
             key={item.transport_category_id}
             value={"transport_" + item.transport_category_id}
           >
-            {item.transport_category_name == "Car"
-              ? "Egen transport"
-              : item.transport_category_name}
+            <GetTransportTitle title={item.transport_category_name} />
           </MenuItem>
         ))}
       </Select>

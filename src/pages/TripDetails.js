@@ -1,6 +1,7 @@
 import { Button, FormControl, TextField } from "@material-ui/core";
 import { scroll, scroller } from "react-scroll";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useReducer } from "react";
+import { useLocation } from "react-router-dom";
 import globalContext from "../context/global/globalContext";
 import DatesSelect from "../components/form-inputs/DatesSelect";
 import DestinationsSelect from "../components/form-inputs/DestinationsSelect";
@@ -11,14 +12,24 @@ import { useStyles } from "../styles";
 import Details from "../components/Details";
 import AdultsSelect from "../components/form-inputs/AdultsSelect";
 import ChildrenSelect from "../components/form-inputs/ChildrenSelect";
+import axios from "axios";
 
-const Home = () => {
+import {
+  SET_CURRENT_COMBINATIONS,
+  SET_TRIPS,
+  SET_CURRENT_TRIP,
+} from "../context/types";
+
+const TripDetails = () => {
   const classes = useStyles();
   const {
+    token,
     destinations,
     handleSubmit,
     adults,
+    currentPeriodId,
     currentDestination,
+    currentCombinations,
     currentDuration,
     currentTransport,
     currentDate,
@@ -27,29 +38,62 @@ const Home = () => {
     currentTrip,
   } = useContext(globalContext);
 
-  useEffect(() => {
-    if (trips) {
-      scroller.scrollTo("trips", {
-        duration: 800,
-        offset: -50,
-        delay: 0,
-        smooth: "easeInOutQuart",
-      });
-    }
-  }, [trips]);
+  let query = new URLSearchParams(useLocation().search);
 
-  useEffect(() => {
-    if (currentTrip) {
-      scroller.scrollTo("trip", {
-        duration: 800,
-        offset: -50,
-        delay: 0,
-        smooth: "easeInOutQuart",
-      });
-    }
-  }, [currentTrip]);
+  const getCombinations = async () => {
+    let travelDate = new Date(query.get("date")).getTime();
 
-  console.log(currentTrip);
+    try {
+      const { data } = await axios.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${query.get(
+          "destination"
+        )}&ages=30,30&duration=${query.get(
+          "duration"
+        )}&date=${travelDate}&transport=transport_${query.get(
+          "transport"
+        )}&token=${token}}`
+      );
+
+      data.result.map(
+        (trip) =>
+          trip.accomodation_code === "pere" &&
+          dispatch({
+            type: SET_CURRENT_TRIP,
+            payload: trip,
+          })
+      );
+
+      console.log(data);
+      dispatch({
+        type: SET_TRIPS,
+        payload: data.result,
+      });
+    } catch (error) {}
+
+    try {
+      const { data } = await axios.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips/combinations?&ages=30,30&duration=${query.get(
+          "duration"
+        )}&date=${travelDate}&transport=transport_${query.get(
+          "transport"
+        )}&token=${token}&accomodation_code=${query.get(
+          "accomodation"
+        )}&period_id=${query.get("period")}`
+      );
+
+      dispatch({
+        type: SET_CURRENT_COMBINATIONS,
+        payload: data.result,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (token) {
+      getCombinations();
+    }
+  }, [token]);
 
   return (
     <>
@@ -124,4 +168,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default TripDetails;

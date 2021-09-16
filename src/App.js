@@ -3,6 +3,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import OrderAccountHolder from "./pages/orderaccountholder";
 import theme from "./styles/theme.js";
 import Home from "./pages/Home";
+import TripDetails from "./pages/TripDetails";
 import Order from "./pages/order";
 import OrderConfirmation from "./pages/orderconfirmation";
 import { useContext, useState } from "react";
@@ -80,6 +81,9 @@ const App = () => {
               <Switch>
                 <Route exact path="/">
                   <Home />
+                </Route>
+                <Route path="/tripdetails">
+                  <TripDetails />
                 </Route>
                 <Route path="/order">
                   <Order />
