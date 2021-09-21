@@ -133,6 +133,8 @@ const GlobalState = (props) => {
       const { data } = await axios.get(
         "https://thinggaard.dk/wp-json/thinggaard/v1/dates?destination_id=" +
           state.currentDestination.code +
+          "&transport=" +
+          state.currentTransport +
           "&duration_from=" +
           state.currentDuration +
           "&duration_to=" +
@@ -143,6 +145,7 @@ const GlobalState = (props) => {
           cancelToken: source.token,
         }
       );
+      console.log(data.result);
       dispatch({
         type: SET_DATES,
         payload: data.result,
@@ -331,7 +334,7 @@ const GlobalState = (props) => {
     return () => {
       source.cancel();
     };
-  }, [state.currentDestination, state.currentDuration]);
+  }, [state.currentDestination, state.currentDuration, state.currentTransport]);
 
   return (
     <GlobalContext.Provider
