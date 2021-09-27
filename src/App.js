@@ -6,14 +6,13 @@ import Home from "./pages/Home";
 import TripDetails from "./pages/TripDetails";
 import Order from "./pages/order";
 import OrderConfirmation from "./pages/orderconfirmation";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import globalContext from "./context/global/globalContext";
 import { PuffLoader } from "react-spinners";
 import axios from "axios";
-import { SET_LOADING } from "./context/types.js";
 
 const App = () => {
-  const { trips, order, dispatch } = useContext(globalContext);
+  const { trips, order } = useContext(globalContext);
 
   const [loading, setLoading] = useState(false);
 
@@ -79,7 +78,7 @@ const App = () => {
           >
             <Router>
               <Switch>
-              <Route exact path="/">
+                <Route exact path="/">
                   <Home />
                 </Route>
                 <Route exact path="/order">
@@ -123,8 +122,7 @@ const App = () => {
                   <OrderConfirmation />
                 </Route>
 
-
-              <Route exact path="/gruppe-react/">
+                <Route exact path="/gruppe-react/">
                   <Home />
                 </Route>
                 <Route exact path="/gruppe-react/order">
@@ -158,10 +156,16 @@ const App = () => {
                 <Route exact path="/gruppe-react/tripdetails/orderconfirmation">
                   <OrderConfirmation />
                 </Route>
-                <Route exact path="/gruppe-react/tripdetails/orderpaymentconfirmation">
+                <Route
+                  exact
+                  path="/gruppe-react/tripdetails/orderpaymentconfirmation"
+                >
                   <OrderConfirmation />
                 </Route>
-                <Route exact path="/gruppe-react/tripdetails/orderpaymentcallback">
+                <Route
+                  exact
+                  path="/gruppe-react/tripdetails/orderpaymentcallback"
+                >
                   <OrderConfirmation />
                 </Route>
                 <Route exact path="/gruppe-react/orderpaymentcancel">

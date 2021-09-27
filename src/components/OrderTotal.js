@@ -1,12 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
-import globalContext from "../context/global/globalContext";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const OrderTotal = ({ order, tailwindCSS }) => {
   const [hotel, setHotel] = useState(false);
 
   useEffect(() => {
-    const getHotel = async (source) => {
+    const getHotel = async () => {
       try {
         const { data } = await axios.get(
           `https://thinggaard.dk/wp-json/thinggaard/v1/hotel?accomodation_code=${order?.accomodation_code}`

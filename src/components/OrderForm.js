@@ -2,30 +2,14 @@ import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import globalContext from "../context/global/globalContext";
-import { useStyles } from "../styles";
 import Participant from "./Participant";
-import { SET_CUSTOMER_DATA } from "../context/types";
 import "animate.css";
 
-var customerTimer;
-
-var formatter = new Intl.NumberFormat("da-DK", {
-  style: "currency",
-  currency: "DKK",
-});
-
 const OrderForm = ({ tailwindCSS }) => {
-  const classes = useStyles();
   const history = useHistory();
 
-  const {
-    order,
-    customerData,
-    setCustomerData,
-    createCustomerData,
-    participantsData,
-    dispatch,
-  } = useContext(globalContext);
+  const { order, customerData, createCustomerData, participantsData } =
+    useContext(globalContext);
 
   const [customerSaved, setCustomerSaved] = useState(false);
 
@@ -49,7 +33,7 @@ const OrderForm = ({ tailwindCSS }) => {
     let participantsFilled = false;
     if (participantsData && customerStatus) {
       participantsFilled = true;
-      participantsData.map((item, index) => {
+      participantsData.map((item) => {
         if (!item.name || !item.age || !item.gender) {
           participantsFilled = false;
         }
@@ -77,7 +61,7 @@ const OrderForm = ({ tailwindCSS }) => {
       setCustomerStatus(true);
     }
     createCustomerData(customerDataTemp);
-    customerTimer = window.setTimeout(() => {
+    window.setTimeout(() => {
       setCustomerSaved(false);
     }, 3000);
   };

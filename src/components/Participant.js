@@ -14,15 +14,19 @@ import { SET_PARTICIPANTS_DATA } from "../context/types";
 
 import { useStyles } from "../styles";
 
+import axios from "axios";
+
 const Participant = ({ participant, personCount }) => {
   const classes = useStyles();
 
-  const { order, participantsData, setParticipantsData, dispatch } =
+  const { token, order, participantsData, setParticipantsData, dispatch } =
     useContext(globalContext);
 
   const [participantsDataNew, setParticipantsDataNew] = useState(
     participantsData ? participantsData : []
   );
+
+  const [locationData, setLocationData] = useState([]);
 
   const handleParticipantSave = (person) => {
     participantsDataNew[person].saved = true;
@@ -53,6 +57,28 @@ const Participant = ({ participant, personCount }) => {
       payload: participantsDataNew,
     });
   }, [personCount, participantsDataNew, participant, dispatch]);
+
+  const getLocations = async (direction) => {
+    let locations = locationData;
+    try {
+      const { data } = await axios({
+        url: `https://thinggaard.dk/wp-json/thinggaard/v1/orders/participants/locations?token=${token}&direction=${direction}&order_id=${order.id}&participant_id=${participant.participant_id}`,
+        method: "GET",
+        data: [],
+      });
+      locations[direction] = data.result;
+      setLocationData(locationData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(locationData);
+
+  useEffect(() => {
+    getLocations("departure");
+    getLocations("return");
+  }, []);
 
   return (
     <div className="my-6 p-4 rounded border border-solid border-1 border-gray-400">
@@ -254,7 +280,6 @@ const Participant = ({ participant, personCount }) => {
             }}
             color="secondary"
             variant="contained"
-            size="large"
           >
             {participantsDataNew[personCount] &&
             participantsDataNew[personCount].saved

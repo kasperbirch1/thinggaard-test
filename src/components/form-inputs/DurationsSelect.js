@@ -1,13 +1,10 @@
 import React, { useContext } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import { useStyles } from "../../styles";
 import globalContext from "../../context/global/globalContext";
 import { SET_CURRENT_DURATION } from "../../context/types";
 
 const DurationsSelect = () => {
-  const classes = useStyles();
-  const { durations, currentDuration, currentDestination, dispatch } =
-    useContext(globalContext);
+  const { durations, currentDuration, dispatch } = useContext(globalContext);
 
   return (
     <FormControl variant="outlined" className="col-span-1 pr-2">

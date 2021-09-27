@@ -1,13 +1,11 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
 import globalContext from "../context/global/globalContext";
 import { SET_PARTICIPANTS_DATA } from "../context/types";
 import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
-import { Button, Tab, Tabs, TabPane, Box, Typography } from "@material-ui/core";
+import { Button, Tab, Tabs, Box, Typography } from "@material-ui/core";
 import HotelMetaComponent from "./HotelMetaComponent";
 import HotelPreviewComponent from "./HotelPreviewComponent";
 
@@ -22,7 +20,7 @@ const Details = () => {
     fetchOrderCreate,
   } = useContext(globalContext);
 
-  const { participantsData, dispatch } = useContext(globalContext);
+  const { dispatch } = useContext(globalContext);
 
   const {
     destination_name,

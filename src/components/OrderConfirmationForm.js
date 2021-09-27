@@ -1,16 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import globalContext from "../context/global/globalContext";
-import { useStyles } from "../styles";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 const OrderConfirmationForm = ({ tailwindCSS }) => {
-  const classes = useStyles();
-  const history = useHistory();
-  const { order, token, fetchOrder, customerData, dispatch } =
-    useContext(globalContext);
+  const { order, token, fetchOrder } = useContext(globalContext);
   const [quickpayForm, setQuickpayForm] = useState(false);
   const [quickpayFormDeposit, setQuickpayFormDeposit] = useState(false);
   const [orderFetched, setOrderFetched] = useState(false);
@@ -286,6 +281,7 @@ const OrderConfirmationForm = ({ tailwindCSS }) => {
                   type="hidden"
                   name={formItem.field_key}
                   value={formItem.field_value}
+                  key={formKey}
                 />
               ))}
               <Button

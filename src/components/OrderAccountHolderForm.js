@@ -1,22 +1,13 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import globalContext from "../context/global/globalContext";
-import { useStyles } from "../styles";
 import { useHistory } from "react-router-dom";
-import { SET_CUSTOMER_DATA, SET_CUSTOMER_CONFIRM } from "../context/types";
+
 import axios from "axios";
 
 const OrderAccountHolderForm = ({ tailwindCSS }) => {
-  const classes = useStyles();
   const history = useHistory();
-  const {
-    token,
-    order,
-    customerData,
-    setCustomerData,
-    participantsData,
-    dispatch,
-  } = useContext(globalContext);
+  const { token, order, customerData } = useContext(globalContext);
 
   const [customerNameFirst, setCustomerNameFirst] = useState(
     customerData.first_name ? customerData.first_name : ""

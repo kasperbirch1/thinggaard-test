@@ -24,7 +24,7 @@ const DatesSelect = () => {
     currentDate,
     dispatch,
   } = useContext(globalContext);
-  
+
   const daylist = dates?.map((date) => date.date);
 
   const renderDayInPicker = (

@@ -2,10 +2,8 @@ import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import React, { useContext } from "react";
 import globalContext from "../../context/global/globalContext";
 import { SET_CURRENT_TRANSPORT } from "../../context/types";
-import { useStyles } from "../../styles";
 
 const TransportsSelect = () => {
-  const classes = useStyles();
   const { transports, currentTransport, dispatch } = useContext(globalContext);
 
   const GetTransportTitle = (props) => {

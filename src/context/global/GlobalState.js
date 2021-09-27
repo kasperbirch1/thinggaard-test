@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import globalReducer from "./globalReducer";
 import GlobalContext from "./globalContext";
 import {
-  SET_LOADING,
   SET_TOKEN,
   SET_DESTINATIONS,
   SET_ALL_DURATIONS,
@@ -15,12 +14,9 @@ import {
   SET_CURRENT_COMBINATIONS,
   SET_CURRENT_TRIP,
   SET_ORDER,
-  SET_PARTICIPANTS_DATA,
-  SET_CUSTOMER_DATA,
-  CREATE_CUSTOMER_DATA,
 } from "../types";
 import axios from "axios";
-import { PAX_DEFAULT_STRING, PAX_DEFAULT, BRAND_ID } from "../../constants";
+import { PAX_DEFAULT, BRAND_ID } from "../../constants";
 
 const GlobalState = (props) => {
   const initialState = {
@@ -206,7 +202,7 @@ const GlobalState = (props) => {
     }
   };
 
-  const setParticipantsData = async (saveData) => {
+  const setParticipantsData = async () => {
     const postData = {
       token: state.token,
       order_id: state.order.id,
