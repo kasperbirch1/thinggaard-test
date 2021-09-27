@@ -49,8 +49,6 @@ const Home = () => {
     }
   }, [currentTrip]);
 
-  console.log(currentTrip);
-
   return (
     <>
       {destinations && (

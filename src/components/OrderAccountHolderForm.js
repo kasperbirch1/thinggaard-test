@@ -110,10 +110,6 @@ const OrderAccountHolderForm = ({ tailwindCSS }) => {
       pincode: order.pin_code,
     };
 
-    console.log(postData);
-
-    console.log(postDataConfirm);
-
     axios
       .post(
         "https://thinggaard.dk/wp-json/thinggaard/v1/orders/customers/patch",

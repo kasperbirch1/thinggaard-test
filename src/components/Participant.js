@@ -73,8 +73,6 @@ const Participant = ({ participant, personCount }) => {
     }
   };
 
-  console.log(locationData);
-
   useEffect(() => {
     getLocations("departure");
     getLocations("return");
