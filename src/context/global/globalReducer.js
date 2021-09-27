@@ -1,6 +1,7 @@
 import {
   SET_LOADING,
   SET_TOKEN,
+  SET_BRAND,
   SET_DESTINATIONS,
   SET_ALL_DURATIONS,
   SET_COUNTRIES,
@@ -30,12 +31,12 @@ const globalReducer = (state, action) => {
         ...state,
         loading: action.payload,
       };
-    case SET_TOKEN:
-      return {
-        ...state,
-        token: action.payload,
-      };
-    case SET_DESTINATIONS:
+      case SET_TOKEN:
+        return {
+          ...state,
+          token: action.payload,
+        };
+          case SET_DESTINATIONS:
       return {
         ...state,
         destinations: action.payload,

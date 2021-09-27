@@ -21,6 +21,8 @@ import {
 } from "../context/types";
 
 const TripDetails = () => {
+  let query = new URLSearchParams(useLocation().search);
+
   const classes = useStyles();
   const {
     token,
@@ -38,8 +40,6 @@ const TripDetails = () => {
     currentTrip,
   } = useContext(globalContext);
 
-  let query = new URLSearchParams(useLocation().search);
-
   const getCombinations = async () => {
     let travelDate = new Date(query.get("date")).getTime();
 
@@ -47,7 +47,7 @@ const TripDetails = () => {
       const { data } = await axios.get(
         `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${query.get(
           "destination"
-        )}&ages=30,30&duration=${query.get(
+        )}&ages=30&duration=${query.get(
           "duration"
         )}&date=${travelDate}&transport=transport_${query.get(
           "transport"
@@ -56,14 +56,13 @@ const TripDetails = () => {
 
       data.result.map(
         (trip) =>
-          trip.accomodation_code === "pere" &&
+          trip.accomodation_code === query.get("accommodation") &&
           dispatch({
             type: SET_CURRENT_TRIP,
             payload: trip,
           })
       );
 
-      console.log(data);
       dispatch({
         type: SET_TRIPS,
         payload: data.result,
@@ -72,12 +71,12 @@ const TripDetails = () => {
 
     try {
       const { data } = await axios.get(
-        `https://thinggaard.dk/wp-json/thinggaard/v1/trips/combinations?&ages=30,30&duration=${query.get(
+        `https://thinggaard.dk/wp-json/thinggaard/v1/trips/combinations?&ages=30&duration=${query.get(
           "duration"
         )}&date=${travelDate}&transport=transport_${query.get(
           "transport"
         )}&token=${token}&accomodation_code=${query.get(
-          "accomodation"
+          "accommodation"
         )}&period_id=${query.get("period")}`
       );
 
@@ -89,7 +88,7 @@ const TripDetails = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
+  useEffect(() => {  
     if (token) {
       getCombinations();
     }

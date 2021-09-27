@@ -79,28 +79,92 @@ const App = () => {
           >
             <Router>
               <Switch>
-                <Route exact path="/">
+              <Route exact path="/">
                   <Home />
                 </Route>
-                <Route path="/tripdetails">
-                  <TripDetails />
-                </Route>
-                <Route path="/order">
+                <Route exact path="/order">
                   <Order />
                 </Route>
-                <Route path="/orderdetails">
+                <Route exact path="/orderdetails">
                   <OrderAccountHolder />
                 </Route>
-                <Route path="/orderconfirmation">
+                <Route exact path="/orderconfirmation">
                   <OrderConfirmation />
                 </Route>
-                <Route path="/orderpaymentconfirmation">
+                <Route exact path="/orderpaymentconfirmation">
                   <OrderConfirmation />
                 </Route>
-                <Route path="/orderpaymentcallback">
+                <Route exact path="/orderpaymentcallback">
                   <OrderConfirmation />
                 </Route>
-                <Route path="/orderpaymentcancel">
+                <Route exact path="/orderpaymentcancel">
+                  <OrderConfirmation />
+                </Route>
+
+                <Route exact path="/tripdetails">
+                  <TripDetails />
+                </Route>
+                <Route exact path="/tripdetails/order">
+                  <Order />
+                </Route>
+                <Route exact path="/tripdetails/orderdetails">
+                  <OrderAccountHolder />
+                </Route>
+                <Route exact path="/tripdetails/orderconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/tripdetails/orderpaymentconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/tripdetails/orderpaymentcallback">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/orderpaymentcancel">
+                  <OrderConfirmation />
+                </Route>
+
+
+              <Route exact path="/gruppe-react/">
+                  <Home />
+                </Route>
+                <Route exact path="/gruppe-react/order">
+                  <Order />
+                </Route>
+                <Route exact path="/gruppe-react/orderdetails">
+                  <OrderAccountHolder />
+                </Route>
+                <Route exact path="/gruppe-react/orderconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentcallback">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentcancel">
+                  <OrderConfirmation />
+                </Route>
+
+                <Route exact path="/gruppe-react/tripdetails">
+                  <TripDetails />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/order">
+                  <Order />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/orderdetails">
+                  <OrderAccountHolder />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/orderconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/orderpaymentconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/orderpaymentcallback">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentcancel">
                   <OrderConfirmation />
                 </Route>
               </Switch>

@@ -20,6 +20,7 @@ import {
   CREATE_CUSTOMER_DATA,
 } from "../types";
 import axios from "axios";
+import { PAX_DEFAULT_STRING, PAX_DEFAULT, BRAND_ID } from "../../constants";
 
 const GlobalState = (props) => {
   const initialState = {
@@ -32,7 +33,7 @@ const GlobalState = (props) => {
     currentDuration: "",
     transports: null,
     currentTransport: "",
-    adults: 2,
+    adults: PAX_DEFAULT,
     children: 0,
     childrenAges: [],
     dates: [new Date()],
@@ -52,7 +53,7 @@ const GlobalState = (props) => {
   const getAuthentication = async (source) => {
     try {
       const { data } = await axios.get(
-        "https://thinggaard.dk/wp-json/thinggaard/v1/authentication",
+        `https://thinggaard.dk/wp-json/thinggaard/v1/authentication?brand=${BRAND_ID}`,
         {
           cancelToken: source.token,
         }

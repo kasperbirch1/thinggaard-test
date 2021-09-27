@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
 import globalContext from "../context/global/globalContext";
