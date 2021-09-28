@@ -5,14 +5,7 @@ import OrderTotal from "../components/OrderTotal";
 import globalContext from "../context/global/globalContext";
 
 const Order = () => {
-  const history = useHistory();
   const { order } = useContext(globalContext);
-
-  //   useEffect(() => {
-  //     if (order === null) {
-  //       history.replace("/");
-  //     }
-  //   }, []);
 
   return (
     <>
@@ -22,7 +15,6 @@ const Order = () => {
           <OrderTotal order={order && order} tailwindCSS="col-span-4" />
         </div>
       )}
-      {/* <pre>{JSON.stringify(order, null, 2)}</pre> */}
     </>
   );
 };

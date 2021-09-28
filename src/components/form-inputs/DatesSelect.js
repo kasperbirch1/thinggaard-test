@@ -8,14 +8,11 @@ import da from "date-fns/locale/da";
 import React, { useContext, useState } from "react";
 import globalContext from "../../context/global/globalContext";
 import { SET_CURRENT_DATE } from "../../context/types";
-import { useStyles } from "../../styles";
-import { shake } from "react-animations";
-import Radium, { StyleRoot } from "radium";
+import { StyleRoot } from "radium";
 
 const DatesSelect = () => {
   const [pickerStatus, setPickerStatus] = useState(false);
 
-  const classes = useStyles();
   const {
     destinations,
     currentDuration,

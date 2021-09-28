@@ -1,18 +1,9 @@
-import { Button, FormControl, TextField } from "@material-ui/core";
-import { scroll, scroller } from "react-scroll";
 import { useEffect, useContext, useReducer } from "react";
 import { useLocation } from "react-router-dom";
 import globalContext from "../context/global/globalContext";
-import DatesSelect from "../components/form-inputs/DatesSelect";
-import DestinationsSelect from "../components/form-inputs/DestinationsSelect";
-import DurationsSelect from "../components/form-inputs/DurationsSelect";
-import TransportsSelect from "../components/form-inputs/TransportsSelect";
-import Trip from "../components/Trip";
-import { useStyles } from "../styles";
 import Details from "../components/Details";
-import AdultsSelect from "../components/form-inputs/AdultsSelect";
-import ChildrenSelect from "../components/form-inputs/ChildrenSelect";
 import axios from "axios";
+import { PAX_DEFAULT_STRING } from "../constants";
 
 import {
   SET_CURRENT_COMBINATIONS,
@@ -23,35 +14,24 @@ import {
 const TripDetails = () => {
   let query = new URLSearchParams(useLocation().search);
 
-  const classes = useStyles();
-  const {
-    token,
-    destinations,
-    handleSubmit,
-    adults,
-    currentPeriodId,
-    currentDestination,
-    currentCombinations,
-    currentDuration,
-    currentTransport,
-    currentDate,
-    dispatch,
-    trips,
-    currentTrip,
-  } = useContext(globalContext);
+  const { token, destinations, dispatch, trips, currentTrip } =
+    useContext(globalContext);
 
   const getCombinations = async () => {
     let travelDate = new Date(query.get("date")).getTime();
+    let added_hours = 12 * 60 * 60 * 1000;
+
+    travelDate = travelDate + added_hours;
 
     try {
       const { data } = await axios.get(
         `https://thinggaard.dk/wp-json/thinggaard/v1/trips?destination_id=${query.get(
           "destination"
-        )}&ages=30&duration=${query.get(
+        )}&ages=${PAX_DEFAULT_STRING}&duration=${query.get(
           "duration"
         )}&date=${travelDate}&transport=transport_${query.get(
           "transport"
-        )}&token=${token}}`
+        )}&period_id=${query.get("period")}&token=${token}}`
       );
 
       data.result.map(
@@ -88,7 +68,7 @@ const TripDetails = () => {
       console.log(error);
     }
   };
-  useEffect(() => {  
+  useEffect(() => {
     if (token) {
       getCombinations();
     }
@@ -97,56 +77,10 @@ const TripDetails = () => {
   return (
     <>
       {destinations && (
-        <div className={trips ? "trip-search-trips" : "trip-search-home"}>
-          <div className="trip-search-form">
-            <form
-              onSubmit={handleSubmit}
-              className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-7 justify-center"
-            >
-              <DestinationsSelect />
-              <DurationsSelect />
-              <TransportsSelect />
-              <DatesSelect />
-              <AdultsSelect />
-              <ChildrenSelect />
-              <FormControl className={classes.formControl}>
-                <Button
-                  disabled={
-                    currentDestination &&
-                    currentDuration &&
-                    currentTransport &&
-                    currentDate
-                      ? false
-                      : true
-                  }
-                  size="large"
-                  color="primary"
-                  type="submit"
-                  variant="contained"
-                  style={{ minHeight: "56px" }}
-                >
-                  Find Rejse
-                </Button>
-              </FormControl>
-            </form>
-          </div>
-
+        <div className="trip-search-trips">
           {currentTrip && (
             <div id="trip">
-              <Details />
-            </div>
-          )}
-
-          {trips && (
-            <div id="trips">
-              {trips.map(
-                (trip) =>
-                  (!currentTrip ||
-                    currentTrip.accomodation_code !==
-                      trip.accomodation_code) && (
-                    <Trip key={trip.accomodation_code} trip={trip} />
-                  )
-              )}
+              <Details singular={true} />
             </div>
           )}
 

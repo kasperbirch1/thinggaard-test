@@ -1,5 +1,5 @@
 import { Button, FormControl, TextField } from "@material-ui/core";
-import { scroll, scroller } from "react-scroll";
+import { scroller } from "react-scroll";
 import { useEffect, useContext } from "react";
 import globalContext from "../context/global/globalContext";
 import DatesSelect from "../components/form-inputs/DatesSelect";
@@ -17,12 +17,10 @@ const Home = () => {
   const {
     destinations,
     handleSubmit,
-    adults,
     currentDestination,
     currentDuration,
     currentTransport,
     currentDate,
-    dispatch,
     trips,
     currentTrip,
   } = useContext(globalContext);
@@ -30,8 +28,8 @@ const Home = () => {
   useEffect(() => {
     if (trips) {
       scroller.scrollTo("trips", {
-        duration: 800,
-        offset: -50,
+        duration: 1200,
+        offset: -350,
         delay: 0,
         smooth: "easeInOutQuart",
       });
@@ -40,9 +38,9 @@ const Home = () => {
 
   useEffect(() => {
     if (currentTrip) {
-      scroller.scrollTo("trip", {
-        duration: 800,
-        offset: -50,
+      scroller.scrollTo("trip-options", {
+        duration: 1200,
+        offset: -150,
         delay: 0,
         smooth: "easeInOutQuart",
       });

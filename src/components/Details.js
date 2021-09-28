@@ -9,7 +9,7 @@ import { Button, Tab, Tabs, Box, Typography } from "@material-ui/core";
 import HotelMetaComponent from "./HotelMetaComponent";
 import HotelPreviewComponent from "./HotelPreviewComponent";
 
-const Details = () => {
+const Details = (props) => {
   const history = useHistory();
   const [tabIndex, setTabIndex] = useState(0);
   // let { currentAccomodationCode, currentPeriodId } = useParams();
@@ -101,7 +101,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="py-4">
+      <div className="py-4 trip-options">
         <AppBar position={"static"}>
           <Tabs
             value={tabIndex}
@@ -185,24 +185,12 @@ const Details = () => {
             </div>
           )}
         </TabPanel>
-
-        {/*
-        <TabPanel className="pt-4" value={tabIndex} index={3}>
-          {post?.meta?.hotel_beliggenhed && (
-            <div
-              className={`${
-                tabIndex === 3 ? "block" : "hidden"
-              } hotel_beliggenhed`}
-            >
-              {parse(post?.meta?.hotel_beliggenhed)}
-            </div>
-          )}
-        </TabPanel>
-            */}
       </div>
-      <div className="p-4 rounded bg-gray-400 text-center text-xl font-semibold text-white">
-        <h1>Andre rejser</h1>
-      </div>
+      {!props.singular && (
+        <div className="p-4 rounded bg-gray-400 text-center text-xl font-semibold text-white">
+          <h1>Andre rejser</h1>
+        </div>
+      )}
     </div>
   );
 };

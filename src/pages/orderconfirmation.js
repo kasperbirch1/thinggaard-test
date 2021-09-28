@@ -5,7 +5,6 @@ import OrderTotal from "../components/OrderTotal";
 import globalContext from "../context/global/globalContext";
 
 const OrderConfirmation = () => {
-  const history = useHistory();
   const { order } = useContext(globalContext);
 
   return (
