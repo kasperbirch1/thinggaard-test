@@ -1,16 +1,15 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
 import globalContext from "../context/global/globalContext";
 import { SET_PARTICIPANTS_DATA } from "../context/types";
 import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
-import { Button, Tab, Tabs, TabPane, Box, Typography } from "@material-ui/core";
+import { Button, Tab, Tabs, Box, Typography } from "@material-ui/core";
 import HotelMetaComponent from "./HotelMetaComponent";
 import HotelPreviewComponent from "./HotelPreviewComponent";
 
-const Details = () => {
+const Details = (props) => {
   const history = useHistory();
   const [tabIndex, setTabIndex] = useState(0);
   // let { currentAccomodationCode, currentPeriodId } = useParams();
@@ -21,7 +20,7 @@ const Details = () => {
     fetchOrderCreate,
   } = useContext(globalContext);
 
-  const { participantsData, dispatch } = useContext(globalContext);
+  const { dispatch } = useContext(globalContext);
 
   const {
     destination_name,
@@ -102,7 +101,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="py-4">
+      <div className="py-4 trip-options">
         <AppBar position={"static"}>
           <Tabs
             value={tabIndex}
@@ -186,24 +185,12 @@ const Details = () => {
             </div>
           )}
         </TabPanel>
-
-        {/*
-        <TabPanel className="pt-4" value={tabIndex} index={3}>
-          {post?.meta?.hotel_beliggenhed && (
-            <div
-              className={`${
-                tabIndex === 3 ? "block" : "hidden"
-              } hotel_beliggenhed`}
-            >
-              {parse(post?.meta?.hotel_beliggenhed)}
-            </div>
-          )}
-        </TabPanel>
-            */}
       </div>
-      <div className="p-4 rounded bg-gray-400 text-center text-xl font-semibold text-white">
-        <h1>Andre rejser</h1>
-      </div>
+      {!props.singular && (
+        <div className="p-4 rounded bg-gray-400 text-center text-xl font-semibold text-white">
+          <h1>Andre rejser</h1>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import HotelOutlinedIcon from "@material-ui/icons/HotelOutlined";
 import parse from "html-react-parser";
-import CarouselComponent from "./CarouselComponent";
 
 const HotelPreviewComponent = ({
   post,

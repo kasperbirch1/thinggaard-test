@@ -1,12 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
-import globalContext from "../context/global/globalContext";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const OrderTotal = ({ order, tailwindCSS }) => {
   const [hotel, setHotel] = useState(false);
 
   useEffect(() => {
-    const getHotel = async (source) => {
+    const getHotel = async () => {
       try {
         const { data } = await axios.get(
           `https://thinggaard.dk/wp-json/thinggaard/v1/hotel?accomodation_code=${order?.accomodation_code}`
@@ -74,9 +73,7 @@ const OrderTotal = ({ order, tailwindCSS }) => {
         </div>
         <div className="md:flex md:justify-between md:items-center pt-4">
           <h2 className="font-bold">Totalpris</h2>
-          <h2 className="font-bold">
-            {formatter.format(order?.booking_amount)}
-          </h2>
+          <h2 className="font-bold">{formatter.format(order?.total_amount)}</h2>
         </div>
       </div>
     </div>

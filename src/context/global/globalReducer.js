@@ -20,8 +20,7 @@ import {
   SET_ORDER,
   SET_PARTICIPANTS_DATA,
   SET_CUSTOMER_DATA,
-  SET_CUSTOMER_CONFIRM,
-  SET_CUSTOMER_CONFIRMED,
+  CREATE_CUSTOMER_DATA,
 } from "../types";
 
 const globalReducer = (state, action) => {
@@ -122,6 +121,11 @@ const globalReducer = (state, action) => {
         participantsData: action.payload,
       };
     case SET_CUSTOMER_DATA:
+      return {
+        ...state,
+        customerData: action.payload,
+      };
+    case CREATE_CUSTOMER_DATA:
       return {
         ...state,
         customerData: action.payload,

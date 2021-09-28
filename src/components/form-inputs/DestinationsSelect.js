@@ -1,17 +1,9 @@
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  MenuList,
-} from "@material-ui/core";
+import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import React, { useContext } from "react";
 import globalContext from "../../context/global/globalContext";
 import { SET_CURRENT_DESTINATION } from "../../context/types";
-import { useStyles } from "../../styles";
 
 const DestinationsSelect = () => {
-  const classes = useStyles();
   const { destinations, currentDestination, dispatch } =
     useContext(globalContext);
 
@@ -30,7 +22,7 @@ const DestinationsSelect = () => {
           });
         }}
       >
-        {destinations?.map((item, key) =>
+        {destinations?.map((item) =>
           item.destinations.map((destination_item, destination_key) => (
             <MenuItem
               disabled={destination_item.type === "country" ? true : false}

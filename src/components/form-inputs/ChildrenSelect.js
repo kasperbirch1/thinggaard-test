@@ -1,20 +1,12 @@
-import {
-  FormControl,
-  Typography,
-  Slider,
-  Button,
-  TextField,
-} from "@material-ui/core";
+import { FormControl, Typography, Button, TextField } from "@material-ui/core";
 import React, { useContext } from "react";
 import globalContext from "../../context/global/globalContext";
 import { SET_CHILDREN, SET_CHILDREN_AGES } from "../../context/types";
-import { useStyles } from "../../styles";
 
-const ChildrenSelect = (props) => {
-  const classes = useStyles();
+const ChildrenSelect = () => {
   const { children, childrenAges, dispatch } = useContext(globalContext);
 
-  const countChildren = (number) => {
+  const countChildren = () => {
     let myChildren = [];
     for (let i = 0; i < children; i++) {
       myChildren.push("5");

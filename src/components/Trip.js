@@ -1,6 +1,5 @@
 // import { Link } from "react-router-dom";
 import React, { useContext } from "react";
-import parse from "html-react-parser";
 import CarouselComponent from "./CarouselComponent";
 import HotelMetaComponent from "./HotelMetaComponent";
 import HotelPreviewComponent from "./HotelPreviewComponent";
@@ -12,7 +11,6 @@ import da from "date-fns/locale/da";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import ArrowForwardOutlinedIcon from "@material-ui/icons/ArrowForwardOutlined";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
-import HotelOutlinedIcon from "@material-ui/icons/HotelOutlined";
 
 const Trip = ({ trip }) => {
   const { dispatch } = useContext(globalContext);
@@ -31,11 +29,6 @@ const Trip = ({ trip }) => {
   if (!post) {
     return null;
   }
-
-  var formatter = new Intl.NumberFormat("da-DK", {
-    style: "currency",
-    currency: "DKK",
-  });
 
   return (
     <div className="relative mt-8 mb-8 p-4 border border-solid border-1 border-gray-300 rounded bg-gray-50">

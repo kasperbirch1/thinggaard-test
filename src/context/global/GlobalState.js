@@ -2,7 +2,6 @@ import React, { useEffect, useState, useReducer } from "react";
 import globalReducer from "./globalReducer";
 import GlobalContext from "./globalContext";
 import {
-  SET_LOADING,
   SET_TOKEN,
   SET_DESTINATIONS,
   SET_ALL_DURATIONS,
@@ -15,10 +14,9 @@ import {
   SET_CURRENT_COMBINATIONS,
   SET_CURRENT_TRIP,
   SET_ORDER,
-  SET_PARTICIPANTS_DATA,
-  SET_CUSTOMER_DATA,
 } from "../types";
 import axios from "axios";
+import { PAX_DEFAULT, BRAND_ID } from "../../constants";
 
 const GlobalState = (props) => {
   const initialState = {
@@ -31,7 +29,7 @@ const GlobalState = (props) => {
     currentDuration: "",
     transports: null,
     currentTransport: "",
-    adults: 2,
+    adults: PAX_DEFAULT,
     children: 0,
     childrenAges: [],
     dates: [new Date()],
@@ -51,7 +49,7 @@ const GlobalState = (props) => {
   const getAuthentication = async (source) => {
     try {
       const { data } = await axios.get(
-        "https://thinggaard.dk/wp-json/thinggaard/v1/authentication",
+        `https://thinggaard.dk/wp-json/thinggaard/v1/authentication?brand=${BRAND_ID}`,
         {
           cancelToken: source.token,
         }
@@ -132,6 +130,8 @@ const GlobalState = (props) => {
       const { data } = await axios.get(
         "https://thinggaard.dk/wp-json/thinggaard/v1/dates?destination_id=" +
           state.currentDestination.code +
+          "&transport=" +
+          state.currentTransport +
           "&duration_from=" +
           state.currentDuration +
           "&duration_to=" +
@@ -142,6 +142,7 @@ const GlobalState = (props) => {
           cancelToken: source.token,
         }
       );
+      console.log(data.result);
       dispatch({
         type: SET_DATES,
         payload: data.result,
@@ -235,6 +236,21 @@ const GlobalState = (props) => {
       .then(() => {});
   };
 
+  const createCustomerData = (saveData) => {
+    const postData = {
+      token: state.token,
+      order_id: state.order.id,
+      customer: JSON.stringify(saveData),
+    };
+
+    axios
+      .post(
+        "https://thinggaard.dk/wp-json/thinggaard/v1/orders/customers/create",
+        postData
+      )
+      .then(() => {});
+  };
+
   const countAdults = (number) => {
     let countAdults = [];
     for (let i = 0; i < state.adults; i++) {
@@ -315,7 +331,7 @@ const GlobalState = (props) => {
     return () => {
       source.cancel();
     };
-  }, [state.currentDestination, state.currentDuration]);
+  }, [state.currentDestination, state.currentDuration, state.currentTransport]);
 
   return (
     <GlobalContext.Provider
@@ -347,6 +363,7 @@ const GlobalState = (props) => {
         fetchOrderCreate,
         setParticipantsData,
         setCustomerData,
+        createCustomerData,
       }}
     >
       {props.children}

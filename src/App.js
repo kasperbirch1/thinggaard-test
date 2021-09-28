@@ -3,16 +3,16 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import OrderAccountHolder from "./pages/orderaccountholder";
 import theme from "./styles/theme.js";
 import Home from "./pages/Home";
+import TripDetails from "./pages/TripDetails";
 import Order from "./pages/order";
 import OrderConfirmation from "./pages/orderconfirmation";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import globalContext from "./context/global/globalContext";
 import { PuffLoader } from "react-spinners";
 import axios from "axios";
-import { SET_LOADING } from "./context/types.js";
 
 const App = () => {
-  const { trips, order, dispatch } = useContext(globalContext);
+  const { trips, order } = useContext(globalContext);
 
   const [loading, setLoading] = useState(false);
 
@@ -81,22 +81,94 @@ const App = () => {
                 <Route exact path="/">
                   <Home />
                 </Route>
-                <Route path="/order">
+                <Route exact path="/order">
                   <Order />
                 </Route>
-                <Route path="/orderdetails">
+                <Route exact path="/orderdetails">
                   <OrderAccountHolder />
                 </Route>
-                <Route path="/orderconfirmation">
+                <Route exact path="/orderconfirmation">
                   <OrderConfirmation />
                 </Route>
-                <Route path="/orderpaymentconfirmation">
+                <Route exact path="/orderpaymentconfirmation">
                   <OrderConfirmation />
                 </Route>
-                <Route path="/orderpaymentcallback">
+                <Route exact path="/orderpaymentcallback">
                   <OrderConfirmation />
                 </Route>
-                <Route path="/orderpaymentcancel">
+                <Route exact path="/orderpaymentcancel">
+                  <OrderConfirmation />
+                </Route>
+
+                <Route exact path="/tripdetails">
+                  <TripDetails />
+                </Route>
+                <Route exact path="/tripdetails/order">
+                  <Order />
+                </Route>
+                <Route exact path="/tripdetails/orderdetails">
+                  <OrderAccountHolder />
+                </Route>
+                <Route exact path="/tripdetails/orderconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/tripdetails/orderpaymentconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/tripdetails/orderpaymentcallback">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/orderpaymentcancel">
+                  <OrderConfirmation />
+                </Route>
+
+                <Route exact path="/gruppe-react/">
+                  <Home />
+                </Route>
+                <Route exact path="/gruppe-react/order">
+                  <Order />
+                </Route>
+                <Route exact path="/gruppe-react/orderdetails">
+                  <OrderAccountHolder />
+                </Route>
+                <Route exact path="/gruppe-react/orderconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentcallback">
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentcancel">
+                  <OrderConfirmation />
+                </Route>
+
+                <Route exact path="/gruppe-react/tripdetails">
+                  <TripDetails />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/order">
+                  <Order />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/orderdetails">
+                  <OrderAccountHolder />
+                </Route>
+                <Route exact path="/gruppe-react/tripdetails/orderconfirmation">
+                  <OrderConfirmation />
+                </Route>
+                <Route
+                  exact
+                  path="/gruppe-react/tripdetails/orderpaymentconfirmation"
+                >
+                  <OrderConfirmation />
+                </Route>
+                <Route
+                  exact
+                  path="/gruppe-react/tripdetails/orderpaymentcallback"
+                >
+                  <OrderConfirmation />
+                </Route>
+                <Route exact path="/gruppe-react/orderpaymentcancel">
                   <OrderConfirmation />
                 </Route>
               </Switch>

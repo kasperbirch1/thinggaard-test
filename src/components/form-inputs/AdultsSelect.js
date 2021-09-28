@@ -1,18 +1,9 @@
-import {
-  FormControl,
-  Typography,
-  Button,
-  Slider,
-  InputLabel,
-  TextField,
-} from "@material-ui/core";
+import { FormControl, Typography, Button } from "@material-ui/core";
 import React, { useContext } from "react";
 import globalContext from "../../context/global/globalContext";
 import { SET_ADULTS } from "../../context/types";
-import { useStyles } from "../../styles";
 
 const AdultsSelect = () => {
-  const classes = useStyles();
   const { adults, dispatch } = useContext(globalContext);
 
   return (
